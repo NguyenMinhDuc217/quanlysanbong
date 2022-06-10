@@ -21,6 +21,7 @@ class CreateTableUser extends Migration
             $table->string('sdt',255);
             $table->string('dia_chi',255);
             $table->string('vi_tien',255);
+            $table->string('remember_token',255);
             $table->timestamps();
         });
     }

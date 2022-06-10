@@ -18,7 +18,6 @@ class CreateTableSan extends Migration
             $table->string('ten',255);
             $table->integer('gia');
             $table->string('mo_ta',255)->nullable();
-            $table->string('dia_chi',255);
             $table->string('loai_san');
             $table->string('tinh_trang');
             $table->string('anh_dai_dien');

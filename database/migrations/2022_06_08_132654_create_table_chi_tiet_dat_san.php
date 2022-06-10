@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTableDatSan extends Migration
+class CreateTableChiTietDatSan extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,15 @@ class CreateTableDatSan extends Migration
      */
     public function up()
     {
-        Schema::create('dat_san', function (Blueprint $table) {
+        Schema::create('chi_tiet_dat_san', function (Blueprint $table) {
             $table->id();
             $table->integer('san_id');
             $table->integer('user_id');
-            $table->integer('chi_tiet_dat_san_id');
+            $table->integer('dich_vu_id');
+            $table->date('ngay_dien_ra');
+            $table->dateTime('gio_bat_dau');
+            $table->dateTime('gio_ket_thuc');
+            $table->double('tong_tien');
             $table->timestamps();
         });
     }
@@ -29,6 +33,6 @@ class CreateTableDatSan extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dat_san');
+        Schema::dropIfExists('table_chi_tiet_dat_san');
     }
 }
