@@ -23,7 +23,7 @@ class UserLoginController extends Controller
             'password' => 'required|string|min:8'
         ]
         );
-    if (Auth::guard('user')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
+    if (Auth::guard('user')->attempt(['email' => $request->email, 'password' => $request->password,'status'=>1], $request->remember)) {
        
         return "đsdsds";
     }

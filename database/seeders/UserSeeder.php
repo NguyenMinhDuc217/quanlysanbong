@@ -16,13 +16,12 @@ class UserSeeder extends Seeder
     {
         User::insert([
             [
-                'ten' => 'User',
+                'username' => 'User',
                 'email' => 'user@gmail.com',
                 'password' => bcrypt('admin123'),
-                'sdt'=>'0223233277',
-                'dia_chi'=>'12A222,',
-                'vi_tien'=>'89',
-                'remember_token'=>"dsdsdsdsd"
+                'phone_number'=>'34234234',
+                'remember_token'=>"dsdsdsdsd",
+                'status'=>'1',
             ]
         ]);
     }
