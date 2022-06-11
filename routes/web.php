@@ -29,7 +29,7 @@ Route::get('/user/logout', [UserLoginController::class,'logout'])->name('logout'
 
 Route::get('/dang-nhap', [AdminLoginController::class,'showLoginForm'])->name('admin.show.login');
 Route::post('/dang-nhap', [AdminLoginController::class,'login'])->name('admin.login');
-Route::get('/dang-xuat', [AdminLoginController::class,'logout'])->name('admin.logout');
+Route::get('/logout', [AdminLoginController::class,'logout'])->name('admin.logout');
 
 Route::get('/dashboard', [AdminController::class,'index'])->name('admin.index');
 
