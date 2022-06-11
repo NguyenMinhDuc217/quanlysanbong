@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTableBinhLuan extends Migration
+class CreateServicesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class CreateTableBinhLuan extends Migration
      */
     public function up()
     {
-        Schema::create('binh_luan', function (Blueprint $table) {
+        Schema::create('services', function (Blueprint $table) {
             $table->id();
-            $table->integer('san_id');
-            $table->integer('user_id');
-            $table->string('noi_dung',255);
-            $table->integer('danh_gia');
-            $table->integer('like');
-            $table->integer('dislike');
+            $table->string('name',255);
+            $table->integer('price');
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ class CreateTableBinhLuan extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('binh_luan');
+        Schema::dropIfExists('services');
     }
 }

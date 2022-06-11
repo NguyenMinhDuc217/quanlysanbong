@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTableTranDau extends Migration
+class CreateMatchsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateTableTranDau extends Migration
      */
     public function up()
     {
-        Schema::create('tran_dau', function (Blueprint $table) {
+        Schema::create('matchs', function (Blueprint $table) {
             $table->id();
-            $table->integer('san_id');
-            $table->date('ngay_dien_ra');
-            $table->dateTime('gio_bat_dau');
-            $table->dateTime('gio_ket_thuc');
-            $table->string('tinh_trang');
+            $table->integer('pitch_id');
+            $table->date('date_event');
+            $table->dateTime('start_time');
+            $table->dateTime('end_time');
+            $table->string('status',255)->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ class CreateTableTranDau extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tran_dau');
+        Schema::dropIfExists('matchs');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTableKhuyenMai extends Migration
+class CreateSetPitchsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateTableKhuyenMai extends Migration
      */
     public function up()
     {
-        Schema::create('khuyen_mai', function (Blueprint $table) {
+        Schema::create('set_pitchs', function (Blueprint $table) {
             $table->id();
+            $table->integer('picth_id');
             $table->integer('user_id');
-            $table->string('ten',255);
-            $table->integer('phan_tram');
+            $table->integer('service_id');
+            $table->integer('detail_set_pitch_id');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateTableKhuyenMai extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('khuyen_mai');
+        Schema::dropIfExists('set_pitchs');
     }
 }

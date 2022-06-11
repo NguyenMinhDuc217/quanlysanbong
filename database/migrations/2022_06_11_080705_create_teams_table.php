@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTableVe extends Migration
+class CreateTeamsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateTableVe extends Migration
      */
     public function up()
     {
-        Schema::create('ve', function (Blueprint $table) {
+        Schema::create('teams', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->integer('dich_vu_id');
-            $table->date('ngay_bat_dau');
-            $table->date('ngay_ket_thuc');
-            $table->string('loai_ve');
+            $table->string('team_name',255);
+            $table->string('team_member',255);
+            $table->string('link',255);
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ class CreateTableVe extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ve');
+        Schema::dropIfExists('teams');
     }
 }
