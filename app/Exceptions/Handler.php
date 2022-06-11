@@ -3,6 +3,8 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use App\Exceptions\InvalidOrderException;
+use Illuminate\Support\Facades\URL;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -13,7 +15,7 @@ class Handler extends ExceptionHandler
      * @var array<int, class-string<Throwable>>
      */
     protected $dontReport = [
-        //
+        ProductNotFoundException::class,
     ];
 
     /**
@@ -37,5 +39,11 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+    protected function context()
+    {
+        return array_merge(parent::context(), [
+            'url' => URL::current(),
+        ]);
     }
 }

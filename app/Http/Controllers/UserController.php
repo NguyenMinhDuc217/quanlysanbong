@@ -12,10 +12,12 @@ class UserController extends Controller
     {
         $this->userRepository = $userRepository;
     }
-    public function showRegister(){
+    public function showRegister()
+    { 
        return view('sign-up.index');
      }
     public function Register(Request $request){
+        
        $this->userRepository->register($request);
     }
 }
