@@ -17,7 +17,7 @@ class CreateTableUser extends Migration
             $table->id();
             $table->string('ten',255);
             $table->string('email',255);
-            $table->string('mat_khau',255);
+            $table->string('password',255);
             $table->string('sdt',255);
             $table->string('dia_chi',255);
             $table->string('vi_tien',255);
