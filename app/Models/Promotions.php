@@ -5,7 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DichVu extends Model
+class Promotions extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'user_id',
+        'name',
+        'percentage_promotion',
+    ];
 }
