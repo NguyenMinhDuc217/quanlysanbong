@@ -10,13 +10,12 @@ class UserRepository implements UserRepositoryInterface
 {
  public function register(Request $request)
  {   
-    $request->validate(
-     [
-          'name' => 'required',
-          'email' => 'required|email',
-          'password' => 'required|min:8',
-          'confirm_password' => 'required|min:8',
-          'phone' => 'required|numeric|digits:10',
+   $request->validate([
+        'name' => 'required',
+        'email' => 'required|email',
+        'password' => 'required|min:8',
+        'confirm_password' => 'required|min:8',
+        'phone' => 'required|numeric|digits:10',
     ],[
         'name.required'=>'Vui lòng nhập Họ và Tên',
         'email.required'=>'Vui lòng nhập Email',
@@ -28,18 +27,15 @@ class UserRepository implements UserRepositoryInterface
         'phone.required'=>'Vui lòng nhập số điện thoại',
         'phone.numeric'=>'Số điện thoại phải là số',
         'phone.digits' => 'Số điện thoại không hợp lệ',
-       ]
-    );
-  
-      
+       ]);
+    
      $user = new User();
      
      if ($user->where('email', '=', $request->email)->exists()) {
-
-         return ['status' => 400, 'error' => 'Email đã tồn tại'];
+         return response()->json(['status' => 400, 'error' => 'Email đã tồn tại']);
      }
      if($request->password!=$request->confirm_password){
-          return ['status' => 400, 'error' => 'Mat khau xac nhan chua chinhs xac'];
+          return response()->json(['status' => 400, 'error' => 'Mật khẩu xác nhận chưa chính xác']);
      }
      $user->username = $request->name;
      $user->email = $request->email;
@@ -50,11 +46,10 @@ class UserRepository implements UserRepositoryInterface
      $user-> remember_token=$request->_token;
    
      if ($user->save()) {
-          return "gui mail";
+          return response()->json(['status' => 200, 'success' => 'Bạn đã đăng kí thành công, vui long kiểm tra email để xác nhận!!']);
       }
        else{
-          return ['status' => 400, 'error' => 'Lỗi xử lý '];
-      }
-      return ['status' => 200, 'success' => 'Bạn đã đăng kí thành công, vui long kiểm tra email để xác nhận!!'];
+          return ['status' => -9999, 'error' => 'Lỗi xử lý '];
+    }
  }
 }
