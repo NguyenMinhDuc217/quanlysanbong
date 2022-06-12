@@ -5,7 +5,11 @@
     @csrf
 <label>Ho ten</label>
 <input type="text" name="name"/></br>
-
+@error('name')
+        <p class="vali_sign" class="invalid-feedback" role="alert">
+          <strong>{{ $message }}</strong>
+        </p>
+ @enderror
 <label>email</label>
 <input type="text" name="email"/></br>
 @error('email')
@@ -53,6 +57,7 @@
               text: res.success,
             })
           } else {
+            console.log(res);
             if (res.error) {
               return Swal.fire({
                 icon: 'error',
