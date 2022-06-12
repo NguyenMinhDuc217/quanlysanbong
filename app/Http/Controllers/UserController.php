@@ -18,6 +18,8 @@ class UserController extends Controller
      }
     public function Register(Request $request){
         
-       $this->userRepository->register($request);
+ 
+       dd( $this->userRepository->register($request));
+        return view('sign-up.index');
     }
 }
