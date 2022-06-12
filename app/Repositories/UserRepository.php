@@ -10,7 +10,11 @@ class UserRepository implements UserRepositoryInterface
 {
  public function register(Request $request){
       dd($request->all());
-      $user=User::all();
+     $user = User::create([
+          'username' => $request->name,
+          'email' => $request->email,
+          'password' => bcrypt($request->password)
+     ]);;
       return $user;
  }
 }
