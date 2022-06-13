@@ -7,6 +7,8 @@ use App\Http\Controllers\UserLoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminLoginController;
+use App\Http\Controllers\UserManagerController;
+
 
 use Illuminate\Support\Facades\Auth;
 
@@ -38,4 +40,7 @@ Route::get('/logout', [AdminLoginController::class,'logout'])->name('admin.logou
 
 Route::get('/dashboard', [AdminController::class,'index'])->name('admin.index');
 
+Route::prefix('admin')->group(function () {
+   Route::resource('/users', UserManagerController::class);
+});
 

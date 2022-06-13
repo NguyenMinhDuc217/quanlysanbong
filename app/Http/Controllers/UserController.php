@@ -17,7 +17,6 @@ class UserController extends Controller
        return view('sign-up.index');
      }
     public function Register(Request $request){
-        
-       $this->userRepository->register($request);
+        return $this->userRepository->register($request);
     }
 }

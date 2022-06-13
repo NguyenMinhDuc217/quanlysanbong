@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>500 - Page error</title>
+    <title>404 - Page error</title>
 
     <style id="" media="all">/* thai */
         @font-face {
