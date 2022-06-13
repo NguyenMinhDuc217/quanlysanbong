@@ -19,12 +19,19 @@
             </div>
         </div>
         <div class="header_top__right">
+            @if(!empty(Auth::guard('user')->user()->id))
             <div class="header_top__right__login">
-                <a href="">Đăng Nhập</a>
+                <a href="{{route('logout')}}">Đăng xuất</a>
+            </div>
+            @else
+            <div class="header_top__right__login">
+                <a href="{{route('show.login')}}">Đăng Nhập</a>
             </div>
             <div class="header_top__right__register">
-                <a href="">Đăng Ký</a>
+                <a href="{{route('show.register')}}">Đăng Ký</a>
             </div>
+            @endif
+        
         </div>
     </div>
     <div class="header_center">

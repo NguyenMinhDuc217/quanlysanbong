@@ -15,8 +15,8 @@ class RepositoryServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
-           PitchRepositoryInterface::class, 
-           PitchRepository::class
+           UserRepositoryInterface::class, 
+           UserRepository::class
         );
         $this->app->bind(
             PitchRepositoryInterface::class, 

@@ -34,12 +34,12 @@
                       <td>{{$user->wallet}}</td>
                       <td>@if($user->status==1) 
                           <span style=" color: #2ecc71;">Đang hoạt động</span> 
-                           @else 
-                           <span style=" color: red;">Ngưng hoạt động</span>
+                           @elseif($user->status==2)
+                           <span style=" color: red;">Chưa hoạt động</span>
+                           @elseif($user->status==3)
+                           <span style=" color: red;">Bị khóa</span>
                            @endif
                           </td>
-          
-      
                       <td>{{ $user->created_at->format('d/m/Y')}}</td>
                     </tr>
                    @endforeach

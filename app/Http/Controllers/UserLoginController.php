@@ -19,15 +19,25 @@ class UserLoginController extends Controller
       
         $this->validate($request,
         [
-            'email' => 'required|string|email',
-            'password' => 'required|string|min:8'
+            'email' => 'required|email',
+            'password' => 'required|min:8'
+        ],[
+            'email.required' => 'Email không được để trống',
+            'email.email' => 'Bạn phải nhập định dạng Email',
+            'password.required' => 'Mật khẩu không được để trống',
+            'password.min' => 'Mật khẩu ít nhất 8 kí tự',
         ]
         );
     if (Auth::guard('user')->attempt(['email' => $request->email, 'password' => $request->password,'status'=>1], $request->remember)) {
-       
-        return "đsdsds";
+        return redirect()->route('list_pitch');
     }
-    return redirect()->back()->withInput($request->only('email', 'remember'))->with('error', 'User Name or Password incorrect!!!!');
+    if (Auth::guard('user')->attempt(['email' => $request->email, 'password' => $request->password,'status'=>2], $request->remember)) {
+        return redirect()->back()->withInput($request->only('email', 'remember'))->with('error', 'Tài khoản chưa kích hoạt!!!');
+    }
+    if (Auth::guard('user')->attempt(['email' => $request->email, 'password' => $request->password,'status'=>3], $request->remember)) {
+        return redirect()->back()->withInput($request->only('email', 'remember'))->with('error', 'Tài khoản đang bị khóa!!!');
+    }
+    return redirect()->back()->withInput($request->only('email', 'remember'))->with('error', 'Tài khoản hoặc mật khẩu chưa đúng!!!');
     }
     public function logout(Request $request)
     {

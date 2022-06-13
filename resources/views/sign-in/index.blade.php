@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>User Login</title>
-</head>
-<body>
-<form method="POST" action="{{ route('login') }}">
-    @csrf
-    <h1></h1>
-    <input type="text" name="email" placeholder="Nhập địa chỉ email">
-    <input type="password" name="password" placeholder="Nhập mật khẩu">
-    <button type="submit">Đăng nhập</button>
-</form>
-</body>
-</html>
+
+@extends('layouts.home')
+@section('content')
+<div class="block_left col-sm-9 col-xs-12">
+    @include('components.pitchs.header')
+    @include('components.pitchs.menu')
+    @include('components.sign-in.sign-in')
+    @include('components.pitchs.footer')
+
+</div>
+@endsection

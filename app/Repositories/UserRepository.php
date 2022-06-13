@@ -37,12 +37,12 @@ class UserRepository implements UserRepositoryInterface
      if($request->password!=$request->confirm_password){
           return response()->json(['status' => 400, 'error' => 'Mật khẩu xác nhận chưa chính xác']);
      }
-     $user->username = $request->name;
+     $user->username = $request->username;
      $user->email = $request->email;
      $user->password = bcrypt($request->password);
      $user->phone_number = $request->phone;
-     $user-> wallet = $request->address;
-     $user->status= '0';
+     $user-> wallet = '0';
+     $user->status='2';
      $user-> remember_token=$request->_token;
    
      if ($user->save()) {
