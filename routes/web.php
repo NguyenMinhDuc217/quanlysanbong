@@ -31,6 +31,8 @@ Route::get('/user/logout', [UserLoginController::class,'logout'])->name('logout'
 Route::get('/user/register', [UserController::class,'showRegister'])->name('show.register');
 Route::post('/user/register', [UserController::class,'register'])->name('register');
 
+//listpitch
+Route::get('/list-pitch', [PitchController::class,'ListPitch'])->name('list_pitch');
 
 Route::get('/dang-nhap', [AdminLoginController::class,'showLoginForm'])->name('admin.show.login');
 Route::post('/dang-nhap', [AdminLoginController::class,'login'])->name('admin.login');
