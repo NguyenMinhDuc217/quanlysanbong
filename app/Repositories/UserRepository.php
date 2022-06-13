@@ -41,7 +41,7 @@ class UserRepository implements UserRepositoryInterface
      $user->email = $request->email;
      $user->password = bcrypt($request->password);
      $user->phone_number = $request->phone;
-     $user-> address = $request->address;
+     $user-> wallet = $request->address;
      $user->status= '0';
      $user-> remember_token=$request->_token;
    
