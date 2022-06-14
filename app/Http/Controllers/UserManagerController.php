@@ -30,7 +30,7 @@ class UserManagerController extends BaseAdminController
      */
     public function create()
     {
-        //
+        return view('admin.user.create');
     }
 
     /**

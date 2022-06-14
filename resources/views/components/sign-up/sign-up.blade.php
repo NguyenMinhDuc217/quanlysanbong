@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="{{asset('/css/register.css') }}">
+<link rel="stylesheet" type="text/css" href="{{asset('css/register.css') }}">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 <div class="container_register">
@@ -78,14 +78,15 @@
                                     <strong>{{ $message }}</strong>
                                     </p>
                              @enderror   
+                             @if(session()->has('error'))
+                                <p class="vali_sign" class="invalid-feedback" role="alert">
+                                   <strong>{{ session()->get('error') }}</strong>
+                                 </p>
+                                @endif
                         </div>
                     </div>
                      
-                     @if(session()->has('error'))
-                    <div class="vali_sign">
-                        {{ session()->get('error') }}
-                    </div>
-                    @endif
+                   
                 </div>
                 <button class="register_button">Đăng ký</button>
             </form>

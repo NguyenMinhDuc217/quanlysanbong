@@ -3,7 +3,7 @@
 @section('content')
 
 @section('content_header', 'Users')
-<link rel="stylesheet" type="text/css" href="{{asset('/css/style.css') }}">
+<link rel="stylesheet" type="text/css" href="{{asset('admin/dist/css/style.css') }}">
 <div class="container">
   <div class="row">
     <div class="col-md-12">
@@ -14,7 +14,7 @@
         <div class="container" style="margin: 10px 0px;">
           <div class="row">
             <div class="col-md-2">
-              <a class="btn btn-success uppercase" href=""> <i class="nav-icon fas fa-plus"></i> Thêm mới</a>
+              <a class="btn btn-success uppercase" href="{{route('users.create')}}"> <i class="nav-icon fas fa-plus"></i> Thêm mới</a>
             </div>
           </div>
         </div>
@@ -50,9 +50,9 @@
                 </td>
                 <td>@if(@$user->created_at) {{ $user->created_at->format('d/m/Y')}} @endif</td>
                 <td>
-                  <button class="btn btn-btn btn-primary">Edit</button>
-
-                  <button class="btn btn-btn btn-danger">Xóa</button>
+                  <button class="btn btn-btn btn-primary">Detail</button>
+                  <button class="btn btn-btn btn-success">Change Password</button>
+                  <button class="btn btn-btn btn-danger">Delete</button>
                 </td>
               </tr>
               @endforeach

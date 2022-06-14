@@ -28,7 +28,7 @@ class UserController extends Controller
         return back()->with('error', 'Email đã tồn tại!!!');
        }
        if($status===401){
-        return back()->with('error', 'Mật khẩu xác nhận không chính xác!!!');
+        return back()->with('error', 'Mật khẩu xác nhận không trùng khớp!!!');
        }
        if($status==-9999){
         return back()->with('error', 'Xử lý lỗi, đăng kí thất bại!!!');

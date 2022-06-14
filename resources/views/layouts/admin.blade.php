@@ -29,7 +29,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Home</a>
+        <a href="{{route('admin.index')}}" class="nav-link">Home</a>
       </li>
     </ul>
 
@@ -41,11 +41,7 @@
           <i class="fas fa-expand-arrows-alt"></i>
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-          <i class="fas fa-th-large"></i>
-        </a>
-      </li>
+
     </ul>
   </nav>
   <!-- /.navbar -->
@@ -55,7 +51,7 @@
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
       <img src="{{asset('admin/dist/img/adLogo.jpg')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">Tên Sân Bóng</span>
+      <span class="brand-text font-weight-light">Sân Bóng 247</span>
     </a>
 
     <!-- Sidebar -->
@@ -66,7 +62,7 @@
           <img src="{{asset('/admin/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block">{{Auth::guard('admin')->user()->name}}</a>
         </div>
       </div>
 
@@ -178,23 +174,12 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="../tables/simple.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Simple Tables</p>
-                </a>
-              </li>
-              <li class="nav-item">
                 <a href="{{route('users.index')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>DataTables</p>
+                  <p>Users</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="../tables/jsgrid.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>jsGrid</p>
-                </a>
-              </li>
+         
             </ul>
           </li>
           

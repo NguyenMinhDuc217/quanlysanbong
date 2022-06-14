@@ -21,21 +21,35 @@ body{
     margin: 0;
 }
 
-.login_google {
+.login_google__zalo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.login_google,
+.login_zalo {
     display: flex !important;
     align-items: center;
     justify-content: center;
 
     cursor: pointer;
-    background-color: #DD4B39;
-    border: 2px solid #DD4B39;
     border-radius: 4px;
     color: #fff;
     display: block;
     padding: 10px;
     font-size: 16px;
-    margin-top:20px;
-    width:100%;
+    margin-top: 20px;
+    width:48%;
+}
+
+.login_google {
+    background-color: #DD4B39;
+    border: 2px solid #DD4B39;
+}
+
+.login_zalo {
+    background-color: #0091FF;
+    border: 2px solid #0091FF;
 }
 
 .container_login{
@@ -53,8 +67,12 @@ h2{
 
 .vali_sign{
     color: red;
-    font-size: 14;
+    font-size: 13px;
 }
+.form-control_notify {
+    width: 100%;
+}
+ 
 
 .form{
     padding: 30px 40px;
@@ -70,7 +88,7 @@ h2{
     color:#777;
     display: block;
     margin-bottom: 5px; 
-    width: 50%;
+    width: 25%;
 }
  
 .form-control input
@@ -117,11 +135,12 @@ h2{
     display: block;
     padding: 10px;
     font-size: 16px;
-    margin-top:20px;
-    width:100%;
+    margin:20px auto 0;
+    width:50%;
 }
 
-.login_google__icon {
+.login_google__icon,
+.login_zalo__icon {
     padding-right: 10px;
 }
 

@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 class UserRepository implements UserRepositoryInterface
 {
@@ -46,6 +47,10 @@ class UserRepository implements UserRepositoryInterface
      $user-> remember_token=$request->_token;
    
      if ($user->save()) {
+         Mail::send('email.active_account',compact('user'),function($email) use($user){
+             $email->subject('Sân Bóng 247 - Xác nhận tài khoản');
+             $email->to($user->email,$user->name);
+         });
           return response()->json(['status'=> 200]);
       }
        else{
