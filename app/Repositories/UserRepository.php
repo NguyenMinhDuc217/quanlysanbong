@@ -10,14 +10,15 @@ class UserRepository implements UserRepositoryInterface
 {
  public function register(Request $request)
  {   
+    
    $request->validate([
-        'name' => 'required',
+        'username' => 'required',
         'email' => 'required|email',
         'password' => 'required|min:8',
         'confirm_password' => 'required|min:8',
         'phone' => 'required|numeric|digits:10',
     ],[
-        'name.required'=>'Vui lòng nhập Họ và Tên',
+        'username.required'=>'Vui lòng nhập Họ và Tên',
         'email.required'=>'Vui lòng nhập Email',
         'email.email'=>'Vui lòng nhập định dạng là Email',
         'password.required'=>'Vui lòng nhập mật khẩu',
@@ -28,14 +29,13 @@ class UserRepository implements UserRepositoryInterface
         'phone.numeric'=>'Số điện thoại phải là số',
         'phone.digits' => 'Số điện thoại không hợp lệ',
        ]);
-    
      $user = new User();
      
      if ($user->where('email', '=', $request->email)->exists()) {
-         return response()->json(['status' => 400, 'error' => 'Email đã tồn tại']);
+         return response()->json(['status'=> 400 ]);
      }
      if($request->password!=$request->confirm_password){
-          return response()->json(['status' => 400, 'error' => 'Mật khẩu xác nhận chưa chính xác']);
+          return response()->json(['status'=> 401]);
      }
      $user->username = $request->username;
      $user->email = $request->email;
@@ -46,10 +46,10 @@ class UserRepository implements UserRepositoryInterface
      $user-> remember_token=$request->_token;
    
      if ($user->save()) {
-          return response()->json(['status' => 200, 'success' => 'Bạn đã đăng kí thành công, vui long kiểm tra email để xác nhận!!']);
+          return response()->json(['status'=> 200]);
       }
        else{
-          return ['status' => -9999, 'error' => 'Lỗi xử lý '];
+          return ['status'=> -9999];
     }
  }
 }

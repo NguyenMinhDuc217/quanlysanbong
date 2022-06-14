@@ -36,7 +36,7 @@
     </div>
     <div class="header_center">
         <div class="header_center__logo">
-            <img src="images/logo/logo.png" alt="logo" />
+            <img src="{{asset('images/logo/logo.png')}}" alt="logo" />
         </div>
         <div class="header_center__search">
             <form action="" class="search search-pc" id="submitSearch" onsubmit="return validateMyForm()">

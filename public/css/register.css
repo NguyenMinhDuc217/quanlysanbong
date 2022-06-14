@@ -34,6 +34,11 @@ h2{
     margin: 0 0 20px;
 }
 
+.vali_sign{
+    color: red;
+    font-size: 13px;
+}
+
 .form{
     padding: 30px 40px;
 }
@@ -48,7 +53,11 @@ h2{
     color:#777;
     display: block;
     margin-bottom: 5px; 
-    width: 50%;
+    width: 40%;
+}
+
+.form-control_notify {
+    width: 60%;
 }
  
 .form-control input
@@ -104,17 +113,26 @@ h2{
     color: red;
   }
 
-  .form_control__custom {
+.form_control__custom {
     display: flex;
     align-items: center;
-  }
+}
+
+.notifi__success {
+    font-size:15px;
+    color: #226A35;
+    background-color: #84ecb0;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
 
  /* animation */
-  .register_button {
-      position: relative;
-  }
+.register_button {
+    position: relative;
+}
 
-  .register_button::after {
+.register_button::after {
     content: "";
     position: absolute;
     top: 0;
@@ -125,7 +143,7 @@ h2{
     transition: all 0.5s ease-out;
     animation: shine 5s infinite;
     border-radius: 4px;
-  }
+}
 
   @keyframes shine {
     0% {

@@ -1,0 +1,10 @@
+.table_custom {
+    display: flex !important;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.btn_add {
+    padding-right: 1.5rem;
+    margin: 10px 0;
+}
