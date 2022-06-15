@@ -30,7 +30,11 @@ Route::get('/user/logout', [UserLoginController::class,'logout'])->name('logout'
 
 Route::get('/user/register', [UserController::class,'showRegister'])->name('show.register');
 Route::post('/user/register', [UserController::class,'register'])->name('register');
-
+Route::get('/user/active', [UserController::class,'activeAccount'])->name('user.active.account');
+Route::get('/user/forget-password', [UserController::class,'showForgetPassword'])->name('show.forgetpassword');
+Route::post('/user/forget-password', [UserController::class,'sendForgetPassword'])->name('send.forgetpassword');
+Route::get('/user/change-password/{id}/{token}', [UserController::class,'changeForgetPassword'])->name('change.forgetpassword');
+Route::post('/user/change-password/{id}/{token}', [UserController::class,'changePassword'])->name('change.password');
 //listpitch
 Route::get('/', [PitchController::class,'ListPitch'])->name('list_pitch');
 

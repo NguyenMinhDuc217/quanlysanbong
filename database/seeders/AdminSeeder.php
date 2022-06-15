@@ -16,9 +16,11 @@ class AdminSeeder extends Seeder
     {
        Admin::insert([
             [
+                'avatar' => 'aa.jpg',
                 'name' => 'Admin',
                 'email' => 'admin@gmail.com',
                 'password' => bcrypt('admin123'),
+                'status'=>'1',
             ]
         ]);
     }

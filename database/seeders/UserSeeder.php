@@ -20,6 +20,7 @@ class UserSeeder extends Seeder
                 'email' => 'user@gmail.com',
                 'password' => bcrypt('admin123'),
                 'phone_number'=>'34234234',
+                'token'=>"dsdsdsdsd",
                 'remember_token'=>"dsdsdsdsd",
                 'status'=>'1',
             ]

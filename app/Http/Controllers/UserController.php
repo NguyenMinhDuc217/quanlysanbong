@@ -34,4 +34,24 @@ class UserController extends Controller
         return back()->with('error', 'Xử lý lỗi, đăng kí thất bại!!!');
        }
     }
+    public function activeAccount(Request $request){
+        return $this->userRepository->activeAccount($request);
+    }
+
+    public function showForgetPassword()
+    { 
+       return view('forgetpassword.index');
+    }
+    public function sendForgetPassword(Request $request)
+    { 
+       return $this->userRepository->sendForgetPassword($request);
+    }
+    public function changeForgetPassword(Request $request)
+    { 
+       return view('changeforgetpass.index');
+    }
+    public function changePassword(Request $request,$id,$token)
+    { 
+       return $this->userRepository->changePassword($request,$id,$token);
+    }
 }

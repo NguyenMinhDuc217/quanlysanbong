@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 class UserRepository implements UserRepositoryInterface
 {
  public function register(Request $request)
@@ -44,7 +45,7 @@ class UserRepository implements UserRepositoryInterface
      $user->phone_number = $request->phone;
      $user-> wallet = '0';
      $user->status='2';
-     $user-> remember_token=$request->_token;
+     $user-> token=strtoupper(Str::random(12));
    
      if ($user->save()) {
          Mail::send('email.active_account',compact('user'),function($email) use($user){
@@ -57,4 +58,40 @@ class UserRepository implements UserRepositoryInterface
           return ['status'=> -9999];
     }
  }
+ public function activeAccount(Request $request){
+    $user=User::where('id',$request->id)->first();
+    if($user->token===$request->token){
+        $user->status='1';
+        $user->token=strtoupper(Str::random(12));
+        $user->save();
+        return redirect()->route('show.login')->with('success','Xác nhận tài khoản thành công, bạn có thể đăng nhập');
+    }else{
+        return redirect()->route('show.login')->with('error','Mã xác nhận bạn gửi không hợp lệ');
+    }
+ }
+
+ public function sendForgetPassword(Request $request){
+    $request->validate(
+        [
+        'email' => 'required|email',
+        ],
+        [
+        'email.required'=>'Vui lòng nhập Email',
+        'email.email'=>'Vui lòng nhập định dạng là Email',
+       ]
+       );
+    $user=User::where('email',$request->email)->first();
+    if(empty($user)) {
+        return redirect()->route('show.forgetpassword')->with('error','Email không tồn tại trong hệ thống');
+     }
+    Mail::send('email.forgot_password',compact('user'),function($email) use($user){
+        $email->subject('Sân Bóng 247 - Quên mật khẩu');
+        $email->to($user->email,$user->name);
+    });
+    return redirect()->route('show.forgetpassword')->with('success','Mã để đặt lại mật khẩu của bạn vừa được gửi đến địa chỉ e-mail của bạn. Vui lòng kiểm tra email của bạn.');
+ }
+ public function changePassword(Request $request,$id,$token){
+      dd($request->all(),$id,$token);
+ }
+
 }

@@ -5,6 +5,11 @@
             <form id="form" class="form" method="POST" action="{{ route('login') }}" enctype="multipart/form-data">
              @csrf  
             <h2>Đăng nhập</h2>
+                    @if (Session::has('success'))
+                        <div class="alert alert-success notify_success" style="color:green; font-size:20px">
+                            <span>{{ Session::get('success') }}</span>
+                        </div>
+                    @endif
                 <div class="form-control">
                     <div class="form_control__custom">
                         <label for="email">Email</label>
@@ -21,7 +26,7 @@
                 </div>
                 <div class="form-control">
                     <div class="form_control__custom">
-                        <label for="password">Password </label>
+                        <label for="password">Mật khẩu</label>
                         <div class="form-control_notify">
                         <input type="password" id="password" name="password" placeholder="Nhập mật khẩu" autocomplete="off" >
                         @error('password')
@@ -42,7 +47,7 @@
                 </div>
                 <button class="login_button">Đăng nhập</button>
                 <div class="forgot_password">
-                    <a href="" class="forgot_password__title">Quên mật khẩu ?</a>
+                    <a href="{{route('show.forgetpassword')}}" class="forgot_password__title">Quên mật khẩu ?</a>
                 </div>
                 <div class="login_google__zalo">
                     <div class="login_google">
