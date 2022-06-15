@@ -4,7 +4,7 @@
     <h2 class="product_title">SÂN BÓNG ĐÁ HỒ CHÍ MINH</h2>
     <div class="product_item">
         @foreach($pitchs as $pitch)
-        
+
         <div class="product_item__list">
             <a href="" class="product_item__link">
                 <div class="product_item__img">
@@ -21,15 +21,15 @@
                         <span><i class='bx bx-star'></i></span>
                     </div>
                 </div>
-                <div class="product_item__price">Giá <span class="product_item__price_color">{{number_format($pitch->price)}}</span> / Giờ</div>
+                <div class="product_item__price">Giá <span class="product_item__price_color">{{$pitch['price']}}</span> / Giờ</div>
             </a>
         </div>
         @endforeach
     </div>
     <div class="hompage_pagination">
-    {{$pitchs->links('components.pagination.custom')}}
+        {{$pitchs->links('components.pagination.custom')}}
         <!-- /phân trang -->
-        </div>
+    </div>
 </div>
 
 <script>

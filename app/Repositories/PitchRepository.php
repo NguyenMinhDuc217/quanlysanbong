@@ -16,4 +16,13 @@ class PitchRepository implements PitchRepositoryInterface
         // dd($page);
         return $pitch;
     }
+    public function Search(Request $request){
+        $key = $request->key;
+        $pitch = new Pitchs();
+        if(!empty($key)){
+            $pitch = $pitch->where('name','like','%'.($key).'%');
+        }
+        $pitch = $pitch->paginate(8)->appends(request()->query());
+        return $pitch;
+    }
 }

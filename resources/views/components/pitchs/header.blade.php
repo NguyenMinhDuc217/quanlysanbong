@@ -20,24 +20,24 @@
         </div>
         <div class="header_top__right">
             <div class="header_top__right__login">
-                <a href="">Đăng Nhập</a>
+                <a href="{{route('show.login') }}">Đăng Nhập</a>
             </div>
             <div class="header_top__right__register">
-                <a href="">Đăng Ký</a>
+                <a href="{{ route('show.register') }}">Đăng Ký</a>
             </div>
         </div>
     </div>
     <div class="header_center">
         <div class="header_center__logo">
-            <img src="images/logo/logo.png" alt="logo" />
+            <img src="images/logo/logosanbong247.png" alt="logo" />
         </div>
         <div class="header_center__search">
-            <form action="" class="search search-pc" id="submitSearch" onsubmit="return validateMyForm()">
+            <form action="{{route('search.pitch')}}" class="search search-pc" id="submitSearch" onsubmit="return validateMyForm()">
                 <div class="form__group">
-                    <button style="padding: 0; border:none" id="btn__submit" disabled="disabled">
+                    <button style="padding: 0; border:none" id="btn__submit" >
                         <i id="find" class='bx bx-search' onclick="handleSubmit()"></i>
                     </button>
-                    <input type="text" name="key" class="inp" placeholder="Sản phẩm cần tìm" id="filter_search" autocomplete="off">
+                    <input type="text" name="key" class="inp" placeholder="Sản phẩm cần tìm" id="filter_search" autocomplete="off" value="{{request()->get('key')}}">
                 </div>
                 <div id="keyword__search" class="keyword__search">
                     <div class="seeAll__search">
@@ -51,8 +51,8 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
- <!-- Swiper JS -->
- <script src="https://unpkg.com/boxicons@2.1.2/dist/boxicons.js"></script>
+<!-- Swiper JS -->
+<script src="https://unpkg.com/boxicons@2.1.2/dist/boxicons.js"></script>
 <script>
     const inputSearch = document.querySelector(".inp");
     const input = document.getElementById('filter_search');
