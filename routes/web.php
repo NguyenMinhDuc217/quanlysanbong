@@ -37,6 +37,7 @@ Route::get('/user/change-password/{id}/{token}', [UserController::class,'changeF
 Route::post('/user/change-password/{id}/{token}', [UserController::class,'changePassword'])->name('change.password');
 //listpitch
 Route::get('/', [PitchController::class,'ListPitch'])->name('list_pitch');
+Route::get('/search-pitch', [PitchController::class,'Search'])->name('search.pitch');
 
 Route::get('/dang-nhap', [AdminLoginController::class,'showLoginForm'])->name('admin.show.login');
 Route::post('/dang-nhap', [AdminLoginController::class,'login'])->name('admin.login');

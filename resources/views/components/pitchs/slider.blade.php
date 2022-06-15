@@ -3,10 +3,10 @@
 <div class="swiper swiper_banner">
     <div class="swiper-wrapper">
         <div class="swiper-slide">
-            <img src="./images/slider/1.jpg" />
+            <img src="./images/slider/slider1.jpg" />
         </div>
         <div class="swiper-slide">
-            <img src="./images/slider/2.jpg" />
+            <img src="./images/slider/slider2.jpg" />
         </div>
     </div>
     <div class="swiper-button-next"></div>
@@ -29,5 +29,6 @@
     autoplay: {
     delay: 2000,
     },
+    loop: true,
     });
 </script>

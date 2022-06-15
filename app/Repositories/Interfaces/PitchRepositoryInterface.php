@@ -8,4 +8,5 @@ use App\Repositories\PitchRepository;
 interface PitchRepositoryInterface
 {
     public function ListPitch(Request $request);
+    public function Search(Request $request);
 }
