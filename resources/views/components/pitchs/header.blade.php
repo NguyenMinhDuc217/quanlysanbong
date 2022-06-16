@@ -36,11 +36,9 @@
     </div>
     <div class="header_center">
         <div class="header_center__logo">
-<<<<<<< HEAD
+            <a href="{{route('list_pitch')}}">
             <img src="{{asset('images/logo/logo.png')}}" alt="logo" />
-=======
-            <img src="images/logo/logosanbong247.png" alt="logo" />
->>>>>>> 6e2d43d009eafa13e20bbccf06ba3027daaf8cfe
+            </a>
         </div>
         <div class="header_center__search">
             <form action="{{route('search.pitch')}}" class="search search-pc" id="submitSearch" onsubmit="return validateMyForm()">

@@ -17,7 +17,7 @@ class UserRepository implements UserRepositoryInterface
         'username' => 'required',
         'email' => 'required|email',
         'password' => 'required|min:8',
-        'confirm_password' => 'required|min:8',
+        'confirm_password' => 'required|min:8|same:password',
         'phone' => 'required|numeric|digits:10',
     ],[
         'username.required'=>'Vui lòng nhập Họ và Tên',
@@ -35,9 +35,6 @@ class UserRepository implements UserRepositoryInterface
      
      if ($user->where('email', '=', $request->email)->exists()) {
          return response()->json(['status'=> 400 ]);
-     }
-     if($request->password!=$request->confirm_password){
-          return response()->json(['status'=> 401]);
      }
      $user->username = $request->username;
      $user->email = $request->email;
@@ -84,14 +81,41 @@ class UserRepository implements UserRepositoryInterface
     if(empty($user)) {
         return redirect()->route('show.forgetpassword')->with('error','Email không tồn tại trong hệ thống');
      }
+     if($user->status=='2'){
+        return redirect()->route('show.forgetpassword')->with('error','Tài khoản của bạn chưa được kích hoạt');
+      }
+      if($user->status=='3'){
+        return redirect()->route('show.forgetpassword')->with('error','Tài khoản của bạn đã bị khóa');
+      }
     Mail::send('email.forgot_password',compact('user'),function($email) use($user){
         $email->subject('Sân Bóng 247 - Quên mật khẩu');
         $email->to($user->email,$user->name);
     });
     return redirect()->route('show.forgetpassword')->with('success','Mã để đặt lại mật khẩu của bạn vừa được gửi đến địa chỉ e-mail của bạn. Vui lòng kiểm tra email của bạn.');
  }
- public function changePassword(Request $request,$id,$token){
-      dd($request->all(),$id,$token);
+ public function changePassword(Request $request){
+    $request->validate(
+        [
+        'password' => 'required|min:8',
+        'confirm_password' => 'required|min:8|same:password',
+        ],
+        [
+        'password.required'=>'Vui lòng nhập mật khẩu',
+        'password.min'=>'Mật khẩu có ít nhất 8 kí tự',
+        'confirm_password.required'=>'Vui lòng nhập mật khẩu xác nhận',
+        'confirm_password.min'=>'Mật khẩu xác nhận có ít nhất 8 kí tự',
+        'confirm_password.same'=>'Mật khẩu không trùng khớp',
+       ]
+       );
+      $user=User::where('id',$request->id)->first();
+      if($user->token===$request->token){
+          $user->token=strtoupper(Str::random(12));
+          $user->password= bcrypt($request->password);
+          $user->save();
+          return redirect()->route('show.login')->with('success','Thay đổi mật khẩu thành công, bạn có thể đăng nhập');
+      }else{
+          return redirect()->back()->withInput($request->only('id', 'token'))->with('error','Mã xác nhận bạn gửi không hợp lệ');
+      }
  }
 
 }

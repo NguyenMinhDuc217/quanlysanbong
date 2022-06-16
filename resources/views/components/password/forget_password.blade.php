@@ -18,7 +18,7 @@
                     <div class="form_control__custom">
                         <label for="email">Email</label>
                         <div class="form-control_notify">
-                        <input type="text" name="email" id="email" placeholder="Nhập email" autocomplete="off" >                
+                        <input type="text" name="email" id="email" placeholder="Nhập email" autocomplete="off" ">                
                         @error('email')
                             <span class="vali_sign" class="invalid-feedback" role="alert">
                                    <strong>{{ $message }}</strong>
