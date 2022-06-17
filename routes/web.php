@@ -28,6 +28,10 @@ Route::get('/user/login', [UserLoginController::class,'showLogin'])->name('show.
 Route::post('/user/login', [UserLoginController::class,'login'])->name('login');
 Route::get('/user/logout', [UserLoginController::class,'logout'])->name('logout');
 
+Route::get('/auth/redirect', [GoogleController::class,'loginUsingGoogle'])->name('show.login.google');
+Route::get('/auth/callback', [GoogleController::class,'callback']);
+
+
 Route::get('/user/register', [UserController::class,'showRegister'])->name('show.register');
 Route::post('/user/register', [UserController::class,'register'])->name('register');
 Route::get('/user/active', [UserController::class,'activeAccount'])->name('user.active.account');

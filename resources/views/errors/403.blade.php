@@ -46,9 +46,9 @@
     </style>
 
     <link type="text/css" rel="stylesheet"
-          href="{{ asset('error/font-awesome.min.css') }}"/>
+          href="{{ asset('public/error/font-awesome.min.css') }}"/>
 
-    <link type="text/css" rel="stylesheet" href="{{ asset('error/error.css') }}"/>
+    <link type="text/css" rel="stylesheet" href="{{ asset('public/error/error.css') }}"/>
 
 </head>
 <body>

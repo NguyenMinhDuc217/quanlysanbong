@@ -3,7 +3,7 @@
 @section('content')
 
 @section('content_header', 'Users')
-<link rel="stylesheet" type="text/css" href="{{asset('admin/dist/css/style.css') }}">
+<link rel="stylesheet" type="text/css" href="{{asset('public/admin/dist/css/style.css') }}">
 <div class="container">
   <div class="row">
     <div class="col-md-12">
