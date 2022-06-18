@@ -4,7 +4,7 @@
     <span class="navbar__item">TRANG CHỦ</span>
     <span class="navbar__item">TRANG CHỦ</span>
     <span class="navbar__item">TRANG CHỦ</span>
-    <span class="navbar__item">TRANG CHỦ</span>
+    <span class="navbar__item">LIÊN HỆ</span></span>
     <div class="dropdown">
         <div class="navbar_dropdown">
             <span class="dropbtn">HỖ TRỢ</span>
