@@ -14,7 +14,7 @@
                     <div class="form_control__custom">
                         <label for="password">Mật khẩu:</label>
                         <div class="form-control_notify">
-                        <input type="password" id="password" name="password"  placeholder="Nhập mật khẩu" autocomplete="off" >
+                        <input type="password" name="password"  placeholder="Nhập mật khẩu" autocomplete="off" >
                         @error('password')
                             <span class="vali_sign" class="invalid-feedback" role="alert">
                                    <strong>{{ $message }}</strong>
@@ -29,7 +29,7 @@
                     <div class="form_control__custom">
                         <label for="password">Mật khẩu xác nhận:</label>
                         <div class="form-control_notify">
-                        <input type="password" id="password" name="confirm_password"  placeholder="Nhập mật khẩu xác nhận" autocomplete="off" >
+                        <input type="password"  name="confirm_password"  placeholder="Nhập mật khẩu xác nhận" autocomplete="off" >
                         @error('confirm_password')
                             <span class="vali_sign" class="invalid-feedback" role="alert">
                                    <strong>{{ $message }}</strong>

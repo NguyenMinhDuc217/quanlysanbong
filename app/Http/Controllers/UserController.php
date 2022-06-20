@@ -27,9 +27,6 @@ class UserController extends Controller
        if($status===400){
         return back()->with('error', 'Email đã tồn tại!!!');
        }
-       if($status===401){
-        return back()->with('error', 'Mật khẩu xác nhận không trùng khớp!!!');
-       }
        if($status==-9999){
         return back()->with('error', 'Xử lý lỗi, đăng kí thất bại!!!');
        }
@@ -50,8 +47,7 @@ class UserController extends Controller
     { 
        return view('changeforgetpass.index');
     }
-    public function changePassword(Request $request,$id,$token)
-    { 
-       return $this->userRepository->changePassword($request,$id,$token);
+   public function test(Request $request){
+      return $this->userRepository->changePassword($request);
     }
 }
