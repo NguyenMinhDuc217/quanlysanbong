@@ -29,18 +29,18 @@ return [
     | mailers below. You are free to add additional mailers as required.
     |
     | Supported: "smtp", "sendmail", "mailgun", "ses",
-    |            "postmark", "log", "array", "failover"
+    |            "postmark", "log", "array"
     |
     */
 
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
-            'host' => 'smtp.gmail.com',
-            'port' => 587,
-            'encryption' => 'tls',
-            'username' => 'quanlysanbong247@gmail.com',
-            'password' => 'wkxonitogpwwpdpv',
+            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+            'port' => env('MAIL_PORT', 587),
+            'encryption' => env('MAIL_ENCRYPTION', ''),
+            'username' => env('MAIL_USERNAME'),
+            'password' => env('MAIL_PASSWORD'),
             'timeout' => null,
             'auth_mode' => null,
         ],
@@ -59,7 +59,7 @@ return [
 
         'sendmail' => [
             'transport' => 'sendmail',
-            'path' => env('MAIL_SENDMAIL_PATH', '/usr/sbin/sendmail -t -i'),
+            'path' => '/usr/sbin/sendmail -bs',
         ],
 
         'log' => [
@@ -70,12 +70,11 @@ return [
         'array' => [
             'transport' => 'array',
         ],
-
-        'failover' => [
-            'transport' => 'failover',
-            'mailers' => [
-                'smtp',
-                'log',
+        'stream' => [
+            'ssl' => [
+                'allow_self_signed' => true,
+                'verify_peer'       => false,
+                'verify_peer_name'  => false,
             ],
         ],
     ],
@@ -91,11 +90,7 @@ return [
     |
     */
 
-    'from' => [
-        'address' =>'quanlysanbong247@gmail.com',
-        'name' =>'Sân Bóng 247',
-    ],
-
+    'from' => ['address' => null, 'name' => null],
     /*
     |--------------------------------------------------------------------------
     | Markdown Mail Settings
@@ -114,5 +109,4 @@ return [
             resource_path('views/vendor/mail'),
         ],
     ],
-
 ];

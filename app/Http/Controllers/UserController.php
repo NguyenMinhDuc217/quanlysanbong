@@ -11,6 +11,7 @@ class UserController extends Controller
     public $userRepository;
     public function __construct(UserRepositoryInterface $userRepository)
     {
+
         $this->userRepository = $userRepository;
     }
     public function showRegister()
