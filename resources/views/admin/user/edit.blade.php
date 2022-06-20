@@ -19,8 +19,8 @@
           </div>
         </div>
         <div class="col-md-12">
-        <form method="POST" action="{{route('users.store')}}" enctype="multipart/form-data">
-          @csrf
+        <form method="POST" action="{{route('users.update',['user'=>$users->id])}}" enctype="multipart/form-data">
+          @csrf @method('PUT')
                      @if(Session::has('success'))
                         <div class="alert alert-success notifi__success">
                             <span>{{ Session::get('success') }}</span>
@@ -29,7 +29,7 @@
                 <div class="card-body">
                   <div class="form-group">
                     <label for="">Họ và Tên</label>
-                    <input type="text" name="username" class="form-control"  placeholder="Họ và tên">
+                    <input type="text" name="username" class="form-control" value="{{$users->username}}"  placeholder="Họ và tên">
                     @error('username')
                                    <span class="vali_sign" class="invalid-feedback" role="alert">
                                    <strong>{{ $message }}</strong>
@@ -38,7 +38,7 @@
                   </div>
                   <div class="form-group">
                     <label for="">Email</label>
-                    <input type="email" name="email" class="form-control"  placeholder="Email">
+                    <input type="email" name="email" class="form-control" value="{{$users->email}}"  placeholder="Email" disabled>
                   </div>
                   @error('email')
                                    <span class="vali_sign" class="invalid-feedback" role="alert">
@@ -47,31 +47,28 @@
                             @enderror   
                   <div class="form-group">
                     <label for="">Số điện thoại</label>
-                    <input type="text" name="phone" class="form-control"  placeholder="Số điện thoại">
+                    <input type="text" name="phone" class="form-control" value="{{$users->phone_number}}" placeholder="Số điện thoại">
                   </div>
                   @error('phone')
                                    <span class="vali_sign" class="invalid-feedback" role="alert">
                                    <strong>{{ $message }}</strong>
                                    </span>
                             @enderror   
-                  <div class="form-group">
-                    <label for="">Password</label>
-                    <input type="password" name="password" class="form-control" placeholder="Password">
-                  </div>
-                  @error('password')
+                 <div class="form-group">
+                    <label for="">Status</label>
+                    <div class="upload_select">
+                                            <select name="status" class="select">
+                                                <option class="select" value="1" {{$users->status == 1 ? 'selected' : ''}} >Đang hoạt động</option>
+                                                <option class="select" value="2" {{$users->status == 2 ? 'selected' : ''}} >Chưa kích hoạt</option>
+                                                <option class="select" value="3" {{$users->status == 3 ? 'selected' : ''}} >Khoá</option>
+                                            </select>
+                                </div>
+                  </div>    
+                  @error('status')
                                    <span class="vali_sign" class="invalid-feedback" role="alert">
                                    <strong>{{ $message }}</strong>
                                    </span>
-                     @enderror   
-                  <div class="form-group">
-                    <label for="">Confirm Password</label>
-                    <input type="password" name="confirm_password" class="form-control"  placeholder="Confirm password">
-                  </div>
-                  @error('confirm_password')
-                                   <span class="vali_sign" class="invalid-feedback" role="alert">
-                                   <strong>{{ $message }}</strong>
-                                   </span>
-                     @enderror   
+                            @enderror  
                      @if(session()->has('error'))
                                 <p class="vali_sign"  class="invalid-feedback" role="alert">
                                    <strong>{{ session()->get('error') }}</strong>

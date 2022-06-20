@@ -28,6 +28,7 @@
                 <th>SĐT</th>
                 <th>Ví</th>
                 <th>Status</th>
+                <th>Người tạo</th>
                 <th>Ngày tạo</th>
                 <th>Action</th>
               </tr>
@@ -48,10 +49,11 @@
                   <span style=" color: red;">Bị khóa</span>
                   @endif
                 </td>
+                <td>{{$user->created_by}}</td>
                 <td>@if(@$user->created_at) {{ $user->created_at->format('d/m/Y')}} @endif</td>
                 <td>
-                  <button class="btn btn-btn btn-primary">Detail</button>
-                  <button class="btn btn-btn btn-success">Change Password</button>
+                 <a  href="{{route('users.edit',['user'=>$user->id])}}"> <button class="btn btn-btn btn-primary">Edit</button></a>
+                  <button class="btn btn-btn btn-success">Reset Password</button>
                   <button class="btn btn-btn btn-danger">Delete</button>
                 </td>
               </tr>

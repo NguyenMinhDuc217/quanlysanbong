@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use App\Mail\SendMail;
 class UserRepository implements UserRepositoryInterface
 {
  public function register(Request $request)
@@ -45,10 +46,15 @@ class UserRepository implements UserRepositoryInterface
      $user-> token=strtoupper(Str::random(12));
    
      if ($user->save()) {
-         Mail::send('email.active_account',compact('user'),function($email) use($user){
-             $email->subject('Sân Bóng 247 - Xác nhận tài khoản');
-             $email->to($user->email,$user->name);
-         });
+        $subject = ' Kích hoạt tài khoản';
+        $details = [
+            'title' => 'Bạn đã đăng ký tài khoản tại hệ thống của chúng tôi.
+           Để có thể tiếp tục sử dụng cho các dịch vụ bạn vui lòng nhán vào nút kích hoạt bên dưới để kích hoạt tài khoản',
+            'link' => route('user.active.account',['id'=>$user->id,'token'=>$user->token]),
+            'name'=>$user->username,
+        ];
+  
+        Mail::to($request->input('email'))->send(new SendMail($details, $subject));
           return response()->json(['status'=> 200]);
       }
        else{
@@ -87,10 +93,14 @@ class UserRepository implements UserRepositoryInterface
       if($user->status=='3'){
         return redirect()->route('show.forgetpassword')->with('error','Tài khoản của bạn đã bị khóa');
       }
-    Mail::send('email.forgot_password',compact('user'),function($email) use($user){
-        $email->subject('Sân Bóng 247 - Quên mật khẩu');
-        $email->to($user->email,$user->name);
-    });
+      $subject = 'Reset Password';
+      $details = [
+          'title' => 'Nếu bạn muốn đặt lại mật khẩu của mình, vui lòng nhấp vào nút bên dưới: ',
+          'link' => route('change.forgetpassword',['id'=>$user->id,'token'=>$user->token]),
+          'name'=>$user->username,
+      ];
+
+      Mail::to($request->input('email'))->send(new SendMail($details, $subject));
     return redirect()->route('show.forgetpassword')->with('success','Mã để đặt lại mật khẩu của bạn vừa được gửi đến địa chỉ e-mail của bạn. Vui lòng kiểm tra email của bạn.');
  }
  public function changePassword(Request $request){
