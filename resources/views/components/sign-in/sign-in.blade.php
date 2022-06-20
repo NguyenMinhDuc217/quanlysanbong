@@ -56,12 +56,15 @@
                         </div>
                         <span class="log_in__title">Đăng nhập bằng Google</span>
                     </div>
+                    <a href="{{route('show.login.fb',['social'=>'facebook'])}}">
                     <div class="login_zalo">
                         <div class="login_zalo__icon">
-                            <i class="fa fa-phone-square" aria-hidden="true"></i>
+                            <i class="fa fa-facebook-official" aria-hidden="true"></i>
                         </div>
                         <span class="log_in__title">Đăng nhập bằng Zalo</span>
                     </div>
+                    </a>
+              
                 </div>
             </form>
         </div>
