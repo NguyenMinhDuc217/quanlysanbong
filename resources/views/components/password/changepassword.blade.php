@@ -1,9 +1,9 @@
-<link rel="stylesheet" type="text/css" href="{{ asset('/public/css/changepassword.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('/css/changepassword.css') }}">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 <div class="container_login">
             <form id="form" class="form" method="POST" action="" enctype="multipart/form-data">
-             @csrf
+             @csrf  
             <h2>Thay đổi mật khẩu</h2>
                     @if (Session::has('success'))
                         <div class="alert alert-success notify_success" style="color:green; font-size:20px">
@@ -22,8 +22,8 @@
                         @enderror
                     </div>
                     </div>
-
-
+                 
+    
                 </div>
                 <div class="form-control">
                     <div class="form_control__custom">
@@ -43,8 +43,8 @@
                         @endif
                     </div>
                     </div>
-
-
+                 
+    
                 </div>
                 <button class="login_button">Thay đổi mật khẩu</button>
             </form>

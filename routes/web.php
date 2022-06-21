@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\UserManagerController;
+use App\Http\Controllers\SocialController;
 
 
 use Illuminate\Support\Facades\Auth;
@@ -28,8 +29,8 @@ Route::get('/user/login', [UserLoginController::class,'showLogin'])->name('show.
 Route::post('/user/login', [UserLoginController::class,'login'])->name('login');
 Route::get('/user/logout', [UserLoginController::class,'logout'])->name('logout');
 
-Route::get('/auth/redirect', [GoogleController::class,'loginUsingGoogle'])->name('show.login.google');
-Route::get('/auth/callback', [GoogleController::class,'callback']);
+Route::get('/getinfo-fb/{social}', [SocialController::class,'getInfo'])->name('show.login.fb');
+Route::get('/checkinfo-fb/{social}', [SocialController::class,'checkInfo'])->name('check.login.fb');
 
 
 Route::get('/user/register', [UserController::class,'showRegister'])->name('show.register');

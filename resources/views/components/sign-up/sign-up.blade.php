@@ -1,8 +1,8 @@
-<link rel="stylesheet" type="text/css" href="{{asset('/public/css/register.css') }}">
+<link rel="stylesheet" type="text/css" href="{{asset('css/register.css') }}">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 <div class="container_register">
-            <form class="form" id="register" method="POST" action="{{route('register')}}" enctype="multipart/form-data">
+            <form class="form" id="register" method="POST" action="" enctype="multipart/form-data">
                @csrf
             <h2>Đăng ký</h2>
                         @if(Session::has('success'))
@@ -19,11 +19,11 @@
                                    <span class="vali_sign" class="invalid-feedback" role="alert">
                                    <strong>{{ $message }}</strong>
                                    </span>
-                            @enderror
+                            @enderror   
                         </div>
                     </div>
-
-
+       
+  
                 </div>
                 <div class="form-control">
                     <div class="form_control__custom">
@@ -34,11 +34,11 @@
                                     <p class="vali_sign" class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                     </p>
-                             @enderror
+                             @enderror   
                     </div>
                     </div>
-
-
+       
+           
                 </div>
                 <div class="form-control">
                     <div class="form_control__custom">
@@ -49,11 +49,11 @@
                                     <p class="vali_sign" class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                     </p>
-                             @enderror
+                             @enderror   
                         </div>
                     </div>
-
-
+       
+           
                 </div>
                 <div class="form-control">
                     <div class="form_control__custom">
@@ -64,7 +64,7 @@
                                     <p class="vali_sign" class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                     </p>
-                             @enderror
+                             @enderror   
                         </div>
                     </div>
                 </div>
@@ -77,7 +77,7 @@
                                     <p class="vali_sign" class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                     </p>
-                             @enderror
+                             @enderror   
                              @if(session()->has('error'))
                                 <p class="vali_sign" class="invalid-feedback" role="alert">
                                    <strong>{{ session()->get('error') }}</strong>
@@ -85,8 +85,8 @@
                                 @endif
                         </div>
                     </div>
-
-
+                     
+                   
                 </div>
                 <button class="register_button">Đăng ký</button>
             </form>
