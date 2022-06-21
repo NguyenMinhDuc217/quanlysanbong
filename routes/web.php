@@ -44,6 +44,9 @@ Route::post('/user/change-password', [UserController::class,'test'])->name('chan
 Route::get('/', [PitchController::class,'ListPitch'])->name('list_pitch');
 Route::get('/search-pitch', [PitchController::class,'Search'])->name('search.pitch');
 
+//detailpitch
+Route::get('/detail-pitch/{pitchid}', [PitchController::class,'DetailPitch'])->name('detail.pitch');
+
 Route::get('/dang-nhap', [AdminLoginController::class,'showLoginForm'])->name('admin.show.login');
 Route::post('/dang-nhap', [AdminLoginController::class,'login'])->name('admin.login');
 Route::get('/logout', [AdminLoginController::class,'logout'])->name('admin.logout');

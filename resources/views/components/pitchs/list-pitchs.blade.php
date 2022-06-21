@@ -6,7 +6,7 @@
         @foreach($pitchs as $pitch)
         
         <div class="product_item__list">
-            <a href="" class="product_item__link">
+            <a href="{{route('detail.pitch',[$pitch->id])}}" class="product_item__link">
                 <div class="product_item__img">
                     <img src="{{ asset('images/pitch') }}/{{ $pitch['avartar'] }}" />
                 </div>

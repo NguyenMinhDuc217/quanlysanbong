@@ -25,4 +25,8 @@ class PitchRepository implements PitchRepositoryInterface
         $pitch = $pitch->paginate(8)->appends(request()->query());
         return $pitch;
     }
+    public function DetailPitch($pitchid = ''){
+        $pitch = Pitchs::where('id',$pitchid)->first();
+        return $pitch;
+    }
 }

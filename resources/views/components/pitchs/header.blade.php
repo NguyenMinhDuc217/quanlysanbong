@@ -37,7 +37,7 @@
     <div class="header_center">
         <div class="header_center__logo">
             <a href="{{route('list_pitch')}}">
-            <img src="{{asset('images/logo/logo.png')}}" alt="logo" />
+            <img src="{{asset('images/logo/logosanbong247.png')}}" alt="logo" />
             </a>
         </div>
         <div class="header_center__search">
