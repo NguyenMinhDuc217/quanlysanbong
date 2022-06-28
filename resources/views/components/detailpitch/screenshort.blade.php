@@ -68,17 +68,48 @@
                 <div class="detail_find" id="find_hour">
                     <span class="detail_find_hour">Tìm giờ trống</span>
                     <div class="detail_find_total">
+
+                        <form method="POST" action="{{route('search.time',['pitchid'=>$pitchs->id])}}" enctype="multipart/form-data">
+                            @csrf
                         <div class="detail_find_list">
                             <div class="detail_find_from">
+                              @if (Session::has('success'))
+                                    <div class="alert alert-success notify_success" style="color:green; font-size:20px">
+                                        <span>{{ Session::get('success') }}</span>
+                                    </div>
+                                @endif
                                 <span>Tìm từ giờ:</span>
-                                <input type="time" placeholder="Tìm từ giờ">
+                                <input type="datetime-local" name="timeStart" placeholder="Tìm từ giờ">
+                                @error('timeStart')
+                            <span class="vali_sign" class="invalid-feedback" role="alert">
+                                   <strong>{{ $message }}</strong>
+                            </span>
+                             @enderror
                             </div>
                             <div class="detail_find_to">
                                 <span>Đến giờ:</span>
-                                <input type="time" placeholder="Tìm từ giờ">
+                                <input type="datetime-local" name="timeEnd" placeholder="Tìm từ giờ">
+                                @error('timeEnd')
+                            <span class="vali_sign" class="invalid-feedback" role="alert">
+                                   <strong>{{ $message }}</strong>
+                            </span>
+                           @enderror
                             </div>
+
+                            <select name="service">
+                               <option value="1">Nước</option>
+                               <option value="2">Nước ngọt</option>
+                               <option value="3">Trọng tài</option>
+                            </select>
                         </div>
-                        <button>Tìm sân</button>
+                        @if(session()->has('error'))
+                        <span class="vali_sign" class="invalid-feedback" role="alert">
+                                   <strong> {{ session()->get('error') }}</strong>
+                            </span>
+                        @endif
+                        <button>Đặt sân</button>
+                        </form>
+                   
                     </div>
                 </div>
             </div>

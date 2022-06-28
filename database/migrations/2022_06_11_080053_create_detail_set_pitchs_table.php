@@ -17,8 +17,8 @@ class CreateDetailSetPitchsTable extends Migration
             $table->id();
             $table->integer('picth_id');
             $table->integer('user_id');
-            $table->integer('service_id');
-            $table->date('date_event');
+            $table->integer('service_id')->nullable();
+            $table->date('date_event')->nullable();
             $table->dateTime('start_time');
             $table->dateTime('end_time');
             $table->string('total');

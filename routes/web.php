@@ -9,7 +9,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\UserManagerController;
 use App\Http\Controllers\SocialController;
-
+use App\Http\Controllers\SetPitchController;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -46,6 +46,10 @@ Route::get('/search-pitch', [PitchController::class,'Search'])->name('search.pit
 
 //detailpitch
 Route::get('/detail-pitch/{pitchid}', [PitchController::class,'DetailPitch'])->name('detail.pitch');
+
+//set pitch
+Route::post('/detail-pitch/{pitchid}', [SetPitchController::class,'setPitch'])->name('search.time');
+
 
 Route::get('/dang-nhap', [AdminLoginController::class,'showLoginForm'])->name('admin.show.login');
 Route::post('/dang-nhap', [AdminLoginController::class,'login'])->name('admin.login');

@@ -5,7 +5,7 @@ use Laravel\Socialite\Contracts\User as ProviderUser;
 use App\Models\Social;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Str;
 class SocialAccountService
 {
     public static function createOrGetUser(ProviderUser $providerUser, $social)
@@ -29,7 +29,9 @@ class SocialAccountService
                 $user = User::create([
                     'email' => $email,
                     'username' => $providerUser->getName(),
- 
+                    'wallet'=>'0',
+                    'status'=>'1',
+                    'token'=>strtoupper(Str::random(12)),
                 ]);
             }
 

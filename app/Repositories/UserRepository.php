@@ -12,8 +12,8 @@ use App\Mail\SendMail;
 class UserRepository implements UserRepositoryInterface
 {
  public function register(Request $request)
- {   
-    
+ {
+
    $request->validate([
         'username' => 'required',
         'email' => 'required|email',
@@ -33,7 +33,7 @@ class UserRepository implements UserRepositoryInterface
         'phone.digits' => 'Số điện thoại không hợp lệ',
        ]);
      $user = new User();
-     
+
      if ($user->where('email', '=', $request->email)->exists()) {
          return response()->json(['status'=> 400 ]);
      }
@@ -43,7 +43,7 @@ class UserRepository implements UserRepositoryInterface
      $user->phone_number = $request->phone;
      $user-> wallet = '0';
      $user->status='2';
-     $user-> token=strtoupper(Str::random(12));
+     $user->token=strtoupper(Str::random(12));
    
      if ($user->save()) {
         $subject = ' Kích hoạt tài khoản';
@@ -53,7 +53,7 @@ class UserRepository implements UserRepositoryInterface
             'link' => route('user.active.account',['id'=>$user->id,'token'=>$user->token]),
             'name'=>$user->username,
         ];
-  
+
         Mail::to($request->input('email'))->send(new SendMail($details, $subject));
           return response()->json(['status'=> 200]);
       }
