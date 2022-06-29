@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDetailSetPitchsTable extends Migration
+class CreateUserSetServicesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,11 @@ class CreateDetailSetPitchsTable extends Migration
      */
     public function up()
     {
-        Schema::create('detail_set_pitchs', function (Blueprint $table) {
+        Schema::create('user_set_services', function (Blueprint $table) {
             $table->id();
-            $table->integer('picth_id');
             $table->integer('user_id');
             $table->integer('service_id');
-            $table->integer('user_set_services');
-            $table->date('date_event');
-            $table->dateTime('start_time');
-            $table->dateTime('end_time');
-            $table->string('total');
-            $table->string('ispay')->default(0);
+            $table->integer('quantity')->default(0);
             $table->timestamps();
         });
     }
@@ -35,6 +29,6 @@ class CreateDetailSetPitchsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('detail_set_pitchs');
+        Schema::dropIfExists('user_set_services');
     }
 }
