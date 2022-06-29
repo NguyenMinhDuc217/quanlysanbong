@@ -55,5 +55,6 @@ Route::get('/dashboard', [AdminController::class,'index'])->name('admin.index');
 
 Route::prefix('admin')->group(function () {
    Route::resource('/users', UserManagerController::class);
+   Route::resource('/pitchs', PitchManagerController::class);
 });
 

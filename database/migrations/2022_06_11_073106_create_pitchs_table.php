@@ -23,9 +23,14 @@ class CreatePitchsTable extends Migration
             $table->string('type_pitch',255);
             $table->string('avartar',255)->nullable();
             $table->string('screenshort',255)->nullable();
-            $table->string('average_rating')->nullable();
-            $table->integer('total_rating')->nullable();
-            $table->integer('total_set')->nullable();
+            $table->integer('five')->default(0);
+            $table->integer('four')->default(0);
+            $table->integer('three')->default(0);
+            $table->integer('two')->default(0);
+            $table->integer('one')->default(0);
+            $table->string('average_rating')->default(0);
+            $table->integer('total_rating')->default(0);
+            $table->integer('total_set')->default(0);
             $table->string('status')->nullable();
             $table->timestamps();
         });
