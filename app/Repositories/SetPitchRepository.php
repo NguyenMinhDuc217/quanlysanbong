@@ -16,6 +16,7 @@ class SetPitchRepository implements SetPitchRepositoryInterface
       define('HAFLANHOUR',30);
       define('SECOND',60);
       define('PERCENT',100);
+      
         $request->validate(
          [
           'timeStart' => 'required',

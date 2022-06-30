@@ -73,7 +73,12 @@ tr:nth-child(even) {
     <td>Không thể hủy</td>
     @endif
     
-    <td></td>
+    <td>
+      <form method="POST" action="{{route('vnpay.payment')}}">
+       @csrf
+       <button type="submit" name="redirect" class="btn btn-success">Thanh toán VNPAY</button>
+      </form>
+    </td>
     @endforeach
     </tr>
  
