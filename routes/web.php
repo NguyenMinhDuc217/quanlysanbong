@@ -55,6 +55,7 @@ Route::get('/list-set-pitch', [SetPitchController::class,'listSetPitch'])->name(
 Route::post('/delete-set-pitch', [SetPitchController::class,'deleteSetPitch'])->name('delete.set.pitch');
 //thanh toan VNPAY
 Route::post('/vnpay-payment', [PayController::class,'vnpay_payment'])->name('vnpay.payment');
+Route::get('/return-vnpay', [PayController::class,'return'])->name('return.payment');
 
 Route::get('/dang-nhap', [AdminLoginController::class,'showLoginForm'])->name('admin.show.login');
 Route::post('/dang-nhap', [AdminLoginController::class,'login'])->name('admin.login');

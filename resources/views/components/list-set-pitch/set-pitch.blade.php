@@ -74,8 +74,9 @@ tr:nth-child(even) {
     @endif
     
     <td>
-      <form method="POST" action="{{route('vnpay.payment')}}">
+      <form method="POST" action="{{route('vnpay.payment',['id'=>$setPitch->id])}}">
        @csrf
+
        <button type="submit" name="redirect" class="btn btn-success">Thanh toán VNPAY</button>
       </form>
     </td>
