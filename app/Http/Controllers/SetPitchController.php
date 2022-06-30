@@ -16,8 +16,13 @@ class SetPitchController extends BaseUserController
     }
  
     public function setPitch(Request $request,$pitchid){
-        return $this->setPitchRepository->setPitch($request,$pitchid);
-
+     return $this->setPitchRepository->setPitch($request,$pitchid);
     }
 
+    public function listSetPitch(){
+     return $this->setPitchRepository->listSetPitch();
+    }
+    public function deleteSetPitch(Request $request){
+     return $this->setPitchRepository->deleteSetPitch($request);
+    }
 }

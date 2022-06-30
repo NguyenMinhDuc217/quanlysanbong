@@ -19,9 +19,11 @@ class CreateDetailSetPitchsTable extends Migration
             $table->integer('user_id');
             $table->integer('service_id')->nullable();
             $table->date('date_event')->nullable();
+            $table->integer('user_set_services');
             $table->dateTime('start_time');
             $table->dateTime('end_time');
             $table->string('total');
+            $table->string('ispay')->default(0);
             $table->timestamps();
         });
     }

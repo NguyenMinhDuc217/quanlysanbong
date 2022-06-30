@@ -68,12 +68,12 @@ class UserManagerController extends BaseAdminController
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->phone_number = $request->phone;
-        $user-> wallet = '0';
-        $user-> created_by= Auth::guard('admin')->user()->name;
+        $user->wallet = '0';
+        $user->created_by= Auth::guard('admin')->user()->name;
         $user->status='1';
         $user-> token=strtoupper(Str::random(12));
       if($user->save()){
-        return redirect()->route('users.create')->with('success','Thêm User mới thành công');
+        return redirect()->route('users.create')->with('success','Thêm sân mới thành công');
       }
        return redirect()->route('users.create')->with('error','Xử lí thêm thất bại');
     }

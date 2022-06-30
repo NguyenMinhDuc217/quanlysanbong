@@ -49,7 +49,10 @@ Route::get('/detail-pitch/{pitchid}', [PitchController::class,'DetailPitch'])->n
 
 //set pitch
 Route::post('/detail-pitch/{pitchid}', [SetPitchController::class,'setPitch'])->name('search.time');
-
+//list set pitch
+Route::get('/list-set-pitch', [SetPitchController::class,'listSetPitch'])->name('list.set.pitch');
+//delete
+Route::post('/delete-set-pitch', [SetPitchController::class,'deleteSetPitch'])->name('delete.set.pitch');
 
 Route::get('/dang-nhap', [AdminLoginController::class,'showLoginForm'])->name('admin.show.login');
 Route::post('/dang-nhap', [AdminLoginController::class,'login'])->name('admin.login');
@@ -59,5 +62,6 @@ Route::get('/dashboard', [AdminController::class,'index'])->name('admin.index');
 
 Route::prefix('admin')->group(function () {
    Route::resource('/users', UserManagerController::class);
+   Route::resource('/pitchs', PitchManagerController::class);
 });
 

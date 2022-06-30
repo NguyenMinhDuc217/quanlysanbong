@@ -1,8 +1,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <div class="navbar">
-    <span class="navbar__item">TRANG CHỦ</span>
-    <span class="navbar__item">TRANG CHỦ</span>
+<a href="{{route('list_pitch')}}"><span class="navbar__item">TRANG CHỦ</span></a>
+   <a href="{{route('list.set.pitch')}}"><span class="navbar__item">SÂN ĐÃ ĐẶT</span></a> 
     <span class="navbar__item">TRANG CHỦ</span>
     <span class="navbar__item">LIÊN HỆ</span></span>
     <div class="dropdown">

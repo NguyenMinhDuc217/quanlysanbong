@@ -66,7 +66,7 @@
                     </span>
                 </a>
                 <div class="detail_find" id="find_hour">
-                    <span class="detail_find_hour">Tìm giờ trống</span>
+                    <span class="detail_find_hour">Đặt sân</span>
                     <div class="detail_find_total">
 
                         <form method="POST" action="{{route('search.time',['pitchid'=>$pitchs->id])}}" enctype="multipart/form-data">
@@ -79,7 +79,7 @@
                                     </div>
                                 @endif
                                 <span>Tìm từ giờ:</span>
-                                <input type="datetime-local" name="timeStart" placeholder="Tìm từ giờ">
+                                <input type="datetime-local" name="timeStart"  id="timeStart">
                                 @error('timeStart')
                             <span class="vali_sign" class="invalid-feedback" role="alert">
                                    <strong>{{ $message }}</strong>
@@ -88,14 +88,14 @@
                             </div>
                             <div class="detail_find_to">
                                 <span>Đến giờ:</span>
-                                <input type="datetime-local" name="timeEnd" placeholder="Tìm từ giờ">
+                                <input type="datetime-local" name="timeEnd" id="timeEnd">
                                 @error('timeEnd')
                             <span class="vali_sign" class="invalid-feedback" role="alert">
                                    <strong>{{ $message }}</strong>
                             </span>
                            @enderror
                             </div>
-
+                    
                             <select name="service">
                                <option value="1">Nước</option>
                                <option value="2">Nước ngọt</option>
@@ -151,4 +151,14 @@
 
     swiper2.controller.control = sliderTwo;
     swiper.controller.control = sliderOne;
+</script>
+<script>
+    const nowTime3 = new Date();
+nowTime3.setMinutes(nowTime3.getMinutes() - nowTime3.getTimezoneOffset());
+nowTime3.setHours(nowTime3.getHours()+3);
+document.getElementById('timeStart').value = nowTime3.toISOString().slice(0, 16);
+const nowTime5 = new Date();
+nowTime5.setMinutes(nowTime5.getMinutes() - nowTime5.getTimezoneOffset());
+nowTime5.setHours(nowTime5.getHours()+5);
+document.getElementById('timeEnd').value = nowTime5.toISOString().slice(0, 16);
 </script>

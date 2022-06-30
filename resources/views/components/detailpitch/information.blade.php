@@ -4,16 +4,16 @@
     <div class="detail_desc">
         <div class="custom_detail">
             <div class="detail_desc__left">
-                <span class="detail_desc__title">Sân bóng CLB Bóng Đá Quang Tuyến</span>
+                <span class="detail_desc__title">{{$pitchs['name']}}</span>
                 <div class="rating">
-                    <div class="star star__pagelistgame" starcomment="">
+                    <div class="star star__pagelistgame" starcomment="{{$pitchs['average_rating']}}">
                         <span><i class='bx bx-star'></i></span>
                         <span><i class='bx bx-star'></i></span>
                         <span><i class='bx bx-star'></i></span>
                         <span><i class='bx bx-star'></i></span>
                         <span><i class='bx bx-star'></i></span>
                     </div>
-                    <a href="">(1 đánh giá)</a>
+                    <a href="">({{$pitchs['total_rating']}} đánh giá)</a>
                 </div>
                 <div class="detail_desc__address">
                     <div class="detail_address__icon">
@@ -27,7 +27,7 @@
                 </div>
                 <div class="viewall__buynow left_right__custom">
                     <div class="desc_list__item">
-                        <span class="desc__title">Sân bóng CLB Bóng Đá Quang Tuyến</span>
+                        <span class="desc__title">{{$pitchs['name']}}</span>
                         <span class="desc__content">Sân bóng CLB Bóng Đá Quang Tuyến 3 được đầu tư xây dựng gồm 1 sân đơn 5
                             người đá, với kích thước sân 20x40m.</span>
                         <span class="desc__content">Được đầu tư khai thác một thời gian dài nên mặt sân bóng Quang Tuyến 3 có
@@ -43,7 +43,7 @@
                         </ul>
                         <sapn class="desc_price">Bảng giá thuê sân</sapn>
                         <ul class="desc__tienich">
-                            <li>Tùy vào mỗi khung giờ khác nhau mà giá thuê sân ở đây giao động từ150.000đ - 350.000đ/trận</li>
+                            <li>Tùy vào mỗi khung giờ khác nhau mà giá thuê sân ở đây sẽ là {{$pitchs['price']}}/trận</li>
                         </ul>
                         <span class="detail_desc_us">Về chúng tôi</span>
                         <span class="detail_desc_us__title">Thế Giới Thể Thao là đơn vị đi đầu trong việc đem đến giải pháp
@@ -52,11 +52,11 @@
                             bị thể thao.... đến tận tay người tiêu dùng.</span>
                     </div>
                     <div class="detail_desc_right">
-                        <span class="detail_desc_right__title">Địa chỉ Sân bóng CLB Bóng Đá Quang Tuyến</span>
+                        <!-- <span class="detail_desc_right__title">Địa chỉ Sân bóng CLB Bóng Đá Quang Tuyến</span>
                         <ul class="detail_desc__address">
                             <li>Địa chỉ: 73 Phan Huy Ích, Phường 12, Gò Vấp, Thành phố Hồ Chí Minh, Việt Nam</li>
                             <li>Liên hệ đặt sân: Điện thoại: 0858.658.899</li>
-                        </ul>
+                        </ul> -->
                         <span class="detail_desc__map">Bản đồ chỉ đường đến sân bóng</span>
                         <div class="detail_map" style="width: 100%;">
                             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.5115470083747!2d106.78350311494195!3d10.848642760822685!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752713216a3adf%3A0xf8b22853eea72777!2zOTcgxJAuIE1hbiBUaGnhu4duLCBIaeG7h3AgUGjDuiwgUXXhuq1uIDksIFRow6BuaCBwaOG7kSBI4buTIENow60gTWluaCwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1655012634297!5m2!1svi!2s" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
