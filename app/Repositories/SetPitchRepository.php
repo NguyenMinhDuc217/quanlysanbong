@@ -76,8 +76,16 @@ class SetPitchRepository implements SetPitchRepositoryInterface
     }
 
    public function listSetPitch(){
-       $listSetPitch=Detail_set_pitchs::where('user_id',Auth::guard('user')->user()->id)->get();
-       return view('list-set-pitch.index',compact('listSetPitch'));
+    foreach(Pitchs::all() as $pitch){
+       $pitchs[$pitch->id]=$pitch->name;
+    }
+    $listSetPitch=[];
+    foreach(Detail_set_pitchs::where('user_id',Auth::guard('user')->user()->id)->get() as $i=>$detail_set_pitch){
+       $listSetPitch[$i]['detail_set_pitch']=$detail_set_pitch;
+       $listSetPitch[$i]['name']=$pitchs[$detail_set_pitch->picth_id];
+    }
+
+    return view('list-set-pitch.index',compact('listSetPitch'));
    }
 
    public function deleteSetPitch(Request $request){ 

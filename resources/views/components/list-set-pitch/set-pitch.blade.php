@@ -29,7 +29,7 @@ tr:nth-child(even) {
       </div>
       <div class="modal-body">
         <input type="hidden" name="set_pitch_id" id="set_pitch_id">
-        <p>Bạn có chắc chắn muốn hủy đặt sân không?</p>
+        <p>Bạn hủy trước 120p thì sẽ mất 20% số tiền. Bạn có chắc chắn muốn hủy đặt sân không?</p>
       </div>
       <div class="modal-footer">
       <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
@@ -61,25 +61,28 @@ tr:nth-child(even) {
   </tr>
 
     @foreach($listSetPitch as $setPitch)
-
     <tr>
-    <td>{{$setPitch->picth_id}}</td>
-    <td>{{$setPitch->start_time}}</td>
-    <td>{{$setPitch->end_time}}</td>
-    <td>{{$setPitch->total}}</td>
-    @if((strtotime($setPitch->start_time)-strtotime(date('Y-m-d H:i:s')))/(60)>=00)
-    <td><button type="button" class="btn btn-danger deleteSetPitchBtn" value="{{$setPitch->id}}">Hủy</button></td>
+    <td>{{$setPitch['name']}}</td>
+    <td>{{$setPitch['detail_set_pitch']->start_time}}</td>
+    <td>{{$setPitch['detail_set_pitch']->end_time}}</td>
+    <td>{{$setPitch['detail_set_pitch']->total}}</td>
+    @if((strtotime($setPitch['detail_set_pitch']->start_time)-strtotime(date('Y-m-d H:i:s')))/(60)>=120)
+    <td><button type="button" class="btn btn-danger deleteSetPitchBtn" value="{{$setPitch['detail_set_pitch']->id}}">Hủy</button></td>
     @else
     <td>Không thể hủy</td>
     @endif
-    
+    <td>{{$setPitch['detail_set_pitch']->ispay==0?'Chưa thanh toán':'Đã thanh toán'}}</td>
+    @if($setPitch['detail_set_pitch']->ispay==0)
     <td>
-      <form method="POST" action="{{route('vnpay.payment',['id'=>$setPitch->id])}}">
+      <form method="POST" action="{{route('vnpay.payment',['id'=>$setPitch['detail_set_pitch']->id])}}">
        @csrf
 
        <button type="submit" name="redirect" class="btn btn-success">Thanh toán VNPAY</button>
       </form>
     </td>
+    @else
+    <td></td>
+    @endif
     @endforeach
     </tr>
  

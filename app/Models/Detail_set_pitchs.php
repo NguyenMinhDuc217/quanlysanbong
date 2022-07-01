@@ -17,4 +17,5 @@ class Detail_set_pitchs extends Model
         'end_time',
         'total',
     ];
+
 }

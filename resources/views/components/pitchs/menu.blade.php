@@ -2,8 +2,8 @@
 
 <div class="navbar">
 <a href="{{route('list_pitch')}}"><span class="navbar__item">TRANG CHỦ</span></a>
-   <a href="{{route('list.set.pitch')}}"><span class="navbar__item">SÂN ĐÃ ĐẶT</span></a> 
-    <span class="navbar__item">TRANG CHỦ</span>
+<a href="{{route('list.set.pitch')}}"><span class="navbar__item">SÂN ĐÃ ĐẶT</span></a> 
+    <span class="navbar__item">TÌM ĐỐI THỦ</span>
     <span class="navbar__item">LIÊN HỆ</span></span>
     <div class="dropdown">
         <div class="navbar_dropdown">
