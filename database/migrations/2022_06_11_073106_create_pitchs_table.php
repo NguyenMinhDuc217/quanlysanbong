@@ -32,7 +32,7 @@ class CreatePitchsTable extends Migration
             $table->string('average_rating')->default(0);
             $table->integer('total_rating')->default(0);
             $table->integer('total_set')->default(0);
-            $table->string('status')->nullable();
+            $table->string('status')->default('1');
             $table->timestamps();
         });
     }

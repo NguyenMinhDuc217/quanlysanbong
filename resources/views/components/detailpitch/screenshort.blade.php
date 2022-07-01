@@ -105,9 +105,7 @@
                                 <div class='box__filter' id='box__filter'>
                                     @foreach($data['services'] as $service)
                                     <label class="main">{{$service['name']}}
-                                        <!-- <input type="checkbox" id="service" name="service"> -->
                                         <input type="checkbox" name="service" {{(is_array(\Request::get('service')) && in_array($service['id'], \Request::get('service')) ) ? 'checked' : ((\Request::get('service') == $service['id']) ? 'checked' : "" )}} value="{{$service['id']}}">
-                                        <!-- <input type="checkbox" name="service"> -->
                                         <span class="geekmark"></span>
                                     </label>
                                     @endforeach
@@ -123,34 +121,7 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="one_day_set_pitch">
-                <table>
-                    <tr>
-                        <th>Thời gian</th>
-                        <th>Tình trạng</th>
-                    </tr>
-                    <tr>
-                        <td>Peter</td>
-                        <td>Griffin</td>
-                    </tr>
-                    <tr>
-                        <td>Lois</td>
-                        <td>Griffin</td>
-                    </tr>
-                    </table>
-            </div> -->
-            <!-- <div class="leaderboard__profiles">
-                @foreach($data['hour'] as $hour)
-                <article class="leaderboard__profile">
-                    <table>
-                        <tr>
-                            <td><span class="leaderboard__name">{{$hour}}h->{{$hour + 2}}h</span></td>
-                            <td><span class="leaderboard__value">Đã được đặt<span>B</span></span></td>
-                        </tr>
-                    </table>
-                </article>
-                @endforeach
-            </div> -->
+            
             <!-- Trigger/Open The Modal -->
             <button class="button" id="myBtn">Lịch đặt sân</button>
 
@@ -162,6 +133,7 @@
                 <span class="close">&times;</span>
                 <!-- <p>Some text in the Modal..</p> -->
                 <div class="leaderboard__profiles">
+                @foreach($detail_set_pitchs as $detail)
                 <article class="leaderboard__profile">
                     <table>
                     <tr>
@@ -174,7 +146,8 @@
                         </tr>
                     </table>
                 </article>
-                <article class="leaderboard__profile">
+                @endforeach
+                <!-- <article class="leaderboard__profile">
                     <table>
                     <tr>
                         <th>Thời gian</th>
@@ -305,7 +278,7 @@
                             <td><span class="leaderboard__value">Còn trống</span></td>
                         </tr>
                     </table>
-                </article>
+                </article> -->
             </div>
             </div>
 

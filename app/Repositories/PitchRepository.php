@@ -61,19 +61,19 @@ class PitchRepository implements PitchRepositoryInterface
         $services = Services::all()->toArray();
 
         //lấy thời gian và tình trạng sân trong ngày hôm đó
-        // $now = new DateTime();
         $now = Carbon::now();
-        $start_time = Detail_set_pitchs::where('picth_id', $pitchid)->get();
-        // dd($now->isToday($start_time[0]['start_time']), $start_time[0]['start_time'], $now->day);
-        // $hour = ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23'];
-        $hour = ['0','2','4','6','8','10','12','14','16','18','20','22'];
+        $detail_set_pitchs = Detail_set_pitchs::where('picth_id', $pitchid)->whereDate('start_time',$now)->orwhereDate('end_time',$now)->get();
+        $start_time = substr($detail_set_pitchs[0]['start_time'],11,8);
+        $end_time = substr($detail_set_pitchs[0]['end_time'],11,8);
+        dd($detail_set_pitchs);
         return array(
             'pitch' => $pitch,
             'comments' => $comments,
             'ratings' => $ratings,
             'user' => $user,
             'services' => $services,
-            'hour' => $hour,
+            'detail_set_pitchs' => $detail_set_pitchs,
+            // 'hour' => $hour,
         );
     }
     public function Comment(Request $request,$id = ''){
