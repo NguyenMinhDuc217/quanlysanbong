@@ -127,7 +127,9 @@ class PayController extends Controller
                    $bill->trace_number=$inputData['vnp_BankTranNo'];
                    $bill->status='1';
                    $bill->save();
-
+                   $setPitch=Detail_set_pitchs::where('id',$bill->detail_set_pitch_id)->first();
+                   $setPitch->ispay='1';
+                   $setPitch->save();
                 return redirect()->route('list.set.pitch')->with('success',"Thanh toán thành công");
             } 
             else {
