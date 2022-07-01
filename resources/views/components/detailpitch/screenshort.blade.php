@@ -127,16 +127,16 @@
                 <span class="close">&times;</span>
                 <!-- <p>Some text in the Modal..</p> -->
                 <div class="leaderboard__profiles">
-                @foreach($detail_set_pitchs as $detail)
+                @foreach($data['detail_set_pitchs'] as $detail)
                 <article class="leaderboard__profile">
                     <table>
                     <tr>
-                        <th>Thời gian</th>
-                        <th>Tình trạng</th>
+                        <th>Thời gian bắt đầu</th>
+                        <th>Thời gian kết thúc</th>
                     </tr>
                         <tr>
-                            <td><span class="leaderboard__name">0h->2h</span></td>
-                            <td><span class="leaderboard__value">Còn trống</span></td>
+                            <td><span class="leaderboard__name">{{$detail['start_time']}}</span></td>
+                            <td><span class="leaderboard__value">{{$detail['end_time']}}</span></td>
                         </tr>
                     </table>
                 </article>

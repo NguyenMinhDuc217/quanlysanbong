@@ -65,7 +65,7 @@ tr:nth-child(even) {
     <td>{{$setPitch['name']}}</td>
     <td>{{$setPitch['detail_set_pitch']->start_time}}</td>
     <td>{{$setPitch['detail_set_pitch']->end_time}}</td>
-    <td>{{$setPitch['detail_set_pitch']->total}}</td>
+    <td>{{number_format($setPitch['detail_set_pitch']->total, 0)}}</td>
     @if((strtotime($setPitch['detail_set_pitch']->start_time)-strtotime(date('Y-m-d H:i:s')))/(60)>=120)
     <td><button type="button" class="btn btn-danger deleteSetPitchBtn" value="{{$setPitch['detail_set_pitch']->id}}">Hủy</button></td>
     @else

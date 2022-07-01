@@ -63,9 +63,11 @@ class PitchRepository implements PitchRepositoryInterface
         //lấy thời gian và tình trạng sân trong ngày hôm đó
         $now = Carbon::now();
         $detail_set_pitchs = Detail_set_pitchs::where('picth_id', $pitchid)->whereDate('start_time',$now)->orwhereDate('end_time',$now)->get();
-        $start_time = substr($detail_set_pitchs[0]['start_time'],11,8);
-        $end_time = substr($detail_set_pitchs[0]['end_time'],11,8);
-        dd($detail_set_pitchs);
+        foreach($detail_set_pitchs as $detail){
+            $detail['start_time'] = substr($detail['start_time'],11,8);
+            $detail['end_time'] = substr($detail['end_time'],11,8);
+
+        }
         return array(
             'pitch' => $pitch,
             'comments' => $comments,
@@ -73,7 +75,7 @@ class PitchRepository implements PitchRepositoryInterface
             'user' => $user,
             'services' => $services,
             'detail_set_pitchs' => $detail_set_pitchs,
-            // 'hour' => $hour,
+            // 'start_time' => $start_time,
         );
     }
     public function Comment(Request $request,$id = ''){
