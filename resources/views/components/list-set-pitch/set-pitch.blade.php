@@ -29,7 +29,7 @@ tr:nth-child(even) {
       </div>
       <div class="modal-body">
         <input type="hidden" name="set_pitch_id" id="set_pitch_id">
-        <p>Bạn hủy trước 120p thì sẽ mất 20% số tiền. Bạn có chắc chắn muốn hủy đặt sân không?</p>
+        <p>Vui lòng hủy sân trước 120p để không mất 20% số tiền. Bạn có chắc chắn muốn hủy đặt sân không?</p>
       </div>
       <div class="modal-footer">
       <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
