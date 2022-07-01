@@ -6,6 +6,7 @@ use App\Models\Comments;
 use App\Repositories\Interfaces\PitchRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Models\Pitchs;
+use App\Models\Services;
 use App\Models\User_comments;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -33,8 +34,6 @@ class PitchRepository implements PitchRepositoryInterface
     public function DetailPitch($pitchid = ''){
         $pitch = Pitchs::where('id',$pitchid)->first();
         $comments = Comments::where('picth_id', $pitchid)->get()->toArray();
-        // $comments = Comments::where('pitch_id', $pitch->id)->get()->toArray();
-        // dd($comments);
 
         if (!empty(Auth::guard('user')->user()->id)) {
             foreach ($comments as &$c) {
@@ -53,12 +52,16 @@ class PitchRepository implements PitchRepositoryInterface
                 $ratings[$stars] = $check->count();
             }
         }
+
         $user = Auth::guard('user')->user();
+
+        $services = Services::all()->toArray();
         return array(
             'pitch' => $pitch,
             'comments' => $comments,
             'ratings' => $ratings,
             'user' => $user,
+            'services' => $services,
         );
     }
     public function Comment(Request $request,$id = ''){

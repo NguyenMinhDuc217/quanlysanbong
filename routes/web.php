@@ -9,7 +9,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\UserManagerController;
 use App\Http\Controllers\SocialController;
-
+use App\Http\Controllers\SetPitchController;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -47,6 +47,16 @@ Route::get('/search-pitch', [PitchController::class,'Search'])->name('search.pit
 //detailpitch
 Route::get('/detail-pitch/{pitchid}', [PitchController::class,'DetailPitch'])->name('detail.pitch');
 Route::post('/detail-pitch/{id}/ajax', [PitchController::class,'commentAjax'])->name('pitch.detail.comment.ajax');
+
+//set pitch
+Route::post('/detail-pitch/{pitchid}', [SetPitchController::class,'setPitch'])->name('search.time');
+//list set pitch
+Route::get('/list-set-pitch', [SetPitchController::class,'listSetPitch'])->name('list.set.pitch');
+//delete
+Route::post('/delete-set-pitch', [SetPitchController::class,'deleteSetPitch'])->name('delete.set.pitch');
+//thanh toan VNPAY
+Route::post('/vnpay-payment', [PayController::class,'vnpay_payment'])->name('vnpay.payment');
+Route::get('/return-vnpay', [PayController::class,'return'])->name('return.payment');
 
 Route::get('/dang-nhap', [AdminLoginController::class,'showLoginForm'])->name('admin.show.login');
 Route::post('/dang-nhap', [AdminLoginController::class,'login'])->name('admin.login');

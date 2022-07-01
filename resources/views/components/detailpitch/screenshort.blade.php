@@ -68,17 +68,59 @@
                 <div class="detail_find" id="find_hour">
                     <span class="detail_find_hour">Đặt sân</span>
                     <div class="detail_find_total">
+
+                        <form method="POST" action="{{route('search.time',['pitchid'=>$data['pitch']['id']])}}" enctype="multipart/form-data">
+                            @csrf
                         <div class="detail_find_list">
                             <div class="detail_find_from">
+                              @if (Session::has('success'))
+                                    <div class="alert alert-success notify_success" style="color:green; font-size:20px">
+                                        <span>{{ Session::get('success') }}</span>
+                                    </div>
+                                @endif
                                 <span>Tìm từ giờ:</span>
-                                <input type="time" placeholder="Tìm từ giờ">
+                                <input type="datetime-local" name="timeStart"  id="timeStart">
+                                @error('timeStart')
+                            <span class="vali_sign" class="invalid-feedback" role="alert">
+                                   <strong>{{ $message }}</strong>
+                            </span>
+                             @enderror
                             </div>
                             <div class="detail_find_to">
                                 <span>Đến giờ:</span>
-                                <input type="time" placeholder="Tìm từ giờ">
+                                <input type="datetime-local" name="timeEnd" id="timeEnd">
+                                @error('timeEnd')
+                            <span class="vali_sign" class="invalid-feedback" role="alert">
+                                   <strong>{{ $message }}</strong>
+                            </span>
+                           @enderror
+                            </div>
+                    
+                            <!-- <select name="service">
+                               <option value="1">Nước</option>
+                               <option value="2">Nước ngọt</option>
+                               <option value="3">Trọng tài</option>
+                            </select> -->
+
+                            <div class='box__filter' id='box__filter'>
+                                @foreach($data['services'] as $service)
+                                <label class="main">{{$service['name']}}
+                                <!-- <input type="checkbox" id="service" name="service"> -->
+                                <input type="checkbox" name="service" {{(is_array(\Request::get('service')) && in_array($service['id'], \Request::get('service')) ) ? 'checked' : ((\Request::get('service') == $service['id']) ? 'checked' : "" )}} value="{{$service['id']}}">
+                                <!-- <input type="checkbox" name="service"> -->
+                                <span class="geekmark"></span>
+                                </label>
+                                @endforeach
                             </div>
                         </div>
-                        <button>Tìm sân</button>
+                        @if(session()->has('error'))
+                        <span class="vali_sign" class="invalid-feedback" role="alert">
+                                   <strong> {{ session()->get('error') }}</strong>
+                            </span>
+                        @endif
+                        <button>Đặt sân</button>
+                        </form>
+                   
                     </div>
                 </div>
             </div>
@@ -120,4 +162,32 @@
 
     swiper2.controller.control = sliderTwo;
     swiper.controller.control = sliderOne;
+</script>
+<script>
+    const nowTime3 = new Date();
+nowTime3.setMinutes(nowTime3.getMinutes() - nowTime3.getTimezoneOffset());
+nowTime3.setHours(nowTime3.getHours()+3);
+document.getElementById('timeStart').value = nowTime3.toISOString().slice(0, 16);
+const nowTime5 = new Date();
+nowTime5.setMinutes(nowTime5.getMinutes() - nowTime5.getTimezoneOffset());
+nowTime5.setHours(nowTime5.getHours()+5);
+document.getElementById('timeEnd').value = nowTime5.toISOString().slice(0, 16);
+
+const filter = document.getElementById('filter');
+  const box__filter = document.getElementById('box__filter');
+  filter.addEventListener("click", function() {
+
+    if (box__filter.classList.contains('show__filter') === true) {
+      box__filter.classList.remove("show__filter");
+    } else {
+      box__filter.classList.add("show__filter");
+    }
+  });
+
+  $(document).mouseup(function(e) {
+    var container = $(".box__filter");
+    if (!container.is(e.target) && container.has(e.target).length === 0) {
+      box__filter.classList.remove("show__filter");
+    }
+  });
 </script>

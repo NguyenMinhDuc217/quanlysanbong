@@ -6,6 +6,8 @@ use App\Repositories\UserRepository;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Repositories\PitchRepository;
 use App\Repositories\Interfaces\PitchRepositoryInterface;
+use App\Repositories\SetPitchRepository;
+use App\Repositories\Interfaces\SetPitchRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,7 +24,10 @@ class RepositoryServiceProvider extends ServiceProvider
             PitchRepositoryInterface::class, 
             PitchRepository::class
          );
-    
+         $this->app->bind(
+            SetPitchRepositoryInterface::class, 
+            SetPitchRepository::class
+         );
     }
      /**
      * Bootstrap services.
