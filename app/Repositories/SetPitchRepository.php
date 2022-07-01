@@ -39,7 +39,11 @@ class SetPitchRepository implements SetPitchRepositoryInterface
         }
         
         
-        $pitch=Pitchs::where('id',$pitchid)->first();
+        $pitch=Pitchs::where('id',$pitchid)->where('status','1')->first();
+         if( $pitch==null){
+            return redirect()->route('detail.pitch',['pitchid'=>$pitchid])->with('error',"Không tìm thấy sân");
+         }
+
         $timeSoccer= (strtotime($timeEnd)-strtotime($timeStart))/(MINUTE*SECOND);
         
         $checkTimes=Detail_set_pitchs::where('picth_id',$pitchid)->where(function ($query) use ($timeStart, $timeEnd) {

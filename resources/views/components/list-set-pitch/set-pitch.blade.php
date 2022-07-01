@@ -63,8 +63,12 @@ tr:nth-child(even) {
     @foreach($listSetPitch as $setPitch)
     <tr>
     <td>{{$setPitch['name']}}</td>
-    <td>{{$setPitch['detail_set_pitch']->start_time}}</td>
-    <td>{{$setPitch['detail_set_pitch']->end_time}}</td>
+    <?php $date=date_create($setPitch['detail_set_pitch']->start_time);
+    $start= date_format($date,"d/m/Y H:i");?>
+    <td>{{$start}}</td>
+    <?php $date=date_create($setPitch['detail_set_pitch']->end_time);
+    $end= date_format($date,"d/m/Y H:i");?>
+    <td>{{$end}}</td>
     <td>{{$setPitch['detail_set_pitch']->total}}</td>
     @if((strtotime($setPitch['detail_set_pitch']->start_time)-strtotime(date('Y-m-d H:i:s')))/(60)>=120)
     <td><button type="button" class="btn btn-danger deleteSetPitchBtn" value="{{$setPitch['detail_set_pitch']->id}}">Hủy</button></td>
