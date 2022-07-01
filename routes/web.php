@@ -10,6 +10,7 @@ use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\UserManagerController;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\SetPitchController;
+use App\Http\Controllers\TicketController;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -56,6 +57,8 @@ Route::post('/delete-set-pitch', [SetPitchController::class,'deleteSetPitch'])->
 //thanh toan VNPAY
 Route::post('/vnpay-payment', [PayController::class,'vnpay_payment'])->name('vnpay.payment');
 Route::get('/return-vnpay', [PayController::class,'return'])->name('return.payment');
+
+Route::get('/ticket', [TicketController::class,'showTicket'])->name('show.ticket');
 
 Route::get('/dang-nhap', [AdminLoginController::class,'showLoginForm'])->name('admin.show.login');
 Route::post('/dang-nhap', [AdminLoginController::class,'login'])->name('admin.login');

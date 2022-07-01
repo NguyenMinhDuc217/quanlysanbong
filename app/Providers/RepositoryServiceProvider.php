@@ -8,6 +8,8 @@ use App\Repositories\PitchRepository;
 use App\Repositories\Interfaces\PitchRepositoryInterface;
 use App\Repositories\SetPitchRepository;
 use App\Repositories\Interfaces\SetPitchRepositoryInterface;
+use App\Repositories\TicketRepository;
+use App\Repositories\Interfaces\TicketRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,6 +29,10 @@ class RepositoryServiceProvider extends ServiceProvider
          $this->app->bind(
             SetPitchRepositoryInterface::class, 
             SetPitchRepository::class
+         );
+         $this->app->bind(
+            TicketRepositoryInterface::class, 
+            TicketRepository::class
          );
     }
      /**

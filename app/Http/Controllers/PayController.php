@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Detail_set_pitchs;
 use App\Models\Bill;
-
-class PayController extends Controller
+use Illuminate\Support\Facades\Auth;
+ 
+class PayController extends BaseUserController
 {
    public function vnpay_payment(Request $request){
     $setPitch = Detail_set_pitchs::where('id', $request->id)->first();
@@ -72,16 +73,30 @@ class PayController extends Controller
         $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret);//  
         $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
     }
+    $bill = Bill::where('detail_set_pitch_id', $setPitch->id)->first();
+    if($bill==null){
+        $bill=new Bill();
+        $bill->detail_set_pitch_id=$setPitch->id;
+        $bill->bill_number=$vnp_TxnRef;
+        $bill->user_id=Auth::guard('user')->user()->id;
+        $bill->price= $setPitch->total;
+        $bill->bank=$vnp_BankCode;
+        $bill->createdate=$vnp_CreateDate;
+        $bill->transfer_content=$vnp_OrderInfo;
+        $bill->status='0';
+        $bill->save();
+    }else{
+        $bill->detail_set_pitch_id=$setPitch->id;
+        $bill->bill_number=$vnp_TxnRef;
+        $bill->user_id=Auth::guard('user')->user()->id;
+        $bill->price= $setPitch->total;
+        $bill->bank=$vnp_BankCode;
+        $bill->createdate=$vnp_CreateDate;
+        $bill->transfer_content=$vnp_OrderInfo;
+        $bill->status='0';
+        $bill->save();
+    }
 
-    $bill=new Bill();
-    $bill->detail_set_pitch_id=$setPitch->id;
-    $bill->bill_number=$vnp_TxnRef;
-    $bill->price= $setPitch->total;
-    $bill->bank=$vnp_BankCode;
-    $bill->createdate=$vnp_CreateDate;
-    $bill->transfer_content=$vnp_OrderInfo;
-    $bill->status='0';
-    $bill->save();
 
     $returnData = array('code' => '00'
         , 'message' => 'success'
