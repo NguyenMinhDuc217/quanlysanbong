@@ -3,14 +3,17 @@
 namespace App\Repositories;
 
 use App\Models\Comments;
+use App\Models\Detail_set_pitchs;
 use App\Repositories\Interfaces\PitchRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Models\Pitchs;
 use App\Models\Services;
 use App\Models\User_comments;
+use DateTime;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class PitchRepository implements PitchRepositoryInterface
 {
@@ -56,12 +59,21 @@ class PitchRepository implements PitchRepositoryInterface
         $user = Auth::guard('user')->user();
 
         $services = Services::all()->toArray();
+
+        //lấy thời gian và tình trạng sân trong ngày hôm đó
+        // $now = new DateTime();
+        $now = Carbon::now();
+        $start_time = Detail_set_pitchs::where('picth_id', $pitchid)->get();
+        // dd($now->isToday($start_time[0]['start_time']), $start_time[0]['start_time'], $now->day);
+        // $hour = ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23'];
+        $hour = ['0','2','4','6','8','10','12','14','16','18','20','22'];
         return array(
             'pitch' => $pitch,
             'comments' => $comments,
             'ratings' => $ratings,
             'user' => $user,
             'services' => $services,
+            'hour' => $hour,
         );
     }
     public function Comment(Request $request,$id = ''){

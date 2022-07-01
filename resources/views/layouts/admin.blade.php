@@ -29,7 +29,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{route('admin.index')}}" class="nav-link">Home</a>
+        <a href="{{route('admin.index')}}" class="nav-link">Trang chủ</a>
       </li>
     </ul>
 
@@ -73,7 +73,7 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item ">
+          <!-- <li class="nav-item ">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-copy"></i>
               <p>
@@ -127,9 +127,9 @@
               </li>
         
             </ul>
-          </li>
+          </li> -->
          
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-edit"></i>
               <p>
@@ -163,12 +163,13 @@
                 </a>
               </li>
             </ul>
-          </li>
+          </li> -->
+
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-table"></i>
               <p>
-                Tables
+                Quản lý
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
@@ -176,7 +177,7 @@
               <li class="nav-item">
                 <a href="{{route('users.index')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Users</p>
+                  <p>Người dùng</p>
                 </a>
               </li>
               <li class="nav-item">
