@@ -23,8 +23,10 @@ class PitchController extends Controller
         return view('pitchs.search', compact('pitchs'));
     }
     public function DetailPitch($pitchid){
-        $pitchs = $this->pitchRepository->DetailPitch($pitchid);
-        // dd($pitchs);
-        return view('detailpitch.index', compact('pitchs'));
+        $data = $this->pitchRepository->DetailPitch($pitchid);
+        return view('detailpitch.index', array('data'=>$data));
+    }
+    public function commentAjax(Request $request, $id = ''){
+        return $comment = $this->pitchRepository->Comment($request, $id);
     }
 }

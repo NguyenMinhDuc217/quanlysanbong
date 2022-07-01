@@ -4,12 +4,12 @@
 <div class="detail">
     <div class="detail_desc">
         <div class="detail_rating">
-            <span class="detail_rating__title">Đánh giá Sân bóng {{@$pitchs['name']}}</span>
-            <span class="detail_rating_title_desc">Có {{@$pitchs['total_rating']}} đánh giá về Sân bóng {{@$pitchs['name']}}</span>
+            <span class="detail_rating__title">Đánh giá Sân bóng {{@$data['pitch']['name']}}</span>
+            <span class="detail_rating_title_desc">Có {{@$data['pitch']['total_rating']}} đánh giá về Sân bóng {{$data['pitch']['name']}}</span>
             <div style="min-height: 100%; border:0.2px solid #ffffff;"></div>
 
             <div class="detail__rating__right">
-                <p class="title">Over view: {{number_format(@$pitchs['average_rating'])}}&nbsp;<i class='bx bxs-star'></i></p>
+                <p class="title">Over view: {{number_format(@$data['pitch']['average_rating'])}}&nbsp;<i class='bx bxs-star'></i></p>
 
                 <div class="histo" id="histo">
                     <div class="five histo-rate">
@@ -17,7 +17,7 @@
                             5 sao
                         </span>
                         <span class="bar-block">
-                            <span id="bar-five" class="bar" count="{{@$pitchs['five']}}">
+                            <span id="bar-five" class="bar" count="{{@$data['pitch']['five']}}">
                                 &nbsp;
                             </span>
                         </span>
@@ -28,7 +28,7 @@
                             4 sao
                         </span>
                         <span class="bar-block">
-                            <span id="bar-four" class="bar" count="{{@$pitchs['four']}}">
+                            <span id="bar-four" class="bar" count="{{@$data['pitch']['four']}}">
                                 &nbsp;
                             </span>
                         </span>
@@ -38,7 +38,7 @@
                         <span class="histo-star">
                             3 sao</span>
                         <span class="bar-block">
-                            <span id="bar-three" class="bar" count="{{@$pitchs['three']}}">
+                            <span id="bar-three" class="bar" count="{{@$data['pitch']['three']}}">
                                 &nbsp;
                             </span>
                         </span>
@@ -48,7 +48,7 @@
                         <span class="histo-star">
                             2 sao</span>
                         <span class="bar-block">
-                            <span id="bar-two" class="bar" count="{{@$pitchs['two']}}">
+                            <span id="bar-two" class="bar" count="{{@$data['pitch']['two']}}">
                                 &nbsp;
                             </span>
                         </span>
@@ -58,7 +58,7 @@
                         <span class="histo-star">
                             1 sao</span>
                         <span class="bar-block">
-                            <span id="bar-one" class="bar" count="{{@$pitchs['one']}}">
+                            <span id="bar-one" class="bar" count="{{@$data['pitch']['one']}}">
                                 &nbsp;
                             </span>
                         </span>
@@ -81,7 +81,8 @@
       .getAttribute('count'));
 
 
-  const five = 80;
+//   const five = 80;
+  const five = (document.getElementById('bar-five').getAttribute('count') * 100) / total;
   const four = (document.getElementById('bar-four').getAttribute('count') * 100) / total;
   const three = (document.getElementById('bar-three').getAttribute('count') * 100) / total;
   const two = (document.getElementById('bar-two').getAttribute('count') * 100) / total;

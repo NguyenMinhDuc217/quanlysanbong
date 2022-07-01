@@ -4,16 +4,17 @@
     <div class="detail_desc">
         <div class="custom_detail">
             <div class="detail_desc__left">
-                <span class="detail_desc__title">{{$pitchs['name']}}</span>
+  
+                <span class="detail_desc__title">{{$data['pitch']['name']}}</span>
                 <div class="rating">
-                    <div class="star star__pagelistgame" starcomment="{{$pitchs['average_rating']}}">
+                    <div class="star star__pagelistgame" starcomment="{{$data['pitch']['average_rating']}}">
                         <span><i class='bx bx-star'></i></span>
                         <span><i class='bx bx-star'></i></span>
                         <span><i class='bx bx-star'></i></span>
                         <span><i class='bx bx-star'></i></span>
                         <span><i class='bx bx-star'></i></span>
                     </div>
-                    <a href="">({{$pitchs['total_rating']}} đánh giá)</a>
+                    <a href="">({{$data['pitch']['total_rating']}} đánh giá)</a>
                 </div>
                 <div class="detail_desc__address">
                     <div class="detail_address__icon">
@@ -27,7 +28,7 @@
                 </div>
                 <div class="viewall__buynow left_right__custom">
                     <div class="desc_list__item">
-                        <span class="desc__title">{{$pitchs['name']}}</span>
+                        <span class="desc__title">{{$data['pitch']['name']}}</span>
                         <span class="desc__content">Sân bóng CLB Bóng Đá Quang Tuyến 3 được đầu tư xây dựng gồm 1 sân đơn 5
                             người đá, với kích thước sân 20x40m.</span>
                         <span class="desc__content">Được đầu tư khai thác một thời gian dài nên mặt sân bóng Quang Tuyến 3 có
@@ -43,7 +44,7 @@
                         </ul>
                         <sapn class="desc_price">Bảng giá thuê sân</sapn>
                         <ul class="desc__tienich">
-                            <li>Tùy vào mỗi khung giờ khác nhau mà giá thuê sân ở đây sẽ là {{$pitchs['price']}}/trận</li>
+                            <li>Tùy vào mỗi khung giờ khác nhau mà giá thuê sân ở đây sẽ là {{$data['pitch']['price']}}/trận</li>
                         </ul>
                         <span class="detail_desc_us">Về chúng tôi</span>
                         <span class="detail_desc_us__title">Thế Giới Thể Thao là đơn vị đi đầu trong việc đem đến giải pháp

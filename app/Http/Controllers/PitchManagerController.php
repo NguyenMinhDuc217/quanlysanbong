@@ -71,6 +71,7 @@ class PitchManagerController extends BaseAdminController
         $pitch->name = $request->name;
         $pitch->price = $request->price;
         $pitch->describe = $request->describe;
+        //avartar
         if ($request->hasFile('cover')) {
             $image = $request->file('cover');
             $filename = $pitch->name . '.' . 'jpg';

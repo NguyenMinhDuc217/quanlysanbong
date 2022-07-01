@@ -17,6 +17,7 @@ class CreateCommentsTable extends Migration
             $table->id();
             $table->integer('picth_id');
             $table->integer('user_id');
+            $table->string('name',255)->nullable();
             $table->string('content',255);
             $table->integer('rating');
             $table->integer('like')->nullable();

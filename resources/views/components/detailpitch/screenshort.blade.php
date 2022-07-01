@@ -10,8 +10,8 @@
             <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper mySwiper2 slider-one">
                 <div class="swiper-wrapper">
 
-                    @if(!empty($pitchs['screenshort']))
-                    @foreach(json_decode($pitchs['screenshort']) as $item)
+                    @if(!empty($data['pitch']['screenshort']))
+                    @foreach(json_decode($data['pitch']['screenshort']) as $item)
                     <div class="swiper-slide">
                         <img src="/images/pitch/{{($item)}}" />
                     </div>
@@ -25,8 +25,8 @@
             </div>
             <div thumbsSlider="" class="swiper mySwiper slider-two">
                 <div class="swiper-wrapper">
-                    @if(!empty($pitchs['screenshort']))
-                    @foreach(json_decode($pitchs['screenshort']) as $item)
+                    @if(!empty($data['pitch']['screenshort']))
+                    @foreach(json_decode($data['pitch']['screenshort']) as $item)
                     <div class="swiper-slide">
                         <img src="/images/pitch/{{($item)}}" />
                     </div>
@@ -66,7 +66,7 @@
                     </span>
                 </a>
                 <div class="detail_find" id="find_hour">
-                    <span class="detail_find_hour">Tìm giờ trống</span>
+                    <span class="detail_find_hour">Đặt sân</span>
                     <div class="detail_find_total">
                         <div class="detail_find_list">
                             <div class="detail_find_from">

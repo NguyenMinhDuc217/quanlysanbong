@@ -792,6 +792,7 @@ p, h2 {
 }
 
 #textarea__review {
+    width: 1000px;
     color: black;
     padding: 10px 20px !important;
     font: optional;
@@ -820,6 +821,7 @@ p, h2 {
 
 #formComment {
     display: flex;
+    /* width: 1000px; */
     flex-direction: column;
 }
 

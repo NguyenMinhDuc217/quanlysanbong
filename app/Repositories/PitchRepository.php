@@ -2,9 +2,14 @@
 
 namespace App\Repositories;
 
+use App\Models\Comments;
 use App\Repositories\Interfaces\PitchRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Models\Pitchs;
+use App\Models\User_comments;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class PitchRepository implements PitchRepositoryInterface
 {
@@ -27,6 +32,166 @@ class PitchRepository implements PitchRepositoryInterface
     }
     public function DetailPitch($pitchid = ''){
         $pitch = Pitchs::where('id',$pitchid)->first();
-        return $pitch;
+        $comments = Comments::where('picth_id', $pitchid)->get()->toArray();
+        // $comments = Comments::where('pitch_id', $pitch->id)->get()->toArray();
+        // dd($comments);
+
+        if (!empty(Auth::guard('user')->user()->id)) {
+            foreach ($comments as &$c) {
+               $userComment = User_comments::where('comment_id', $c->id)->where('user_id', Auth::guard('user')->user()->id)->first();
+               $c->status = (!empty($userComment['status'])) ? $userComment['status'] :'';
+               
+            }
+        }
+        //lấy lượt đánh giá của từng sao
+        $ratings = [];
+        for ($stars = 1; $stars <= 5; $stars++) {
+            $check = Comments::where('picth_id', $pitch['id'])->where('rating', $stars)->get();
+            if (!isset($check)) {
+                $ratings[$stars] = 0;
+            } else {
+                $ratings[$stars] = $check->count();
+            }
+        }
+        $user = Auth::guard('user')->user();
+        return array(
+            'pitch' => $pitch,
+            'comments' => $comments,
+            'ratings' => $ratings,
+            'user' => $user,
+        );
+    }
+    public function Comment(Request $request,$id = ''){
+        $validator = Validator::make($request->all(), [
+            'comment' => 'required|string|max:255',
+        ], [
+            'comment.required' => "Vui lòng nhập nội dung",
+            'comment.max' => "Vui lòng nhập, tối đa :max ký tự",
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['status' => 400, 'errors' => $validator->errors()->all()]);
+        }
+        $pitch = Pitchs::where('id', $id)->first();
+        if (empty($pitch)) {
+            return response()->json(['status' => 400, 'error' => "Sân không tồn tại"]);
+        }
+        //nếu chưa đăng nhập
+        if (empty(Auth::guard('user')->user()->id)) {
+            $comment = new Comments();
+            $comment->picth_id = $pitch['id'];
+            $comment->id_user = 0;
+            $comment->name = "user" . "" . rand(0, 10) . "" . Str::random(5);
+            $comment->content = $request->get('comment');
+            if (empty($request->get('rating'))) {
+                $comment->rating = 1;
+            } else {
+                $comment->rating = $request->get('rating');
+            }
+            $comment->like = "";
+            $comment->dislike = "";
+            $comment->save();
+
+            //cập nhật numberVoters, score vô trong application đó
+            $idpitch = $pitch['id'];
+            $argscore = round(Comments::where('picth_id', $idpitch)->avg('rating'), 1);
+            $countcomment = Comments::where('picth_id', $idpitch)->get()->count();
+            $pitch['total_rating'] = $countcomment;
+            $pitch['average_rating'] = $argscore;
+            $pitch->save();
+        }
+        //nếu đã đăng nhập
+        else{
+            $check = Comments::where('picth_id', $pitch['id'])->where('user_id', Auth::guard('user')->user()->id)->first();
+            $comment = [];
+            if(empty($check)){
+                $comment = new Comments();
+                $comment->picth_id = $pitch['id'];
+                $comment->id_user = Auth::guard('user')->user()->id;
+                $comment->name = Auth::guard('user')->user()->name;
+                $comment->content = $request->get('comment');
+                if (empty($request->get('rating'))) {
+                    $comment->rating = 1;
+                } else {
+                    $comment->rating = $request->get('rating');
+                }
+                $comment->approval = "";
+                $comment->ip = "";
+                $comment->save();
+                //cập nhật numberVoters, score vô trong application đó
+                $idpitch = $pitch['id'];
+                $argscore = round(Comments::where('picth_id', $idpitch)->avg('rating'), 1);
+                $countcomment = Comments::where('picth_id', $idpitch)->get()->count();
+                $pitch['total_rating'] = $countcomment;
+                $pitch['average_rating'] = $argscore;
+                $pitch->save();
+            }
+            //nếu đã comment -> sửa comment
+            else{
+                $check->content = $request->get('comment');
+                $ratingtemp = $check['rating'];
+                if (empty($request->get('rating'))) {
+                    //nếu rating trong db đang là 1 thì -1
+                    if ($check->rating == 1) {
+                        $pitch['one'] = $pitch['one'] - 1;
+                        $pitch->save();
+                    }
+                    //nếu rating trong db khác 1 thì -1 count của rating đó
+                    else {
+                        if ($check->rating == 5) {
+                            $pitch['five'] = $pitch['five'] - 1;
+                        } elseif ($check->rating == 4) {
+                            $pitch['four'] = $pitch['four'] - 1;
+                        } elseif ($check->rating == 3) {
+                            $pitch['three'] = $pitch['three'] - 1;
+                        } elseif ($check->rating == 2) {
+                            $pitch['two'] = $pitch['two'] - 1;
+                        } elseif ($check->rating == 1) {
+                            $pitch['one'] = $pitch['one'] - 1;
+                        }
+                        $check->rating = 1;
+                    }
+                }
+                else {
+                    //giảm count rating của rating cũ
+                    if ($check->rating == 5) {
+                        $pitch['five'] = $pitch['five'] - 1;
+                    } elseif ($check->rating == 4) {
+                        $pitch['four'] = $pitch['four'] - 1;
+                    } elseif ($check->rating == 3) {
+                        $pitch['three'] = $pitch['three'] - 1;
+                    } elseif ($check->rating == 2) {
+                        $pitch['two'] = $pitch['two'] - 1;
+                    } elseif ($check->rating == 1) {
+                        $pitch['one'] = $pitch['one'] - 1;
+                    }
+                    $pitch->save();
+                    $check->rating = $request->get('rating');
+                }
+                $check->save();
+                $comment = $check;
+                $comment->save();
+                //cập nhật numberVoters, score vô trong application đó
+                $idpitch = $pitch['id'];
+                $argscore = round(Comments::where('picth_id', $idpitch)->avg('rating'), 1);
+                $countcomment = Comments::where('picth_id', $idpitch)->get()->count();
+                $pitch['total_rating'] = $countcomment;
+                $pitch['average_rating'] = $argscore;
+                $pitch->save();
+            }
+        }
+        //tăng count rating của rating mới
+        if ($comment->rating == 5) {
+            $pitch['five'] = $pitch['five'] + 1;
+        } elseif ($comment->rating == 4) {
+            $pitch['four'] = $pitch['four'] + 1;
+        } elseif ($comment->rating == 3) {
+            $pitch['three'] = $pitch['three'] + 1;
+        } elseif ($comment->rating == 2) {
+            $pitch['two'] = $pitch['two'] + 1;
+        } elseif ($comment->rating == 1) {
+            $pitch['one'] = $pitch['one'] + 1;
+        }
+        $pitch->save();
+        return response()->json(['status' => 200, 'success' => "thành công", "comment" => $comment]);
     }
 }
