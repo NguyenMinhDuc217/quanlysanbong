@@ -14,7 +14,7 @@
         <div class="container" style="margin: 10px 0px;">
           <div class="row">
             <div class="col-md-2">
-              <a class="btn btn-success uppercase" href="{{route('pitchs.create')}}"> <i class="nav-icon fas fa-plus"></i> Thêm mới</a>
+              <a class="btn btn-success uppercase" href="{{route('pitchs.create')}}"> <i class="nav-icon fas fa-plus"></i>New Pitch</a>
             </div>
           </div>
         </div>

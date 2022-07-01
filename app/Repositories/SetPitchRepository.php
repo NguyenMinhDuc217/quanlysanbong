@@ -29,19 +29,19 @@ class SetPitchRepository implements SetPitchRepositoryInterface
         );
         $timeStart=$request->timeStart;
         $timeEnd=$request->timeEnd;
-  
+        
         if( $timeEnd<$timeStart){
             return redirect()->route('detail.pitch',['pitchid'=>$pitchid])->with('error',"Thời gian kết thúc phải lớn hơn thời gian bắt đầu");
         }
-      
+        
         if((strtotime($timeEnd)-strtotime($timeStart))/SECOND<=HAFLANHOUR){
             return redirect()->route('detail.pitch',['pitchid'=>$pitchid])->with('error',"Thời gian của trận đấu phải lớn hơn 30 phút");
         }
-
-
+        
+        
         $pitch=Pitchs::where('id',$pitchid)->first();
         $timeSoccer= (strtotime($timeEnd)-strtotime($timeStart))/(MINUTE*SECOND);
-    
+        
         $checkTimes=Detail_set_pitchs::where('picth_id',$pitchid)->where(function ($query) use ($timeStart, $timeEnd) {
             $query->where('start_time','<=',$timeStart)->where('end_time','>=', $timeEnd);
         })->get();
@@ -50,7 +50,7 @@ class SetPitchRepository implements SetPitchRepositoryInterface
                 $query->whereBetween('start_time', [$timeStart, $timeEnd])->orwhereBetween('end_time', [$timeStart, $timeEnd]);
             })->get();
         }
-
+        
         if($checkTimes->count()>0){
             foreach ($checkTimes as $checkTime) {
                 $setTimeStart=$checkTime->start_time;

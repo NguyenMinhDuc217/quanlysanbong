@@ -1,7 +1,7 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('/css/detailProduct.css') }}">
 <!-- <link rel="stylesheet" type="text/css" href="{{ asset('/public/css/homepage.css') }}"> -->
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 
 <div class="detail_top">
@@ -10,8 +10,8 @@
             <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper mySwiper2 slider-one">
                 <div class="swiper-wrapper">
 
-                    @if(!empty($pitchs['screenshort']))
-                    @foreach(json_decode($pitchs['screenshort']) as $item)
+                    @if(!empty($data['pitch']['screenshort']))
+                    @foreach(json_decode($data['pitch']['screenshort']) as $item)
                     <div class="swiper-slide">
                         <img src="/images/pitch/{{($item)}}" />
                     </div>
@@ -25,8 +25,8 @@
             </div>
             <div thumbsSlider="" class="swiper mySwiper slider-two">
                 <div class="swiper-wrapper">
-                    @if(!empty($pitchs['screenshort']))
-                    @foreach(json_decode($pitchs['screenshort']) as $item)
+                    @if(!empty($data['pitch']['screenshort']))
+                    @foreach(json_decode($data['pitch']['screenshort']) as $item)
                     <div class="swiper-slide">
                         <img src="/images/pitch/{{($item)}}" />
                     </div>
@@ -69,49 +69,246 @@
                     <span class="detail_find_hour">Đặt sân</span>
                     <div class="detail_find_total">
 
-                        <form method="POST" action="{{route('search.time',['pitchid'=>$pitchs->id])}}" enctype="multipart/form-data">
+                        <form method="POST" action="{{route('search.time',['pitchid'=>$data['pitch']['id']])}}" enctype="multipart/form-data">
                             @csrf
-                        <div class="detail_find_list">
-                            <div class="detail_find_from">
-                              @if (Session::has('success'))
+                            <div class="detail_find_list">
+                                <div class="detail_find_from">
+                                    @if (Session::has('success'))
                                     <div class="alert alert-success notify_success" style="color:green; font-size:20px">
                                         <span>{{ Session::get('success') }}</span>
                                     </div>
-                                @endif
-                                <span>Tìm từ giờ:</span>
-                                <input type="datetime-local" name="timeStart"  id="timeStart">
-                                @error('timeStart')
-                            <span class="vali_sign" class="invalid-feedback" role="alert">
-                                   <strong>{{ $message }}</strong>
-                            </span>
-                             @enderror
-                            </div>
-                            <div class="detail_find_to">
-                                <span>Đến giờ:</span>
-                                <input type="datetime-local" name="timeEnd" id="timeEnd">
-                                @error('timeEnd')
-                            <span class="vali_sign" class="invalid-feedback" role="alert">
-                                   <strong>{{ $message }}</strong>
-                            </span>
-                           @enderror
-                            </div>
-                    
-                            <select name="service">
+                                    @endif
+                                    <span>Tìm từ giờ:</span>
+                                    <input type="datetime-local" name="timeStart" id="timeStart">
+                                    @error('timeStart')
+                                    <span class="vali_sign" class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                                <div class="detail_find_to">
+                                    <span>Đến giờ:</span>
+                                    <input type="datetime-local" name="timeEnd" id="timeEnd">
+                                    @error('timeEnd')
+                                    <span class="vali_sign" class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <!-- <select name="service">
                                <option value="1">Nước</option>
                                <option value="2">Nước ngọt</option>
                                <option value="3">Trọng tài</option>
-                            </select>
-                        </div>
-                        @if(session()->has('error'))
-                        <span class="vali_sign" class="invalid-feedback" role="alert">
-                                   <strong> {{ session()->get('error') }}</strong>
+                            </select> -->
+
+                                <div class='box__filter' id='box__filter'>
+                                    @foreach($data['services'] as $service)
+                                    <label class="main">{{$service['name']}}
+                                        <!-- <input type="checkbox" id="service" name="service"> -->
+                                        <input type="checkbox" name="service" {{(is_array(\Request::get('service')) && in_array($service['id'], \Request::get('service')) ) ? 'checked' : ((\Request::get('service') == $service['id']) ? 'checked' : "" )}} value="{{$service['id']}}">
+                                        <!-- <input type="checkbox" name="service"> -->
+                                        <span class="geekmark"></span>
+                                    </label>
+                                    @endforeach
+                                </div>
+                            </div>
+                            @if(session()->has('error'))
+                            <span class="vali_sign" class="invalid-feedback" role="alert">
+                                <strong> {{ session()->get('error') }}</strong>
                             </span>
-                        @endif
-                        <button>Đặt sân</button>
+                            @endif
+                            <button>Đặt sân</button>
                         </form>
-                   
                     </div>
                 </div>
+            </div>
+            <!-- <div class="one_day_set_pitch">
+                <table>
+                    <tr>
+                        <th>Thời gian</th>
+                        <th>Tình trạng</th>
+                    </tr>
+                    <tr>
+                        <td>Peter</td>
+                        <td>Griffin</td>
+                    </tr>
+                    <tr>
+                        <td>Lois</td>
+                        <td>Griffin</td>
+                    </tr>
+                    </table>
+            </div> -->
+            <!-- <div class="leaderboard__profiles">
+                @foreach($data['hour'] as $hour)
+                <article class="leaderboard__profile">
+                    <table>
+                        <tr>
+                            <td><span class="leaderboard__name">{{$hour}}h->{{$hour + 2}}h</span></td>
+                            <td><span class="leaderboard__value">Đã được đặt<span>B</span></span></td>
+                        </tr>
+                    </table>
+                </article>
+                @endforeach
+            </div> -->
+            <!-- Trigger/Open The Modal -->
+            <button class="button" id="myBtn">Lịch đặt sân</button>
+
+            <!-- The Modal -->
+            <div id="myModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <!-- <p>Some text in the Modal..</p> -->
+                <div class="leaderboard__profiles">
+                <article class="leaderboard__profile">
+                    <table>
+                    <tr>
+                        <th>Thời gian</th>
+                        <th>Tình trạng</th>
+                    </tr>
+                        <tr>
+                            <td><span class="leaderboard__name">0h->2h</span></td>
+                            <td><span class="leaderboard__value">Còn trống</span></td>
+                        </tr>
+                    </table>
+                </article>
+                <article class="leaderboard__profile">
+                    <table>
+                    <tr>
+                        <th>Thời gian</th>
+                        <th>Tình trạng</th>
+                    </tr>
+                        <tr>
+                            <td><span class="leaderboard__name">2h->4h</span></td>
+                            <td><span class="leaderboard__value">Còn trống</span></td>
+                        </tr>
+                    </table>
+                </article>
+                <article class="leaderboard__profile">
+                    <table>
+                    <tr>
+                        <th>Thời gian</th>
+                        <th>Tình trạng</th>
+                    </tr>
+                        <tr>
+                            <td><span class="leaderboard__name">4h->6h</span></td>
+                            <td><span class="leaderboard__value">Đã được đặt</span></td>
+                        </tr>
+                    </table>
+                </article>
+                <article class="leaderboard__profile">
+                    <table>
+                    <tr>
+                        <th>Thời gian</th>
+                        <th>Tình trạng</th>
+                    </tr>
+                        <tr>
+                            <td><span class="leaderboard__name">6h->8h</span></td>
+                            <td><span class="leaderboard__value">Đã được đặt</span></td>
+                        </tr>
+                    </table>
+                </article>
+                <article class="leaderboard__profile">
+                    <table>
+                    <tr>
+                        <th>Thời gian</th>
+                        <th>Tình trạng</th>
+                    </tr>
+                        <tr>
+                            <td><span class="leaderboard__name">8h->10h</span></td>
+                            <td><span class="leaderboard__value">Đã được đặt</span></td>
+                        </tr>
+                    </table>
+                </article>
+                <article class="leaderboard__profile">
+                    <table>
+                    <tr>
+                        <th>Thời gian</th>
+                        <th>Tình trạng</th>
+                    </tr>
+                        <tr>
+                            <td><span class="leaderboard__name">10h->12h</span></td>
+                            <td><span class="leaderboard__value">Còn trống</span></td>
+                        </tr>
+                    </table>
+                </article>
+                <article class="leaderboard__profile">
+                    <table>
+                    <tr>
+                        <th>Thời gian</th>
+                        <th>Tình trạng</th>
+                    </tr>
+                        <tr>
+                            <td><span class="leaderboard__name">12h->14h</span></td>
+                            <td><span class="leaderboard__value">Còn trống</span></td>
+                        </tr>
+                    </table>
+                </article>
+                <article class="leaderboard__profile">
+                    <table>
+                    <tr>
+                        <th>Thời gian</th>
+                        <th>Tình trạng</th>
+                    </tr>
+                        <tr>
+                            <td><span class="leaderboard__name">14h->16h</span></td>
+                            <td><span class="leaderboard__value">Đã được đặt</span></td>
+                        </tr>
+                    </table>
+                </article>
+                <article class="leaderboard__profile">
+                    <table>
+                    <tr>
+                        <th>Thời gian</th>
+                        <th>Tình trạng</th>
+                    </tr>
+                        <tr>
+                            <td><span class="leaderboard__name">16h->18h</span></td>
+                            <td><span class="leaderboard__value">Đã được đặt</span></td>
+                        </tr>
+                    </table>
+                </article>
+                <article class="leaderboard__profile">
+                    <table>
+                    <tr>
+                        <th>Thời gian</th>
+                        <th>Tình trạng</th>
+                    </tr>
+                        <tr>
+                            <td><span class="leaderboard__name">18h->20h</span></td>
+                            <td><span class="leaderboard__value">Đã được đặt</span></td>
+                        </tr>
+                    </table>
+                </article>
+                <article class="leaderboard__profile">
+                    <table>
+                    <tr>
+                        <th>Thời gian</th>
+                        <th>Tình trạng</th>
+                    </tr>
+                        <tr>
+                            <td><span class="leaderboard__name">20h->22h</span></td>
+                            <td><span class="leaderboard__value">Đã được đặt</span></td>
+                        </tr>
+                    </table>
+                </article>
+                <article class="leaderboard__profile">
+                    <table>
+                    <tr>
+                        <th>Thời gian</th>
+                        <th>Tình trạng</th>
+                    </tr>
+                        <tr>
+                            <td><span class="leaderboard__name">22h->24h</span></td>
+                            <td><span class="leaderboard__value">Còn trống</span></td>
+                        </tr>
+                    </table>
+                </article>
+            </div>
+            </div>
+
             </div>
         </div>
     </div>
@@ -121,7 +318,33 @@
 <script src="https://unpkg.com/boxicons@2.1.2/dist/boxicons.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.17/sweetalert2.min.js" integrity="sha512-Kyb4n9EVHqUml4QZsvtNk6NDNGO3+Ta1757DSJqpxe7uJlHX1dgpQ6Sk77OGoYA4zl7QXcOK1AlWf8P61lSLfQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+<script>
+// Get the modal
+var modal = document.getElementById("myModal");
 
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
 <script>
     var swiper = new Swiper(".mySwiper", {
         loop: true,
@@ -154,11 +377,29 @@
 </script>
 <script>
     const nowTime3 = new Date();
-nowTime3.setMinutes(nowTime3.getMinutes() - nowTime3.getTimezoneOffset());
-nowTime3.setHours(nowTime3.getHours()+3);
-document.getElementById('timeStart').value = nowTime3.toISOString().slice(0, 16);
-const nowTime5 = new Date();
-nowTime5.setMinutes(nowTime5.getMinutes() - nowTime5.getTimezoneOffset());
-nowTime5.setHours(nowTime5.getHours()+5);
-document.getElementById('timeEnd').value = nowTime5.toISOString().slice(0, 16);
+    nowTime3.setMinutes(nowTime3.getMinutes() - nowTime3.getTimezoneOffset());
+    nowTime3.setHours(nowTime3.getHours() + 3);
+    document.getElementById('timeStart').value = nowTime3.toISOString().slice(0, 16);
+    const nowTime5 = new Date();
+    nowTime5.setMinutes(nowTime5.getMinutes() - nowTime5.getTimezoneOffset());
+    nowTime5.setHours(nowTime5.getHours() + 5);
+    document.getElementById('timeEnd').value = nowTime5.toISOString().slice(0, 16);
+
+    const filter = document.getElementById('filter');
+    const box__filter = document.getElementById('box__filter');
+    filter.addEventListener("click", function() {
+
+        if (box__filter.classList.contains('show__filter') === true) {
+            box__filter.classList.remove("show__filter");
+        } else {
+            box__filter.classList.add("show__filter");
+        }
+    });
+
+    $(document).mouseup(function(e) {
+        var container = $(".box__filter");
+        if (!container.is(e.target) && container.has(e.target).length === 0) {
+            box__filter.classList.remove("show__filter");
+        }
+    });
 </script>

@@ -272,6 +272,113 @@ p, h2 {
 .contact_social__search:hover {
     border: 1px solid red !important;
 }
+/* set pitch one day */
+.leaderboard__profiles {
+    background-color: #fff;
+    border-radius: 0 0 12px 12px;
+    padding: 15px 15px 20px;
+    display: grid;
+    row-gap: 8px;
+    width: 450px;
+  }
+  .leaderboard__profile {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    align-items: center;
+    padding: 10px 30px 10px 10px;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 5px 7px -1px rgba(51, 51, 51, 0.23);
+    cursor: pointer;
+    transition: transform 0.25s cubic-bezier(0.7, 0.98, 0.86, 0.98), box-shadow 0.25s cubic-bezier(0.7, 0.98, 0.86, 0.98);
+    background-color: #fff;
+  }
+  .leaderboard__profile:hover {
+    transform: scale(1.2);
+    box-shadow: 0 9px 47px 11px rgba(51, 51, 51, 0.18);
+  }
+  .leaderboard__name {
+    color: #979cb0;
+    font-weight: 600;
+    font-size: 20px;
+    letter-spacing: 0.64px;
+    margin-left: 12px;
+  }
+  .leaderboard__value {
+    color: #35d8ac;
+    font-weight: 700;
+    font-size: 34px;
+    text-align: right;
+  }
+  .leaderboard__value > span {
+    opacity: 0.8;
+    font-weight: 600;
+    font-size: 13px;
+    margin-left: 3px;
+  }
+  table{
+      table-layout: fixed;
+      width: 100%;
+  }
+  th, td {
+    /* border: 1px solid black; */
+    width: 200px;
+    /* height: 200px; */
+    overflow: hidden;
+    }
+  
+    /* pop up */
+    /* button lịch đăt sân*/
+    .button {
+        background-color: #4CAF50; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+      }
+    /* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+  /* Modal Content */
+  .modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 30%;
+  }
+  
+  /* The Close Button */
+  .close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
 
 
 /* star */
@@ -792,6 +899,7 @@ p, h2 {
 }
 
 #textarea__review {
+    width: 1000px;
     color: black;
     padding: 10px 20px !important;
     font: optional;
@@ -820,6 +928,7 @@ p, h2 {
 
 #formComment {
     display: flex;
+    /* width: 1000px; */
     flex-direction: column;
 }
 

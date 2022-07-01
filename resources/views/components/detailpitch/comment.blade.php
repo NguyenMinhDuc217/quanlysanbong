@@ -42,7 +42,9 @@
                         <i class='bx bx-star com'></i>
                     </div>
                     <hr class='line'>
-                    <form action="" id='formComment'>
+                    <form action="{{route('detail.pitch',['pitchid'=>$data['pitch']['id']])}}" id='formComment'>
+                      @csrf
+                    <!-- <form action="" id='formComment'> -->
                         <textarea name="comment" id="textarea__review" cols="30" rows="10" placeholder='Viết bình luận của bạn ...'></textarea>
                         <input type="number" name="rating" id="count__star" value="" hidden>
                         <button id="sm_cmt" class="submit__review">Gửi</button>
@@ -54,7 +56,7 @@
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="https://unpkg.com/boxicons@2.1.2/dist/boxicons.js"></script>
+<!-- <script src="https://unpkg.com/boxicons@2.1.2/dist/boxicons.js"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.17/sweetalert2.min.js"
   integrity="sha512-Kyb4n9EVHqUml4QZsvtNk6NDNGO3+Ta1757DSJqpxe7uJlHX1dgpQ6Sk77OGoYA4zl7QXcOK1AlWf8P61lSLfQ=="
   crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -88,4 +90,78 @@
       document.getElementById('count__star').value = idStar + 1;
     })
   }
+
+  $(document).ready(function() {
+
+
+// Submit comment
+$('#sm_cmt').on('click', function(e) {
+  e.preventDefault();
+  var $this = $(this);
+  $this.attr('disabled', 'disabled').html("Loading...");
+  $.ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
+  $.ajax({
+    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+    type: 'post',
+    url: `{{route('pitch.detail.comment.ajax', ['id'=>$data['pitch']['id']] )}}`,
+    data: $('#formComment').serialize(),
+    success: function(res) {
+      if (res.status === 200) {
+        Swal.fire({
+          title: "Success",
+          imageUrl: `{{ asset('/images/alert/bell__success.png') }}`,
+          imageWidth: 100,
+          imageHeight: 100,
+          imageAlt: 'Message',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            $this.removeAttr('disabled').html("Gửi");
+            window.location.reload();
+          }
+        })
+      } else {
+        if (res.error) {
+          $this.removeAttr('disabled').html("Gửi");
+          return  Swal.fire({
+          title: res.error,
+          imageUrl: `{{ asset('/images/alert/bell.png') }}`,
+          imageWidth: 100,
+          imageHeight: 100,
+          imageAlt: 'Message',
+        })
+        } else if (res.errors) {
+          $this.removeAttr('disabled').html("Gửi");
+          return Swal.fire({
+            imageUrl: `{{ asset('/images/alert/bell.png') }}`,
+            imageWidth: 100,
+            imageHeight: 100,
+            imageAlt: 'Message',
+            text: "Error",
+            html: '<span></span>',
+            willOpen: () => {
+              let b = Swal.getHtmlContainer().querySelector(
+                'span')
+              res.errors.map((item) => {
+                b.textContent = item
+              })
+            }
+          })
+        }
+        Swal.fire({
+          imageUrl: `{{ asset('/images/alert/bell.png') }}`,
+          imageWidth: 100,
+          imageHeight: 100,
+          imageAlt: 'Message',
+          text: "An unknown error !",
+        })
+        $this.removeAttr('disabled').html("Gửi");
+      }
+    }
+  });
+});
+});
 </script>

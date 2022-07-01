@@ -11,9 +11,9 @@
             <i class="dropdown__icon fas fa-angle-down"></i>
         </div>
         <div class="dropdown-content">
-            <a class="dropdown-content__item" href="#">Link 1</a>
-            <a class="dropdown-content__item" href="#">Link 2</a>
-            <a class="dropdown-content__item" href="#">Link 3</a>
+            <a class="dropdown-content__item" href="#">Facebook</a>
+            <a class="dropdown-content__item" href="#">Zalo</a>
+            <a class="dropdown-content__item" href="#">Hotline</a>
         </div>
     </div>
 </div>

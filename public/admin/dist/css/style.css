@@ -12,3 +12,8 @@
     color: red;
   font-size: 13px;
 }
+
+.btn_create {
+    padding: 10px 20px;
+    font-size: 20px;
+}
