@@ -96,18 +96,10 @@
                                     @enderror
                                 </div>
 
-                                <!-- <select name="service">
-                               <option value="1">Nước</option>
-                               <option value="2">Nước ngọt</option>
-                               <option value="3">Trọng tài</option>
-                            </select> -->
-
                                 <div class='box__filter' id='box__filter'>
                                     @foreach($data['services'] as $service)
                                     <label class="main">{{$service['name']}}
-                                        <!-- <input type="checkbox" id="service" name="service"> -->
                                         <input type="checkbox" name="service" {{(is_array(\Request::get('service')) && in_array($service['id'], \Request::get('service')) ) ? 'checked' : ((\Request::get('service') == $service['id']) ? 'checked' : "" )}} value="{{$service['id']}}">
-                                        <!-- <input type="checkbox" name="service"> -->
                                         <span class="geekmark"></span>
                                     </label>
                                     @endforeach
