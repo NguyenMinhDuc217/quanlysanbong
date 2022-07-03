@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserSetServicesTable extends Migration
+class CreateDetailTicketsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,14 @@ class CreateUserSetServicesTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_set_services', function (Blueprint $table) {
+        Schema::create('detail_tickets', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->integer('service_id');
-            $table->integer('quantity')->default(0);
+            $table->string('ticket_id');
+            $table->string('sercive_id');
+            $table->dateTime('start_time');
+            $table->dateTime('end_time');
+            $table->string('pitch_id');
+            $table->string('status');
             $table->timestamps();
         });
     }
@@ -29,6 +32,6 @@ class CreateUserSetServicesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_set_services');
+        Schema::dropIfExists('detail_tickets');
     }
 }

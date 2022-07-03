@@ -230,7 +230,7 @@ i {
 }
 
 .navbar__item {
-    padding-right: 20px;
+    padding-right: 50px;
 }
   
 .dropdown {
@@ -280,12 +280,13 @@ i {
 
 .swiper {
     width: 100%;
-    height: 100%;
+    height: 500px;
   }
 
 .swiper-slide {
     background-position: center;
     background-size: cover;
+    object-fit: cover;
 }
 
 .swiper-slide img {

@@ -26,6 +26,9 @@ body{
     justify-content: space-between;
     align-items: center;
 }
+.login_google__zalo a {
+    text-decoration: none;
+}
 .login_google,
 .login_zalo {
     display: flex !important;
@@ -39,7 +42,7 @@ body{
     padding: 10px;
     font-size: 16px;
     margin-top: 20px;
-    width:48%;
+    width: 100%;
 }
 
 .login_google {
@@ -99,6 +102,7 @@ h2{
     width: 100%;
     padding: 10px;
     font-size: 14px;   
+    line-height: 18px;
 }
 
 .form-control input:focus{

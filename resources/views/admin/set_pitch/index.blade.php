@@ -9,12 +9,12 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title"><b>Danh sách sân</b></h3>
+          <h3 class="card-title"><b>Danh sách đặt sân</b></h3>
         </div>
         <div class="container" style="margin: 10px 0px;">
           <div class="row">
             <div class="col-md-2">
-              <a class="btn btn-success uppercase" href="{{route('pitchs.create')}}"> <i class="nav-icon fas fa-plus"></i>Thêm sân mới</a>
+              <a class="btn btn-success uppercase" href="{{route('pitchs.create')}}"> <i class="nav-icon fas fa-plus"></i>Thêm Đặt sân</a>
             </div>
           </div>
         </div>
@@ -23,7 +23,9 @@
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Tên</th>
+                <th>Tên sân</th>
+                <th>Người đặt</th>
+                <th>Thời gian</th>
                 <th>Trạng thái</th>
                 <th>Chức năng</th>
               </tr>

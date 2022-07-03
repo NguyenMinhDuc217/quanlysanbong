@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTicketsTable extends Migration
+class CreateSetServicesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateTicketsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tickets', function (Blueprint $table) {
+        Schema::create('set_services', function (Blueprint $table) {
             $table->id();
-            $table->string('image');
-            $table->string('number_day_of_week');
-            $table->string('price');
-            $table->string('ticket_type',255);
+            $table->integer('set_pitch_id');
+            $table->integer('service_id');
+            $table->string('name',255);
+            $table->integer('quantity')->default(1);
+            $table->string('total',255);
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ class CreateTicketsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tickets');
+        Schema::dropIfExists('set_services');
     }
 }

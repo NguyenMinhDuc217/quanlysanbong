@@ -61,9 +61,10 @@
                     <a href="{{route('show.login.fb',['social'=>'facebook'])}}">
                     <div class="login_zalo">
                         <div class="login_zalo__icon">
-                            <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                            <!-- <i class="fa fa-facebook-official" aria-hidden="true"></i> -->
+                            <i class="fa-brands fa-facebook-f"></i>
                         </div>
-                        <span class="log_in__title">Đăng nhập bằng Zalo</span>
+                        <span class="log_in__title">Đăng nhập bằng Facebook</span>
                     </div>
                     </a>
               

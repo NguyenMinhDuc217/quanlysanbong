@@ -96,14 +96,18 @@
                                     @enderror
                                 </div>
 
-                                <div class='box__filter' id='box__filter'>
-                                    @foreach($data['services'] as $service)
-                                    <label class="main">{{$service['name']}}
-                                        <input type="checkbox" name="service" {{(is_array(\Request::get('service')) && in_array($service['id'], \Request::get('service')) ) ? 'checked' : ((\Request::get('service') == $service['id']) ? 'checked' : "" )}} value="{{$service['id']}}">
-                                        <span class="geekmark"></span>
-                                    </label>
-                                    @endforeach
-                                </div>
+                            </div>
+                            <div class='box__filter' id='box__filter'>
+                                
+                                @foreach($data['services'] as $service)
+                                <div class="checkbox form-inline">
+                                <label class="main">
+                                 <input type="checkbox" name="ch_name[]" {{(is_array(\Request::get('service')) && in_array($service['id'], \Request::get('service')) ) ? 'checked' : ((\Request::get('service') == $service['id']) ? 'checked' : "" )}} value="{{$service['id']}}">  {{$service['name']}}
+                                <span class="geekmark"></span>
+                               </label>
+                               <input type="number" name="ch_for[{{$service['id']}}][]" value="1" placeholder="Nhập số lượng"  class="form-control ch_for hide" min="1">
+                               </div>
+                               @endforeach
                             </div>
                             @if(session()->has('error'))
                             <span class="vali_sign" class="invalid-feedback" role="alert">
@@ -115,34 +119,7 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="one_day_set_pitch">
-                <table>
-                    <tr>
-                        <th>Thời gian</th>
-                        <th>Tình trạng</th>
-                    </tr>
-                    <tr>
-                        <td>Peter</td>
-                        <td>Griffin</td>
-                    </tr>
-                    <tr>
-                        <td>Lois</td>
-                        <td>Griffin</td>
-                    </tr>
-                    </table>
-            </div> -->
-            <!-- <div class="leaderboard__profiles">
-                @foreach($data['hour'] as $hour)
-                <article class="leaderboard__profile">
-                    <table>
-                        <tr>
-                            <td><span class="leaderboard__name">{{$hour}}h->{{$hour + 2}}h</span></td>
-                            <td><span class="leaderboard__value">Đã được đặt<span>B</span></span></td>
-                        </tr>
-                    </table>
-                </article>
-                @endforeach
-            </div> -->
+            
             <!-- Trigger/Open The Modal -->
             <button class="button" id="myBtn">Lịch đặt sân</button>
 
@@ -154,19 +131,21 @@
                 <span class="close">&times;</span>
                 <!-- <p>Some text in the Modal..</p> -->
                 <div class="leaderboard__profiles">
+                @foreach($data['detail_set_pitchs'] as $detail)
                 <article class="leaderboard__profile">
                     <table>
                     <tr>
-                        <th>Thời gian</th>
-                        <th>Tình trạng</th>
+                        <th>Thời gian bắt đầu</th>
+                        <th>Thời gian kết thúc</th>
                     </tr>
                         <tr>
-                            <td><span class="leaderboard__name">0h->2h</span></td>
-                            <td><span class="leaderboard__value">Còn trống</span></td>
+                            <td><span class="leaderboard__name">{{$detail['start_time']}}</span></td>
+                            <td><span class="leaderboard__value">{{$detail['end_time']}}</span></td>
                         </tr>
                     </table>
                 </article>
-                <article class="leaderboard__profile">
+                @endforeach
+                <!-- <article class="leaderboard__profile">
                     <table>
                     <tr>
                         <th>Thời gian</th>
@@ -297,7 +276,7 @@
                             <td><span class="leaderboard__value">Còn trống</span></td>
                         </tr>
                     </table>
-                </article>
+                </article> -->
             </div>
             </div>
 
@@ -306,6 +285,7 @@
     </div>
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script src="https://unpkg.com/boxicons@2.1.2/dist/boxicons.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.17/sweetalert2.min.js" integrity="sha512-Kyb4n9EVHqUml4QZsvtNk6NDNGO3+Ta1757DSJqpxe7uJlHX1dgpQ6Sk77OGoYA4zl7QXcOK1AlWf8P61lSLfQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -336,6 +316,11 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 }
+$(document).ready(function () {
+              $('.checkbox input:checkbox').on('click', function(){
+               $(this).closest('.checkbox').find('.ch_for').toggle();
+                })
+    });
 </script>
 <script>
     var swiper = new Swiper(".mySwiper", {

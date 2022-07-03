@@ -5,6 +5,9 @@ table {
   border-collapse: collapse;
   width: 100%;
 }
+.table {
+  margin: 30px 0;
+}
 .vali_sign{
     color: red;
     font-size: 13px;
@@ -50,26 +53,46 @@ tr:nth-child(even) {
         <strong> {{ session()->get('error') }}</strong>
         </span>
    @endif
-<table>
+<table class="table">
   <tr>
     <th>Tên sân</th>
     <th>Thời gian bắt đầu</th>
     <th>Thời gian kết thúc</th>
+    <th>Tên dịch vụ</th>
+    <th>Số lượng</th>
     <th>Tổng tiền</th>
     <th>Hủy sân</th>
     <th>Thanh toán</th>
+    <th>Phương thức</th>
   </tr>
 
     @foreach($listSetPitch as $setPitch)
     <tr>
     <td>{{$setPitch['name']}}</td>
-    <?php $date=date_create($setPitch['detail_set_pitch']->start_time);
-    $start= date_format($date,"d/m/Y H:i");?>
+     @php
+    $date=date_create($setPitch['detail_set_pitch']->start_time);
+    $start= date_format($date,"d/m/Y H:i");
+    @endphp
     <td>{{$start}}</td>
-    <?php $date=date_create($setPitch['detail_set_pitch']->end_time);
-    $end= date_format($date,"d/m/Y H:i");?>
+    @php
+    $date=date_create($setPitch['detail_set_pitch']->end_time);
+    $end= date_format($date,"d/m/Y H:i");
+     @endphp
     <td>{{$end}}</td>
-    <td>{{$setPitch['detail_set_pitch']->total}}</td>
+    <td>
+    @foreach($setPitch['service'] as $service)
+   {{$service->name}},
+    @endforeach
+    </td>
+    <td>
+    @foreach($setPitch['service'] as $service)
+   {{$service->quantity}},
+    @endforeach
+  </td>
+   @php
+   $total=number_format($setPitch['detail_set_pitch']->total, 0, '', ',');
+   @endphp
+    <td>{{$total}}VNĐ</td>
     @if((strtotime($setPitch['detail_set_pitch']->start_time)-strtotime(date('Y-m-d H:i:s')))/(60)>=120)
     <td><button type="button" class="btn btn-danger deleteSetPitchBtn" value="{{$setPitch['detail_set_pitch']->id}}">Hủy</button></td>
     @else
