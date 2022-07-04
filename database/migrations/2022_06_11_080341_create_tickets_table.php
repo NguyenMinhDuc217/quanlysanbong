@@ -22,7 +22,7 @@ class CreateTicketsTable extends Migration
             $table->date('timeout');
             $table->string('price');
             $table->string('month');
-            $table->string('ticket_type_by_pitch',255);
+            $table->integer('discount')->default(0);
             $table->integer('status')->default(1);
             $table->timestamps();
         });

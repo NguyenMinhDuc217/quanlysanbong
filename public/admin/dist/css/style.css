@@ -17,3 +17,18 @@
     padding: 10px 20px;
     font-size: 20px;
 }
+
+/* chọn ngày tháng năm */
+.detail_find_total button {
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    width: 100px;
+    height: 30px;
+    background-color: #226A35;
+    color: #FFFFFF;
+    font-size: 15px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
