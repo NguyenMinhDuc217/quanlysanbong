@@ -2,7 +2,7 @@
 
 @section('content')
 
-@section('content_header', 'Pitchs')
+@section('content_header', 'Set Pitchs')
 <link rel="stylesheet" type="text/css" href="{{asset('admin/dist/css/style.css') }}">
 <div class="container">
   <div class="row">

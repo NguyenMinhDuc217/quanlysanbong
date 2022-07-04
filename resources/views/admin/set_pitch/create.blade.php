@@ -11,7 +11,7 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title"><b>Danh sách sân</b></h3>
+          <h3 class="card-title"><b>Danh sách sân đặt</b></h3>
         </div>
         <div class="container" style="margin: 10px 0px;">
           <div class="row">
@@ -23,20 +23,6 @@
         <div class="col-md-12">
           <form method="POST" action="{{route('pitchs.store')}}" enctype="multipart/form-data">
             @csrf
-            <!-- avatar -->
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-              <div class="inbox-left-sd">
-                <img src="{{ asset('/images/admin/pitch/default-app.png') }}" id="appimg" alt="App Cover" class="img-fluid app_cover">
-                <input required type="hidden" name="cover" id="cover">
-                <p class="text-center pt-3">Ảnh đại diện của sân</p>
-
-                <div class="form-group">
-                  <label for="exampleFormControlFile1">Chọn hình ảnh</label>
-                  <input value="" required type="file" name="cover" class="form-control-file" id="cover_input">
-                </div>
-              </div>
-            </div>
-
             @if(Session::has('success'))
             <div class="alert alert-success notifi__success">
               <span>{{ Session::get('success') }}</span>
@@ -44,8 +30,8 @@
             @endif
             <div class="card-body">
               <div class="form-group">
-                <label for="">Tên</label>
-                <input type="text" name="name" class="form-control" placeholder="Tên sân">
+                <label for="">Tên sân</label>
+                <input disabled type="text" name="name" class="form-control" placeholder="Tên sân">
                 @error('username')
                 <span class="vali_sign" class="invalid-feedback" role="alert">
                   <strong>{{ $message }}</strong>
@@ -78,22 +64,6 @@
                   <option value="3">Bị khoá</option>
                 </select>
               </div>
-
-              <!-- screenshort -->
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <div class="input-field">
-                      <label class="active">Ảnh Hoạt Động </label><span> (Bạn có thể chọn tối đa 8 ảnh. Ảnh nổi bật của bạn phải là tệp PNG hoặc JPEG với kích thước tệp tối đa là 8 MB và độ phân giải ảnh là: 1455 x 500px)</span>
-                      <div id="screenshots" class="screenshots" style="padding-top: .5rem;"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- <div class="image-uploader" style="border: 0;">
-                <div class="uploaded" id="screen">
-                </div>
-              </div> -->
 
               @if(session()->has('error'))
               <p class="vali_sign" class="invalid-feedback" role="alert">

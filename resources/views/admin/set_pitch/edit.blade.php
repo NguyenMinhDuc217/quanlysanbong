@@ -11,48 +11,32 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title"><b>Pitchs Table</b></h3>
+          <h3 class="card-title"><b>Set Pitchs Table</b></h3>
         </div>
         <div class="container" style="margin: 10px 0px;">
           <div class="row">
             <div class="col-md-2">
-              <a class="btn btn-success uppercase" href="{{route('pitchs.index')}}"> <i class="nav-icon fa fa-long-arrow-left"></i> Back</a>
+              <a class="btn btn-success uppercase" href="{{route('set_pitchs.index')}}"> <i class="nav-icon fa fa-long-arrow-left"></i> Back</a>
             </div>
           </div>
         </div>
         <div class="col-md-12">
-          <form method="POST" action="{{route('pitchs.update', ['pitch'=>$pitch->id])}}" enctype="multipart/form-data">
+          <form method="POST" action="{{route('set_pitchs.update', ['pitchs'=>$pitchs->id])}}" enctype="multipart/form-data">
           @csrf @method('PUT')
-            <!-- avatar -->
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-            <div class="inbox-left-sd">
-                <img src="{{ asset('/images/pitch/') }}/{{$pitch->avartar}}" id="appimg" alt="App Cover"
-                      class="img-fluid app_cover">
-                <input required type="hidden" name="cover" id="cover">
-                <p class="text-center pt-3">App Image</p>
-
-                <div class="form-group">
-                    <label for="exampleFormControlFile1">Example file input</label>
-                    <input required value="" type="file" name="cover" class="form-control-file" id="cover_input">
-                </div>
-
-            </div>
-            </div>
-
             @if(Session::has('success'))
             <div class="alert alert-success notifi__success">
               <span>{{ Session::get('success') }}</span>
             </div>
             @endif
             <div class="card-body">
-              <div class="form-group">
-                <label for="">Tên</label>
-                <input type="text" value="{{$pitch->name}}" name="name" class="form-control" placeholder="Tên sân">
-                @error('username')
-                <span class="vali_sign" class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-                </span>
-                @enderror
+            <div class="form-group">
+                <label>Chọn sân sân</label>
+                <select type="pitch" class="form-control" name="type_pitch" id="type_pitch" placeholder="Chọn sân sân" 
+                value="{{$pitch->type_pitch}}">
+                @foreach($pitchs as $pitch)
+                  <option value="">{{$pitch->name}}</option>
+                  @endforeach
+                </select>
               </div>
               <div class="form-group">
                 <label for="">Giá</label>

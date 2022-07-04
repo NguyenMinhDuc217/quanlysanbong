@@ -11,13 +11,13 @@
         <div class="card-header">
           <h3 class="card-title"><b>Danh sách đặt sân</b></h3>
         </div>
-        <div class="container" style="margin: 10px 0px;">
+        <!-- <div class="container" style="margin: 10px 0px;">
           <div class="row">
             <div class="col-md-2">
-              <a class="btn btn-success uppercase" href="{{route('pitchs.create')}}"> <i class="nav-icon fas fa-plus"></i>Thêm Đặt sân</a>
+              <a class="btn btn-success uppercase" href="{{route('set_pitchs.create')}}"> <i class="nav-icon fas fa-plus"></i>Thêm Đặt sân</a>
             </div>
           </div>
-        </div>
+        </div> -->
         <div class="col-md-12">
           <table id="myTable" class="table table-striped table-bordered nowrap">
             <thead>
@@ -25,26 +25,29 @@
                 <th>ID</th>
                 <th>Tên sân</th>
                 <th>Người đặt</th>
-                <th>Thời gian</th>
-                <th>Trạng thái</th>
+                <th>Dịch vụ</th>
+                <th>Thời gian bắt đầu</th>
+                <th>Thời gian két thúc</th>
+                <th>Tình trạng</th>
                 <th>Chức năng</th>
               </tr>
             </thead>
             <tbody>
-              @foreach($pitchs as $pitch)
+              @foreach($detail_set_pitch as $pitch)
               <tr>
                 <td>{{$pitch->id}}</td>
-                <td>{{$pitch->name}}</td>
-                <td>@if($pitch->status==1)
-                  <span style=" color: #2ecc71;">Đang hoạt động</span>
-                  @elseif($pitch->status==2)
-                  <span style=" color: blue;">Chưa hoạt động</span>
-                  @elseif($pitch->status==3)
-                  <span style=" color: red;">Bị khóa</span>
-                  @endif
-                </td>
+                <td>{{$pitch->pitch_name}}</td>
+                <td>{{$pitch->username}}</td>
+                <td>{{$pitch->service_name}}</td>
+                <td>{{$pitch->start_time}}</td>
+                <td>{{$pitch->end_time}}</td>
+                @if($pitch->ispay == 1)
+                <td>Đã thanh toán</td>
+                @elseif($pitch->ispay == 0)
+                <td>Chưa thanh toán</td>
+                @endif
                 <td>
-                 <a  href="{{route('pitchs.edit',$pitch->id)}}"> <button class="btn btn-btn btn-primary">Sửa</button></a>
+                 <a  href="{{route('set_pitchs.edit',$pitch->id)}}"> <button class="btn btn-btn btn-primary">Sửa</button></a>
                   <button class="btn btn-btn btn-danger">Xoá</button>
                 </td>
               </tr>
