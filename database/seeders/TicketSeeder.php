@@ -15,7 +15,7 @@ class TicketSeeder extends Seeder
     public function run()
     {        Tickets::insert([
         [
-            'image' => 'ticket1.jpg',
+            'image' => 'ticket1.png',
             'number_day_of_week' => '1',
             'month'=>'1',
             'name'=>'Vé tháng hăng say',
@@ -25,7 +25,7 @@ class TicketSeeder extends Seeder
             'ticket_type_by_pitch'=>'5'
         ],
         [
-            'image' => 'ticket1.jpg',
+            'image' => 'ticket1.png',
             'number_day_of_week' => '2',
             'month'=>'1',
             'name'=>'Vé tháng chăm chỉ',
@@ -35,7 +35,7 @@ class TicketSeeder extends Seeder
             'ticket_type_by_pitch'=>'5'
         ],
         [
-            'image' => 'ticket1.jpg',
+            'image' => 'ticket1.png',
             'number_day_of_week' => '1',
             'month'=>'1',
             'name'=>'Vé tháng hăng say',
@@ -45,7 +45,7 @@ class TicketSeeder extends Seeder
             'ticket_type_by_pitch'=>'5'
         ],
         [
-            'image' => 'ticket1.jpg',
+            'image' => 'ticket1.png',
             'number_day_of_week' => '2',
             'month'=>'1',
             'name'=>'Vé tháng chăm chỉ',
@@ -55,7 +55,7 @@ class TicketSeeder extends Seeder
             'ticket_type_by_pitch'=>'5'
         ],
         [
-            'image' => 'ticket1.jpg',
+            'image' => 'ticket1.png',
             'number_day_of_week' => '1',
             'month'=>'1',
             'name'=>'Vé tháng hăng say',
@@ -65,7 +65,7 @@ class TicketSeeder extends Seeder
             'ticket_type_by_pitch'=>'7'
         ],
         [
-            'image' => 'ticket1.jpg',
+            'image' => 'ticket1.png',
             'number_day_of_week' => '2',
             'month'=>'1',
             'name'=>'Vé tháng chăm chỉ',
@@ -75,7 +75,7 @@ class TicketSeeder extends Seeder
             'ticket_type_by_pitch'=>'7'
         ],
         [
-            'image' => 'ticket1.jpg',
+            'image' => 'ticket1.png',
             'number_day_of_week' => '1',
             'month'=>'1',
             'name'=>'Vé tháng hăng say',
@@ -85,7 +85,7 @@ class TicketSeeder extends Seeder
             'ticket_type_by_pitch'=>'5'
         ],
         [
-            'image' => 'ticket1.jpg',
+            'image' => 'ticket1.png',
             'number_day_of_week' => '2',
             'month'=>'1',
             'name'=>'Vé tháng chăm chỉ',
@@ -95,7 +95,7 @@ class TicketSeeder extends Seeder
             'ticket_type_by_pitch'=>'5'
         ],
         [
-            'image' => 'ticket1.jpg',
+            'image' => 'ticket1.png',
             'number_day_of_week' => '1',
             'month'=>'1',
             'name'=>'Vé tháng hăng say',
@@ -105,7 +105,7 @@ class TicketSeeder extends Seeder
             'ticket_type_by_pitch'=>'5'
         ],
         [
-            'image' => 'ticket1.jpg',
+            'image' => 'ticket1.png',
             'number_day_of_week' => '2',
             'month'=>'1',
             'name'=>'Vé tháng chăm chỉ',
@@ -115,7 +115,7 @@ class TicketSeeder extends Seeder
             'ticket_type_by_pitch'=>'5'
         ],
         [
-            'image' => 'ticket1.jpg',
+            'image' => 'ticket1.png',
             'number_day_of_week' => '1',
             'month'=>'1',
             'name'=>'Vé tháng hăng say',
@@ -125,7 +125,7 @@ class TicketSeeder extends Seeder
             'ticket_type_by_pitch'=>'7'
         ],
         [
-            'image' => 'ticket1.jpg',
+            'image' => 'ticket1.png',
             'number_day_of_week' => '2',
             'month'=>'1',
             'name'=>'Vé tháng chăm chỉ',
