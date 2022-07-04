@@ -61,8 +61,8 @@ class PitchManagerController extends BaseAdminController
         ],[
             'name.required'=>'Vui lòng nhập tên sân',
             'name.max'=>'Vui lòng nhập tên sân không quá 255 ký tự',
-            'price.required'=>'Vui lòng nhập số điện thoại',
-            'price.numeric'=>'Số điện thoại phải là số',
+            'price.required'=>'Vui lòng nhập giá',
+            'price.numeric'=>'Giá phải là số',
             'describe.required' => 'Vui lòng nhập thông tin',
             'describe.max'=>'Vui lòng nhập tên sân không quá 500 ký tự',
         ]);

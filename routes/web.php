@@ -73,5 +73,6 @@ Route::prefix('admin')->group(function () {
    Route::resource('/users', UserManagerController::class);
    Route::resource('/pitchs', PitchManagerController::class);
    Route::resource('/set_pitchs', SetPitchManagerController::class);
+   Route::resource('/tickets', TicketManagerController::class);
 });
 

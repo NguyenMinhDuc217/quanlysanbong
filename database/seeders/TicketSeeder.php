@@ -22,7 +22,7 @@ class TicketSeeder extends Seeder
             'code_ticket'=>'TICKET123',
             'price'=>'1000000',
             'timeout'=>'2022-07-04',
-            'ticket_type_by_pitch'=>'5'
+            'discount'=>10,
         ],
         [
             'image' => 'ticket1.png',
@@ -32,7 +32,7 @@ class TicketSeeder extends Seeder
             'code_ticket'=>'TICKET123',
             'price'=>'2000000',
             'timeout'=>'2022-07-04',
-            'ticket_type_by_pitch'=>'5'
+            'discount'=>0,
         ],
         [
             'image' => 'ticket1.png',
@@ -42,7 +42,7 @@ class TicketSeeder extends Seeder
             'code_ticket'=>'TICKET123',
             'price'=>'1000000',
             'timeout'=>'2022-07-04',
-            'ticket_type_by_pitch'=>'5'
+            'discount'=>10,
         ],
         [
             'image' => 'ticket1.png',
@@ -52,7 +52,7 @@ class TicketSeeder extends Seeder
             'code_ticket'=>'TICKET123',
             'price'=>'2000000',
             'timeout'=>'2022-07-04',
-            'ticket_type_by_pitch'=>'5'
+            'discount'=>10,
         ],
         [
             'image' => 'ticket1.png',
@@ -62,7 +62,7 @@ class TicketSeeder extends Seeder
             'code_ticket'=>'TICKET123',
             'price'=>'1000000',
             'timeout'=>'2022-07-04',
-            'ticket_type_by_pitch'=>'7'
+            'discount'=>0,
         ],
         [
             'image' => 'ticket1.png',
@@ -72,7 +72,7 @@ class TicketSeeder extends Seeder
             'code_ticket'=>'TICKET123',
             'price'=>'2000000',
             'timeout'=>'2022-07-04',
-            'ticket_type_by_pitch'=>'7'
+            'discount'=>0,
         ],
         [
             'image' => 'ticket1.png',
@@ -82,7 +82,7 @@ class TicketSeeder extends Seeder
             'code_ticket'=>'TICKET123',
             'price'=>'1000000',
             'timeout'=>'2022-07-04',
-            'ticket_type_by_pitch'=>'5'
+            'discount'=>0,
         ],
         [
             'image' => 'ticket1.png',
@@ -92,7 +92,7 @@ class TicketSeeder extends Seeder
             'code_ticket'=>'TICKET123',
             'price'=>'2000000',
             'timeout'=>'2022-07-04',
-            'ticket_type_by_pitch'=>'5'
+            'discount'=>20,
         ],
         [
             'image' => 'ticket1.png',
@@ -102,7 +102,7 @@ class TicketSeeder extends Seeder
             'code_ticket'=>'TICKET123',
             'price'=>'1000000',
             'timeout'=>'2022-07-04',
-            'ticket_type_by_pitch'=>'5'
+            'discount'=>10,
         ],
         [
             'image' => 'ticket1.png',
@@ -112,7 +112,7 @@ class TicketSeeder extends Seeder
             'code_ticket'=>'TICKET123',
             'price'=>'2000000',
             'timeout'=>'2022-07-04',
-            'ticket_type_by_pitch'=>'5'
+            'discount'=>0,
         ],
         [
             'image' => 'ticket1.png',
@@ -122,7 +122,7 @@ class TicketSeeder extends Seeder
             'code_ticket'=>'TICKET123',
             'price'=>'1000000',
             'timeout'=>'2022-07-04',
-            'ticket_type_by_pitch'=>'7'
+            'discount'=>10,
         ],
         [
             'image' => 'ticket1.png',
@@ -132,7 +132,7 @@ class TicketSeeder extends Seeder
             'code_ticket'=>'TICKET123',
             'price'=>'2000000',
             'timeout'=>'2022-07-04',
-            'ticket_type_by_pitch'=>'7'
+            'discount'=>20,
         ],
     ]);
     }
