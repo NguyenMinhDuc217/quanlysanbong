@@ -15,11 +15,15 @@ class CreateTicketsTable extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->integer('service_id');
-            $table->date('start_day');
-            $table->date('end_day');
-            $table->string('ticket_type',255);
+            $table->string('image');
+            $table->string('name');
+            $table->string('code_ticket');
+            $table->string('number_day_of_week');
+            $table->date('timeout');
+            $table->string('price');
+            $table->string('month');
+            $table->string('ticket_type_by_pitch',255);
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }

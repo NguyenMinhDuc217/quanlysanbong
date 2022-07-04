@@ -96,14 +96,18 @@
                                     @enderror
                                 </div>
 
-                                <div class='box__filter' id='box__filter'>
-                                    @foreach($data['services'] as $service)
-                                    <label class="main">{{$service['name']}}
-                                        <input type="checkbox" name="service" {{(is_array(\Request::get('service')) && in_array($service['id'], \Request::get('service')) ) ? 'checked' : ((\Request::get('service') == $service['id']) ? 'checked' : "" )}} value="{{$service['id']}}">
-                                        <span class="geekmark"></span>
-                                    </label>
-                                    @endforeach
-                                </div>
+                            </div>
+                            <div class='box__filter' id='box__filter'>
+                                
+                                @foreach($data['services'] as $service)
+                                <div class="checkbox form-inline">
+                                <label class="main">
+                                 <input type="checkbox" name="ch_name[]" {{(is_array(\Request::get('service')) && in_array($service['id'], \Request::get('service')) ) ? 'checked' : ((\Request::get('service') == $service['id']) ? 'checked' : "" )}} value="{{$service['id']}}">  {{$service['name']}}
+                                <span class="geekmark"></span>
+                               </label>
+                               <input type="number" name="ch_for[{{$service['id']}}][]" value="1" placeholder="Nhập số lượng"  class="form-control ch_for hide" min="1">
+                               </div>
+                               @endforeach
                             </div>
                             @if(session()->has('error'))
                             <span class="vali_sign" class="invalid-feedback" role="alert">
@@ -281,6 +285,7 @@
     </div>
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script src="https://unpkg.com/boxicons@2.1.2/dist/boxicons.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.17/sweetalert2.min.js" integrity="sha512-Kyb4n9EVHqUml4QZsvtNk6NDNGO3+Ta1757DSJqpxe7uJlHX1dgpQ6Sk77OGoYA4zl7QXcOK1AlWf8P61lSLfQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -311,6 +316,11 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 }
+$(document).ready(function () {
+              $('.checkbox input:checkbox').on('click', function(){
+               $(this).closest('.checkbox').find('.ch_for').toggle();
+                })
+    });
 </script>
 <script>
     var swiper = new Swiper(".mySwiper", {
@@ -347,6 +357,7 @@ window.onclick = function(event) {
     nowTime3.setMinutes(nowTime3.getMinutes() - nowTime3.getTimezoneOffset());
     nowTime3.setHours(nowTime3.getHours() + 3);
     document.getElementById('timeStart').value = nowTime3.toISOString().slice(0, 16);
+    
     const nowTime5 = new Date();
     nowTime5.setMinutes(nowTime5.getMinutes() - nowTime5.getTimezoneOffset());
     nowTime5.setHours(nowTime5.getHours() + 5);

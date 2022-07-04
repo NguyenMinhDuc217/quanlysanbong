@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             PitchSeeder::class,
             SettingSeeder::class,
             ServicesSeeder::class,
+            TicketSeeder::class,
         ]);
     }
 }

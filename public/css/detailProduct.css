@@ -973,8 +973,19 @@ p, h2 {
     margin-top: 20px;
 }
 
+.box__filter {
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+    margin-bottom: 8px;
+}
+
 @media (max-width:1366px) {
     .advise_form__input {
         width: 270px;
     }
+}
+
+.hide{
+    display:none;
 }

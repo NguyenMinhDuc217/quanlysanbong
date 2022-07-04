@@ -16,11 +16,15 @@ class ServicesSeeder extends Seeder
     {
         Services::insert([
             [
-                'name' => 'Nước',
-                'price' => 15000,
+                'name' => 'name',
+                'price' => 5000,
             ],
             [
-                'name' => 'Áo đấu',
+                'name' => 'Revive chanh muối',
+                'price' => 5000,
+            ],
+            [
+                'name' => 'Áo bib',
                 'price' => 20000,
             ],
             [

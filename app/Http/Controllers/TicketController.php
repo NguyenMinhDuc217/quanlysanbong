@@ -15,4 +15,7 @@ class TicketController extends Controller
     public function showTicket(){
         return $this->ticketRepository->showTicket();
     }
+    public function viewTicket(Request $request){
+        return $this->ticketRepository->viewTicket($request);
+    }
 }

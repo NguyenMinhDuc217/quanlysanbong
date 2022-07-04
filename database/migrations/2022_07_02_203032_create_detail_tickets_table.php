@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDetailSetPitchsTable extends Migration
+class CreateDetailTicketsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class CreateDetailSetPitchsTable extends Migration
      */
     public function up()
     {
-        Schema::create('detail_set_pitchs', function (Blueprint $table) {
+        Schema::create('detail_tickets', function (Blueprint $table) {
             $table->id();
-            $table->integer('picth_id');
-            $table->integer('user_id');
-            $table->date('date_event')->nullable();
+            $table->string('ticket_id');
+            $table->longText('description');
+            $table->string('sercive_id');
             $table->dateTime('start_time');
             $table->dateTime('end_time');
-            $table->string('total');
-            $table->string('ispay')->default(0);
+            $table->string('pitch_id');
+            $table->string('status');
             $table->timestamps();
         });
     }
@@ -33,6 +33,6 @@ class CreateDetailSetPitchsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('detail_set_pitchs');
+        Schema::dropIfExists('detail_tickets');
     }
 }

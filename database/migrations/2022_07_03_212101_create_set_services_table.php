@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserSetServicesTable extends Migration
+class CreateSetServicesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateUserSetServicesTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_set_services', function (Blueprint $table) {
+        Schema::create('set_services', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
+            $table->integer('set_pitch_id');
             $table->integer('service_id');
-            $table->integer('quantity')->default(0);
+            $table->string('name',255);
+            $table->integer('quantity')->default(1);
+            $table->string('total',255);
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ class CreateUserSetServicesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_set_services');
+        Schema::dropIfExists('set_services');
     }
 }
