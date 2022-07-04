@@ -9,4 +9,5 @@ interface TicketRepositoryInterface
 {
     public function showTicket();
     public function viewTicket(Request $request);
+    public function detailTicket(Request $request);
 }

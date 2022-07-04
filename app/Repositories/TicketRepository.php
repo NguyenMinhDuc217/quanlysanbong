@@ -13,7 +13,7 @@ class TicketRepository implements TicketRepositoryInterface
 {
   public function showTicket(){
     $now=Carbon::now()->format('Y-m-d');
-       $tickets=Tickets::where('status',1)->where('timeout','>',$now)->paginate(9)->appends(request()->query());
+      $tickets=Tickets::where('status',1)->where('timeout','>',$now)->paginate(9)->appends(request()->query());
       return view('buy-ticket.index',compact('tickets'));
   }
 
@@ -27,4 +27,14 @@ class TicketRepository implements TicketRepositoryInterface
         'data'=>$data,
       ]);
   }
+
+  public function detailTicket(Request $request){
+    $now=Carbon::now()->format('Y-m-d');
+    $data=[];
+    $data['ticket']=Tickets::where('id', $request->ticketid)->where('status',1)->where('timeout','>',$now)->first();
+    $data['detail_ticket']=DetailTicket::where('ticket_id', $request->ticketid)->first();
+    return view('ticket-detail.index',compact('data'));
+  }
+
+  
 }

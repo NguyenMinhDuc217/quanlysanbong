@@ -62,6 +62,8 @@ Route::get('/return-vnpay', [PayController::class,'return'])->name('return.payme
 Route::get('/ticket', [TicketController::class,'showTicket'])->name('show.ticket');
 //view
 Route::get('/view-ticket', [TicketController::class,'viewTicket'])->name('view.ticket');
+//detail
+Route::get('/detail-ticket', [TicketController::class,'detailTicket'])->name('detail.ticket');
 
 Route::get('/dang-nhap', [AdminLoginController::class,'showLoginForm'])->name('admin.show.login');
 Route::post('/dang-nhap', [AdminLoginController::class,'login'])->name('admin.login');
