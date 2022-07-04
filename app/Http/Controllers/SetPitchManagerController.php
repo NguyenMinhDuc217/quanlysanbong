@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\BaseAdminController;
 use App\Models\Detail_set_pitchs;
 use App\Models\Pitchs;
+use App\Models\Services;
 use App\Models\User;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
@@ -35,10 +36,13 @@ class SetPitchManagerController extends BaseAdminController
         $users = [];
         foreach($detail_set_pitch as $i => $detail){
             $users = User::where("id",$detail['user_id'])->first();
-            $detail[$i]['username'] = isset($users['name']) ? $users['name'] : "";
-            dd($detail);
+            $services = Services::where("id",$detail["service_id"])->first();
+            $pitchs = Pitchs::where("id",$detail["picth_id"])->first();
+            $detail['pitch_name'] = isset($pitchs['name']) ? $pitchs['name'] : "";
+            $detail['username'] = isset($users['username']) ? $users['username'] : "";
+            $detail['service_name'] = isset($services['name']) ? $services['name'] : "";
+            // dd($detail["picth_id"], $pitchs);
         }
-        dd($users);
         return View('admin.set_pitch.index', compact('detail_set_pitch'));
     }
 
@@ -49,7 +53,7 @@ class SetPitchManagerController extends BaseAdminController
      */
     public function create()
     {
-        return View('admin.pitch.create');
+        return View('admin.set_pitchs.create');
     }
 
     /**
@@ -145,8 +149,8 @@ class SetPitchManagerController extends BaseAdminController
      */
     public function edit($id)
     {
-        $pitch = Pitchs::where('id', $id)->first();
-        return View('admin.pitch.edit',compact('pitch'));
+        $pitchs = Pitchs::where('id', $id)->first();
+        return View('admin.set_pitch.edit',compact('pitchs'));
     }
 
     /**

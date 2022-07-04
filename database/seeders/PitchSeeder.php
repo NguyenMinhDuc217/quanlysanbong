@@ -26,7 +26,7 @@ class PitchSeeder extends Seeder
                 'average_rating' => '4',
                 'total_rating' => 45,
                 'total_set' => 78,
-                'status' => '',
+                'status' => '1',
             ],
             [
                 'id' => 2,
@@ -39,7 +39,7 @@ class PitchSeeder extends Seeder
                 'average_rating' => '4.5',
                 'total_rating' => 65,
                 'total_set' => 94,
-                'status' => '',
+                'status' => '1',
             ],
             [
                 'id' => 3,
@@ -52,7 +52,7 @@ class PitchSeeder extends Seeder
                 'average_rating' => '3.5',
                 'total_rating' => 34,
                 'total_set' => 40,
-                'status' => '',
+                'status' => '1',
             ],
             [
                 'id' => 4,
@@ -65,7 +65,7 @@ class PitchSeeder extends Seeder
                 'average_rating' => '4',
                 'total_rating' => 50,
                 'total_set' => 62,
-                'status' => '',
+                'status' => '1',
             ],
             [
                 'id' => 5,
@@ -78,7 +78,7 @@ class PitchSeeder extends Seeder
                 'average_rating' => '5',
                 'total_rating' => 41,
                 'total_set' => 54,
-                'status' => '',
+                'status' => '1',
             ],
             [
                 'id' => 6,
@@ -91,7 +91,7 @@ class PitchSeeder extends Seeder
                 'average_rating' => '3.5',
                 'total_rating' => 28,
                 'total_set' => 39,
-                'status' => '',
+                'status' => '1',
             ],
             [
                 'id' => 7,
@@ -104,7 +104,7 @@ class PitchSeeder extends Seeder
                 'average_rating' => '4',
                 'total_rating' => 46,
                 'total_set' => 64,
-                'status' => '',
+                'status' => '1',
             ],
             [
                 'id' => 8,
@@ -117,7 +117,7 @@ class PitchSeeder extends Seeder
                 'average_rating' => '5',
                 'total_rating' => 80,
                 'total_set' => 95,
-                'status' => '',
+                'status' => '1',
             ],
             [
                 'id' => 9,
@@ -130,7 +130,7 @@ class PitchSeeder extends Seeder
                 'average_rating' => '4',
                 'total_rating' => 38,
                 'total_set' => 50,
-                'status' => '',
+                'status' => '1',
             ],
             [
                 'id' => 10,
@@ -143,7 +143,7 @@ class PitchSeeder extends Seeder
                 'average_rating' => '3.5',
                 'total_rating' => 20,
                 'total_set' => 31,
-                'status' => '',
+                'status' => '1',
             ],
             [
                 'id' => 11,
@@ -156,7 +156,7 @@ class PitchSeeder extends Seeder
                 'average_rating' => '4',
                 'total_rating' => 101,
                 'total_set' => 112,
-                'status' => '',
+                'status' => '1',
             ],
             [
                 'id' => 12,
@@ -169,7 +169,7 @@ class PitchSeeder extends Seeder
                 'average_rating' => '5',
                 'total_rating' => 62,
                 'total_set' => 103,
-                'status' => '',
+                'status' => '1',
             ],
             [
                 'id' => 13,
@@ -182,7 +182,7 @@ class PitchSeeder extends Seeder
                 'average_rating' => '3.5',
                 'total_rating' => 28,
                 'total_set' => 39,
-                'status' => '',
+                'status' => '1',
             ],
             [
                 'id' => 14,
@@ -195,7 +195,7 @@ class PitchSeeder extends Seeder
                 'average_rating' => '4',
                 'total_rating' => 54,
                 'total_set' => 72,
-                'status' => '',
+                'status' => '1',
             ],
             [
                 'id' => 15,
@@ -208,7 +208,7 @@ class PitchSeeder extends Seeder
                 'average_rating' => '4.5',
                 'total_rating' => 50,
                 'total_set' => 60,
-                'status' => '',
+                'status' => '1',
             ],
         ]);
     }
