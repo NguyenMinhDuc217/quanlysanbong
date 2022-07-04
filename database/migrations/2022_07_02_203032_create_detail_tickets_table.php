@@ -16,6 +16,7 @@ class CreateDetailTicketsTable extends Migration
         Schema::create('detail_tickets', function (Blueprint $table) {
             $table->id();
             $table->string('ticket_id');
+            $table->longText('description');
             $table->string('sercive_id');
             $table->dateTime('start_time');
             $table->dateTime('end_time');

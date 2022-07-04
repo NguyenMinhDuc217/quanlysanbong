@@ -357,6 +357,7 @@ $(document).ready(function () {
     nowTime3.setMinutes(nowTime3.getMinutes() - nowTime3.getTimezoneOffset());
     nowTime3.setHours(nowTime3.getHours() + 3);
     document.getElementById('timeStart').value = nowTime3.toISOString().slice(0, 16);
+    
     const nowTime5 = new Date();
     nowTime5.setMinutes(nowTime5.getMinutes() - nowTime5.getTimezoneOffset());
     nowTime5.setHours(nowTime5.getHours() + 5);

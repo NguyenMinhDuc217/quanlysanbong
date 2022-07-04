@@ -117,7 +117,6 @@ tr:nth-child(even) {
 
 <script>
   $(document).ready(function(){
- 
         $(document).on('click','.deleteSetPitchBtn',function(e){
           e.preventDefault();
           var setpitch_id=$(this).val();

@@ -1,0 +1,161 @@
+
+.product {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 20px 0 20px 20px;
+    /* width: 100%; */
+}
+
+.product_item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    row-gap: 20px;
+}
+
+.product_title {
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-size: 18px;
+}
+
+.product_item__title,
+.product_item__vote_num,
+.product_item__price {
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-size: 14px;
+    color: #333;
+    padding: 0 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+}
+
+.product_item__list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: calc(100% / 4);
+}
+
+.product_item__link {
+    text-decoration: none;
+    border: 1px solid #EDEDED;
+    border-radius: 5px;
+}
+
+.product_item__rating {
+    font-size: 10px;
+    /* transform: scale(0.8); */
+    transform-origin: right;
+    color: #d5d5d5;
+    margin: -1px 0 0 auto;
+}
+
+.product_item__star_active {
+    color: #FF9727;
+}
+
+.product_item__price_color {
+    color: #FF6700;
+}
+
+.product_item__title {
+    margin: 10px 0;
+}
+
+.product_item__vote {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.product_item__price {
+    margin: 10px 0;
+}
+
+.product_item__link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* star */
+
+.star__pagelistgame {
+    padding: 5px;
+}
+
+.star .bx {
+    font-size: 15px;
+    color: #efef4c;
+}
+
+.star {
+    cursor: pointer;
+}
+
+.star__active .bxs-like,
+.bxs-dislike {
+    cursor: pointer;
+}
+
+.bxs-star {
+    color: #dbdb1c !important;
+}
+
+/*hết product sân bóng đá*/
+/* pagination */
+.home-product__pagination {
+    margin: 48px 0 32px;
+    padding-left: 0;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+}
+
+.pagination-item {
+    margin: 0 12px;
+}
+
+.pagination-item__active .pagination-item__link {
+    background-color: #226A35;
+    color: #FFFFFF;
+}
+
+.pagination-item__active .pagination-item__link:hover {
+    background-color: #55a1f8;
+}
+
+.pagination-item__link {
+    display: block;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 300;
+    color: #939393;
+    height: 30px;
+    line-height: 30px;
+    min-width: 40px;
+    text-align: center;
+    border-radius: 2px;
+}
+/* hết pagination */
+
+
+
+/* hết footer */
+
+@media (max-width:1366px) {
+    .product_item__list {
+        width: calc(100% / 3);
+    }
+}

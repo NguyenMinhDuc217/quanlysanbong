@@ -8,4 +8,5 @@ use App\Repositories\TicketRepository;
 interface TicketRepositoryInterface
 {
     public function showTicket();
+    public function viewTicket(Request $request);
 }
