@@ -98,16 +98,16 @@
 
                             </div>
                             <div class='box__filter' id='box__filter'>
-                                
+
                                 @foreach($data['services'] as $service)
                                 <div class="checkbox form-inline">
-                                <label class="main">
-                                 <input type="checkbox" name="ch_name[]" {{(is_array(\Request::get('service')) && in_array($service['id'], \Request::get('service')) ) ? 'checked' : ((\Request::get('service') == $service['id']) ? 'checked' : "" )}} value="{{$service['id']}}">  {{$service['name']}}
-                                <span class="geekmark"></span>
-                               </label>
-                               <input type="number" name="ch_for[{{$service['id']}}][]" value="1" placeholder="Nhập số lượng"  class="form-control ch_for hide" min="1">
-                               </div>
-                               @endforeach
+                                    <label class="main">
+                                        <input type="checkbox" name="ch_name[]" {{(is_array(\Request::get('service')) && in_array($service['id'], \Request::get('service')) ) ? 'checked' : ((\Request::get('service') == $service['id']) ? 'checked' : "" )}} value="{{$service['id']}}"> {{$service['name']}}
+                                        <span class="geekmark"></span>
+                                    </label>
+                                    <input type="number" name="ch_for[{{$service['id']}}][]" value="1" placeholder="Nhập số lượng" class="form-control ch_for hide" min="1">
+                                </div>
+                                @endforeach
                             </div>
                             @if(session()->has('error'))
                             <span class="vali_sign" class="invalid-feedback" role="alert">
@@ -119,34 +119,82 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- Trigger/Open The Modal -->
-            <button class="button" id="myBtn">Lịch đặt sân</button>
 
-            <!-- The Modal -->
-            <div id="myModal" class="modal">
-
-            <!-- Modal content -->
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <!-- <p>Some text in the Modal..</p> -->
-                 <div class="leaderboard__profiles">
+            <div class="leaderboard__profiles">
                 <article class="leaderboard__profile">
-                    <table>
+                    <!-- Table-->
+                    <table cellspacing="0" cellpadding="0">
                         <tr>
-                            <th>Thời gian bắt đầu</th>
-                            <th>Thời gian kết thúc</th>
+                            <td>
+                                <table cellspacing="0" cellpadding="1" style="margin-bottom: 15px;border-bottom: 1px solid #d9c3c3;padding-bottom: 10px">
+                                    <tr style="color:#3CC472;font-size:20px; padding-bottom:20px">
+                                        <th>Thời gian bắt đầu</th>
+                                        <th>Thời gian kết thúc</th>
+                                    </tr>
+                                </table>
+                            </td>
                         </tr>
-                        @foreach($data['detail_set_pitchs'] as $detail)
                         <tr>
-                            <td><span class="leaderboard__name">{{$detail['start_time']}}</span></td>
-                            <td><span class="leaderboard__value">{{$detail['end_time']}}</span></td>
+                            <td>
+                                <div class="value__table">
+                                    <table cellspacing="0" cellpadding="1">
+                                        @foreach($data['detail_set_pitchs'] as $detail)
+                                        <tr>
+                                            <td><span class="leaderboard__name">{{$detail['start_time']}}</span></td>
+                                            <td><span class="leaderboard__name">{{$detail['end_time']}}</span></td>
+                                        </tr>
+                                        @endforeach
+                                        <tr>
+                                            <td><span class="leaderboard__name">jsadgjadgsadhs</span></td>
+                                            <td><span class="leaderboard__name">shđsgạdghád</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="leaderboard__name">jsadgjadgsadhs</span></td>
+                                            <td><span class="leaderboard__name">shđsgạdghád</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="leaderboard__name">jsadgjadgsadhs</span></td>
+                                            <td><span class="leaderboard__name">shđsgạdghád</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="leaderboard__name">jsadgjadgsadhs</span></td>
+                                            <td><span class="leaderboard__name">shđsgạdghád</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="leaderboard__name">jsadgjadgsadhs</span></td>
+                                            <td><span class="leaderboard__name">shđsgạdghád</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="leaderboard__name">jsadgjadgsadhs</span></td>
+                                            <td><span class="leaderboard__name">shđsgạdghád</span></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
                         </tr>
-                        @endforeach
                     </table>
+                    <!-- Old -->
+                    <!-- <table>
+                        <thead>
+                            <tr>
+                                <th>Thời gian bắt đầu</th>
+                                <th>Thời gian kết thúc</th>
+                            </tr>
+                        </thead>
+                        <div style="height:80px; overflow:auto;">
+                        <tbody>
+                            @foreach($data['detail_set_pitchs'] as $detail)
+                            <td>
+                                <tr>
+                                    <td><span class="leaderboard__name">{{$detail['start_time']}}</span></td>
+                                    <td><span class="leaderboard__value">{{$detail['end_time']}}</span></td>
+                                </tr>
+                            </td>
+                            @endforeach
+                        </tbody>
+                        </div>
+                    </table> -->
                 </article>
-            </div>
-            </div>
             </div>
         </div>
     </div>
@@ -158,35 +206,35 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.17/sweetalert2.min.js" integrity="sha512-Kyb4n9EVHqUml4QZsvtNk6NDNGO3+Ta1757DSJqpxe7uJlHX1dgpQ6Sk77OGoYA4zl7QXcOK1AlWf8P61lSLfQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
-// Get the modal
-var modal = document.getElementById("myModal");
+    // Get the modal
+    var modal = document.getElementById("myModal");
 
-// Get the button that opens the modal
-var btn = document.getElementById("myBtn");
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
 
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
 
-// When the user clicks the button, open the modal 
-btn.onclick = function() {
-  modal.style.display = "block";
-}
+    // When the user clicks the button, open the modal 
+    // btn.onclick = function() {
+    //   modal.style.display = "block";
+    // }
 
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
-}
+    // When the user clicks on <span> (x), close the modal
+    // span.onclick = function() {
+    //   modal.style.display = "none";
+    // }
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
-$(document).ready(function () {
-              $('.checkbox input:checkbox').on('click', function(){
-               $(this).closest('.checkbox').find('.ch_for').toggle();
-                })
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+    $(document).ready(function() {
+        $('.checkbox input:checkbox').on('click', function() {
+            $(this).closest('.checkbox').find('.ch_for').toggle();
+        })
     });
 </script>
 <script>
@@ -224,7 +272,7 @@ $(document).ready(function () {
     nowTime3.setMinutes(nowTime3.getMinutes() - nowTime3.getTimezoneOffset());
     nowTime3.setHours(nowTime3.getHours() + 3);
     document.getElementById('timeStart').value = nowTime3.toISOString().slice(0, 16);
-    
+
     const nowTime5 = new Date();
     nowTime5.setMinutes(nowTime5.getMinutes() - nowTime5.getTimezoneOffset());
     nowTime5.setHours(nowTime5.getHours() + 5);

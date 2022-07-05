@@ -37,12 +37,14 @@ class PitchRepository implements PitchRepositoryInterface
     public function DetailPitch($pitchid = ''){
         $pitch = Pitchs::where('id',$pitchid)->first();
         $comments = Comments::where('picth_id', $pitchid)->get()->toArray();
-
+        
         if (!empty(Auth::guard('user')->user()->id)) {
             foreach ($comments as &$c) {
-               $userComment = User_comments::where('comment_id', $c->id)->where('user_id', Auth::guard('user')->user()->id)->first();
-               $c->status = (!empty($userComment['status'])) ? $userComment['status'] :'';
-               
+               $userComment = User_comments::where('comment_id', $c["id"])->where('user_id', Auth::guard('user')->user()->id)->first();
+            //    dd(!empty($userComment['status']) ? $userComment['status'] :'');
+            $c["created_at"] = strtotime($c["created_at"]);
+            // dd($c["created_at"]);
+            $c["status"] = (!empty($userComment['status'])) ? $userComment['status'] :"";
             }
         }
         //lấy lượt đánh giá của từng sao
@@ -96,7 +98,7 @@ class PitchRepository implements PitchRepositoryInterface
         if (empty(Auth::guard('user')->user()->id)) {
             $comment = new Comments();
             $comment->picth_id = $pitch['id'];
-            $comment->id_user = 0;
+            $comment->user_id = 0;
             $comment->name = "user" . "" . rand(0, 10) . "" . Str::random(5);
             $comment->content = $request->get('comment');
             if (empty($request->get('rating'))) {
@@ -123,16 +125,16 @@ class PitchRepository implements PitchRepositoryInterface
             if(empty($check)){
                 $comment = new Comments();
                 $comment->picth_id = $pitch['id'];
-                $comment->id_user = Auth::guard('user')->user()->id;
-                $comment->name = Auth::guard('user')->user()->name;
+                $comment->user_id = Auth::guard('user')->user()->id;
+                $comment->name = Auth::guard('user')->user()->username;
                 $comment->content = $request->get('comment');
                 if (empty($request->get('rating'))) {
                     $comment->rating = 1;
                 } else {
                     $comment->rating = $request->get('rating');
                 }
-                $comment->approval = "";
-                $comment->ip = "";
+                $comment->like = "";
+                $comment->dislike = "";
                 $comment->save();
                 //cập nhật numberVoters, score vô trong application đó
                 $idpitch = $pitch['id'];
