@@ -33,6 +33,7 @@ class TicketManagerController extends Controller
             'price' => 'required|numeric',
             'describe' => 'required|max:500',
             'number_day' => 'required|digits:1,7',
+            'timeOut' => 'required',
             'timeStart' => 'required',
             'timeEnd' => 'required',
         ],[
@@ -44,16 +45,22 @@ class TicketManagerController extends Controller
             'price.numeric'=>'Giá phải là số',
             'number_day.required' => 'Vui lòng nhập số ngày',
             'number_day.digits'=>'Vui lòng nhập số ngày trong khoảng từ 1 đến 7',
+            'timeOut.required'=>'Vui lòng chọn thời gian bắt đầu',
             'timeStart.required'=>'Vui lòng chọn thời gian bắt đầu',
             'timeEnd.required'=>'Vui lòng thời gian kết thúc',
         ]);
-
+        
+        $timeOut=$request->timeOut;
         $timeStart=$request->timeStart;
+        // dd(abs(strtotime($timeStart) - strtotime($timeOut))/(SECOND*MINUTE*24), $timeOut, $timeStart);
         $timeEnd=$request->timeEnd;
+
         if( $timeEnd<$timeStart){
             return redirect()->route('tickets.create')->with('error',"Thời gian kết thúc phải lớn hơn thời gian bắt đầu");
         }
-        
+        if((abs(strtotime($timeStart) - strtotime($timeOut))/(SECOND*MINUTE*24)) < 3){
+            return redirect()->route('tickets.create')->with('error',"Thời gian hạn đặt vé phải lớn hơn thời gian bắt đầu 3 ngày");
+        }
 
         $pitch = new Pitchs();
         $pitch->name = $request->name;
