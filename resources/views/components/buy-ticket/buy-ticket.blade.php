@@ -65,7 +65,7 @@
                     @endif
                   </div>
                 <div class="product_item__price">
-                  <form action="{{route('')}}" method="POST" enctype="multipart/form-data">
+                  <form action="" method="POST" enctype="multipart/form-data">
                     @csrf
                       <button type="submit" class="btn btn-primary btn_buy">
                        Mua ngay
