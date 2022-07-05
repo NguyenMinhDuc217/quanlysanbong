@@ -65,9 +65,12 @@
                     @endif
                   </div>
                 <div class="product_item__price">
-                    <button class="btn btn-primary btn_buy">
+                  <form action="{{route('')}}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                      <button type="submit" class="btn btn-primary btn_buy">
                        Mua ngay
                     </button>
+                  </form>
                     <button type="button" value="{{$ticket['id']}}" class="btn btn-success btnShow btn-sm btn_view" data-toggle="modal" data-target="#show">
                       Xem nhanh
                   </button>
