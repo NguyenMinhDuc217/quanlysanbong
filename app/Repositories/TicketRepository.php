@@ -13,7 +13,7 @@ class TicketRepository implements TicketRepositoryInterface
 {
   public function showTicket(){
     $now=Carbon::now()->format('Y-m-d');
-       $tickets=Tickets::where('status',1)->where('timeout','>',$now)->paginate(9)->appends(request()->query());
+       $tickets=Tickets::where('status',1)->where('timeout','>=',$now)->paginate(9)->appends(request()->query());
       return view('buy-ticket.index',compact('tickets'));
   }
 
