@@ -120,166 +120,21 @@
                 </div>
             </div>
             
-            <!-- Trigger/Open The Modal -->
-            <button class="button" id="myBtn">Lịch đặt sân</button>
-
-            <!-- The Modal -->
-            <div id="myModal" class="modal">
-
-            <!-- Modal content -->
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <!-- <p>Some text in the Modal..</p> -->
-                <div class="leaderboard__profiles">
-                @foreach($data['detail_set_pitchs'] as $detail)
+            <div class="leaderboard__profiles">
                 <article class="leaderboard__profile">
                     <table>
-                    <tr>
-                        <th>Thời gian bắt đầu</th>
-                        <th>Thời gian kết thúc</th>
-                    </tr>
+                        <tr>
+                            <th>Thời gian bắt đầu</th>
+                            <th>Thời gian kết thúc</th>
+                        </tr>
+                        @foreach($data['detail_set_pitchs'] as $detail)
                         <tr>
                             <td><span class="leaderboard__name">{{$detail['start_time']}}</span></td>
                             <td><span class="leaderboard__value">{{$detail['end_time']}}</span></td>
                         </tr>
+                        @endforeach
                     </table>
                 </article>
-                @endforeach
-                <!-- <article class="leaderboard__profile">
-                    <table>
-                    <tr>
-                        <th>Thời gian</th>
-                        <th>Tình trạng</th>
-                    </tr>
-                        <tr>
-                            <td><span class="leaderboard__name">2h->4h</span></td>
-                            <td><span class="leaderboard__value">Còn trống</span></td>
-                        </tr>
-                    </table>
-                </article>
-                <article class="leaderboard__profile">
-                    <table>
-                    <tr>
-                        <th>Thời gian</th>
-                        <th>Tình trạng</th>
-                    </tr>
-                        <tr>
-                            <td><span class="leaderboard__name">4h->6h</span></td>
-                            <td><span class="leaderboard__value">Đã được đặt</span></td>
-                        </tr>
-                    </table>
-                </article>
-                <article class="leaderboard__profile">
-                    <table>
-                    <tr>
-                        <th>Thời gian</th>
-                        <th>Tình trạng</th>
-                    </tr>
-                        <tr>
-                            <td><span class="leaderboard__name">6h->8h</span></td>
-                            <td><span class="leaderboard__value">Đã được đặt</span></td>
-                        </tr>
-                    </table>
-                </article>
-                <article class="leaderboard__profile">
-                    <table>
-                    <tr>
-                        <th>Thời gian</th>
-                        <th>Tình trạng</th>
-                    </tr>
-                        <tr>
-                            <td><span class="leaderboard__name">8h->10h</span></td>
-                            <td><span class="leaderboard__value">Đã được đặt</span></td>
-                        </tr>
-                    </table>
-                </article>
-                <article class="leaderboard__profile">
-                    <table>
-                    <tr>
-                        <th>Thời gian</th>
-                        <th>Tình trạng</th>
-                    </tr>
-                        <tr>
-                            <td><span class="leaderboard__name">10h->12h</span></td>
-                            <td><span class="leaderboard__value">Còn trống</span></td>
-                        </tr>
-                    </table>
-                </article>
-                <article class="leaderboard__profile">
-                    <table>
-                    <tr>
-                        <th>Thời gian</th>
-                        <th>Tình trạng</th>
-                    </tr>
-                        <tr>
-                            <td><span class="leaderboard__name">12h->14h</span></td>
-                            <td><span class="leaderboard__value">Còn trống</span></td>
-                        </tr>
-                    </table>
-                </article>
-                <article class="leaderboard__profile">
-                    <table>
-                    <tr>
-                        <th>Thời gian</th>
-                        <th>Tình trạng</th>
-                    </tr>
-                        <tr>
-                            <td><span class="leaderboard__name">14h->16h</span></td>
-                            <td><span class="leaderboard__value">Đã được đặt</span></td>
-                        </tr>
-                    </table>
-                </article>
-                <article class="leaderboard__profile">
-                    <table>
-                    <tr>
-                        <th>Thời gian</th>
-                        <th>Tình trạng</th>
-                    </tr>
-                        <tr>
-                            <td><span class="leaderboard__name">16h->18h</span></td>
-                            <td><span class="leaderboard__value">Đã được đặt</span></td>
-                        </tr>
-                    </table>
-                </article>
-                <article class="leaderboard__profile">
-                    <table>
-                    <tr>
-                        <th>Thời gian</th>
-                        <th>Tình trạng</th>
-                    </tr>
-                        <tr>
-                            <td><span class="leaderboard__name">18h->20h</span></td>
-                            <td><span class="leaderboard__value">Đã được đặt</span></td>
-                        </tr>
-                    </table>
-                </article>
-                <article class="leaderboard__profile">
-                    <table>
-                    <tr>
-                        <th>Thời gian</th>
-                        <th>Tình trạng</th>
-                    </tr>
-                        <tr>
-                            <td><span class="leaderboard__name">20h->22h</span></td>
-                            <td><span class="leaderboard__value">Đã được đặt</span></td>
-                        </tr>
-                    </table>
-                </article>
-                <article class="leaderboard__profile">
-                    <table>
-                    <tr>
-                        <th>Thời gian</th>
-                        <th>Tình trạng</th>
-                    </tr>
-                        <tr>
-                            <td><span class="leaderboard__name">22h->24h</span></td>
-                            <td><span class="leaderboard__value">Còn trống</span></td>
-                        </tr>
-                    </table>
-                </article> -->
-            </div>
-            </div>
-
             </div>
         </div>
     </div>

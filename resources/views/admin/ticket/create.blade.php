@@ -60,7 +60,7 @@
               <!-- Sân -->
               <div class="form-group">
               <label>Sân</label>
-              <select type="name" class="form-control" name="pitch" id="pitch" placeholder="Sân" value="#">
+              <select type="name" class="form-control" name="pitch_id" id="pitch_id" placeholder="Sân" value="#">
                 @foreach($pitchs as $pitch)
                   <option value="{{$pitch->id}}">{{$pitch->name}}</option>
                 @endforeach
@@ -78,15 +78,15 @@
               <!-- Number day of week -->
               <div class="form-group">
                 <label>Số ngày trong một tuần <span class="text-danger"></span></label>
-                <input type="text" name="number_day" class="form-control" placeholder="Ex: 2 ngày">
+                <input type="text" name="number_day" class="form-control" placeholder="Ex(ngày): 2">
               </div>
               <!-- Tháng -->
               <div class="form-group">
-              <label>Tháng</label>
-              <select type="name" class="form-control" name="month" id="status" placeholder="Tháng" value="#">
-                @foreach($months as $month)
-                  <option value="{{$month}}">Tháng {{$month}}</option>
-                @endforeach
+              <label>Số tháng</label>
+                <select type="name" class="form-control" name="month" id="month" placeholder="Số tháng" value="#">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
                 </select>
               </div>
               <!-- Thời gain hết hạn -->
@@ -113,6 +113,16 @@
               <div class="form-group">
                 <label for="">Thời gian kết thúc</label>
                 <input type="date" name="timeEnd" id="timeEnd">
+                  @error('timeEnd')
+                  <span class="vali_sign" class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+                  @enderror
+              </div>
+              <!-- Chi tiết thời gian đá hàng tuần -->
+              <div class="form-group">
+                <label for="">Chi tiết thời gian đá hàng tuần</label>
+                <input type="datetime-local" name="timeDay" id="timeDay">
                   @error('timeEnd')
                   <span class="vali_sign" class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
@@ -207,5 +217,10 @@
     nowTime5.setMinutes(nowTime5.getMinutes() - nowTime5.getTimezoneOffset());
     nowTime5.setHours(nowTime5.getHours() + 5);
     document.getElementById('timeEnd').value = nowTime5.toISOString().slice(0, 16);
+
+    const nowTime7 = new Date();
+    nowTime7.setMinutes(nowTime5.getMinutes() - nowTime7.getTimezoneOffset());
+    nowTime7.setHours(nowTime7.getHours() + 5);
+    document.getElementById('timeDay').value = nowTime7.toISOString().slice(0, 16);
 </script>
   @endsection

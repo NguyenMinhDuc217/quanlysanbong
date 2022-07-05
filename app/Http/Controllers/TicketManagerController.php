@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DetailTicket;
 use App\Models\Pitchs;
 use App\Models\Services;
 use App\Models\Tickets;
 use Illuminate\Http\Request;
+use Intervention\Image\ImageManagerStatic as Image;
+use Carbon\Carbon;
 
 class TicketManagerController extends Controller
 {
@@ -17,10 +20,10 @@ class TicketManagerController extends Controller
     }
     public function create()
     {
-        $months = ['1','2','3','4','5','6','7','8','9','10','11','12'];
+        // $months = ['1','2','3','4','5','6','7','8','9','10','11','12'];
         $services = Services::all();
         $pitchs = Pitchs::all();
-        return View('admin.ticket.create', compact('months', 'services','pitchs'));
+        return View('admin.ticket.create', compact('services','pitchs'));
     }
     public function store(Request $request)
     {
@@ -36,6 +39,7 @@ class TicketManagerController extends Controller
             'timeOut' => 'required',
             'timeStart' => 'required',
             'timeEnd' => 'required',
+            'timeDay' => 'required',
         ],[
             'name.required'=>'Vui lòng nhập tên vé',
             'name.max'=>'Vui lòng nhập tên vé không quá 255 ký tự',
@@ -48,71 +52,86 @@ class TicketManagerController extends Controller
             'timeOut.required'=>'Vui lòng chọn thời gian bắt đầu',
             'timeStart.required'=>'Vui lòng chọn thời gian bắt đầu',
             'timeEnd.required'=>'Vui lòng thời gian kết thúc',
+            'timeDay.required'=>'Vui lòng thời gian đá hàng tuần',
         ]);
-        
+        $now=Carbon::now()->format('Y-m-d');
+        $month = $request->month;
         $timeOut=$request->timeOut;
         $timeStart=$request->timeStart;
-        // dd(abs(strtotime($timeStart) - strtotime($timeOut))/(SECOND*MINUTE*24), $timeOut, $timeStart);
         $timeEnd=$request->timeEnd;
-
-        if( $timeEnd<$timeStart){
-            return redirect()->route('tickets.create')->with('error',"Thời gian kết thúc phải lớn hơn thời gian bắt đầu");
+        $timeDay=$request->timeDay;
+        $checkTicket = Tickets::where('name',$request->name)->first();
+        if(!empty($checkTicket)){
+            return redirect()->route('tickets.create')->with('error',"Vé đã tồn tại");
+        }
+        if( $timeOut<$now){
+            return redirect()->route('tickets.create')->with('error',"Thời gian hạn đặt vé phải lớn hơn hoặc bầng thời gian hiện tại");
         }
         if((abs(strtotime($timeStart) - strtotime($timeOut))/(SECOND*MINUTE*24)) < 3){
             return redirect()->route('tickets.create')->with('error',"Thời gian hạn đặt vé phải lớn hơn thời gian bắt đầu 3 ngày");
         }
-
-        $pitch = new Pitchs();
-        $pitch->name = $request->name;
-        $pitch->price = $request->price;
-        $pitch->describe = $request->describe;
+        if( $timeEnd<$timeStart){
+            return redirect()->route('tickets.create')->with('error',"Thời gian kết thúc phải lớn hơn thời gian bắt đầu");
+        }
+        if( $timeDay<$timeStart){
+            return redirect()->route('tickets.create')->with('error',"Thời gian đá hàng tuần phải lớn hơn hoặc bằng thời gian bắt đầu");
+        }
+        if($month == 1){
+            if((abs(strtotime($timeEnd) - strtotime($timeStart))/(SECOND*MINUTE*24)) < 30 || (abs(strtotime($timeEnd) - strtotime($timeStart))/(SECOND*MINUTE*24)) > 30){
+                return redirect()->route('tickets.create')->with('error',"Bạn đã trọn ".$month." tháng nên thời gian hiệu lực của vé phải là 31 ngày");
+            }
+        }elseif($month == 2){
+            if((abs(strtotime($timeEnd) - strtotime($timeStart))/(SECOND*MINUTE*24)) < 60 || (abs(strtotime($timeEnd) - strtotime($timeStart))/(SECOND*MINUTE*24)) > 60){
+                return redirect()->route('tickets.create')->with('error',"Bạn đã trọn ".$month." tháng nên thời gian hiệu lực của vé phải là 62 ngày");
+            }
+        }elseif($month == 3){
+            if((abs(strtotime($timeEnd) - strtotime($timeStart))/(SECOND*MINUTE*24)) < 90 || (abs(strtotime($timeEnd) - strtotime($timeStart))/(SECOND*MINUTE*24)) > 90){
+                return redirect()->route('tickets.create')->with('error',"Bạn đã trọn ".$month." tháng nên thời gian hiệu lực của vé phải là 93 ngày");
+            }
+        }
+        //lấy phần tử cuối cùng trong mảng
+        $ticketsTemp = Tickets::all()->toArray();
+        $ticketsTemp = end($ticketsTemp);
+        
+        $detailTicket = new DetailTicket();
+        $detailTicket->ticket_id = $ticketsTemp["id"];
+        $detailTicket->pitch_id = $request->pitch_id;
+        $detailTicket->description = $request->describe;
+        $detailTicket->sercive_id = $request->type_service;
+        $detailTicket->start_time = $request->timeStart;
+        $detailTicket->end_time = $request->timeEnd;
+        $detailTicket->status = $request->get('status');
+        
+        $tickets = new Tickets();
+        $tickets->user_id = 0;
+        $tickets->name = $request->name;
         //avartar
         if ($request->hasFile('cover')) {
             $image = $request->file('cover');
-            $filename = $pitch->name . '.' . 'jpg';
-            $location = public_path('/images/pitch/' . $filename);
-            Image::make($image)->resize(350, 228)->save($location);
-            $pitch->avartar = $filename;
+            $filename = $tickets->name . '.' . 'jpg';
+            $location = public_path('/images/tickets/' . $filename);
+            Image::make($image)->resize(300, 200)->save($location);
+            $tickets->image = $filename;
         } else {
             $path = $request->get('cover');
-            $filename = $request->appid . '.jpg';
-            Image::make($path)->resize(350, 228)->save(public_path('/images/pitch' . $filename));
-            $pitch->avartar = $filename;
+            $filename = $tickets->name . '.jpg';
+            Image::make($path)->resize(350, 228)->save(public_path('/images/tickets' . $filename));
+            $tickets->image = $filename;
         }
-        $pitch->type_pitch = $request->get('type_pitch');
-        $pitch->status = $request->get('status');
-        $count_s = [];
-        if ($request->hasFile('images')) {
-            $screenshots = $request->file('images');
-
-            foreach ($screenshots as $k => $v) {
-                if ($v->isValid()) {
-                    // $filename = $request->appid . '_up_' . $k . '.' . $v->extension();
-                    $filename = $request->name . 'sc' . $k . '.' . 'jpg';
-                    $v->move(public_path() . '/images/pitch/', $filename);
-                    $count_s[] = $filename;
-                }
-            }
-        }
-        if (isset($request->preScreenshots) && count($request->preScreenshots) > 0) {
-            if ($this->screenshot_save->value == 1) {
-                foreach ($request->preScreenshots as $k => $v) {
-                    if ($v->isValid()) {
-                        // $filename = $request->appid . '_' . $k . '.' . $v->extension();
-                        $filename = $request->name . '_sc' . $k . '.' . 'jpg';
-                        Image::make($v)->save(public_path('images/pitch/' . $filename));
-                        $count_s[] = $filename;
-                    }
-                }
-            } else {
-                $count_s = $request->preScreenshots;
-            }
-        }
-        $pitch->screenshort = json_encode($count_s);
-        if($pitch->save()){
-            return redirect()->route('pitchs.create')->with('success','Thêm User mới thành công');
+        $tickets->code_ticket = "D".$timeDay."M".$month."P".$detailTicket->pitch_id."-".$detailTicket->ticket_id;
+        $tickets->number_day_of_week = $request->number_day;
+        // $timeDay;
+        $tickets->timeout = $request->timeOut;
+        $tickets->price = $request->price;
+        $tickets->month = $request->month;
+        $tickets->discount = $request->discount;
+        $tickets->status = $request->get('status');
+        
+        $detailTicket->save();
+        if($tickets->save()){
+            return redirect()->route('tickets.create')->with('success','Thêm vé mới thành công');
           }
-           return redirect()->route('pitchs.create')->with('error','Xử lí thêm thất bại');
+           return redirect()->route('tickets.create')->with('error','Xử lí thêm thất bại');
     }
     public function edit($id)
     {
