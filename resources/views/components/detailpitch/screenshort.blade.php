@@ -171,7 +171,7 @@ window.onclick = function(event) {
     modal.style.display = "none";
   }
 }
-$(document).ready(function () {
+  $(document).ready(function () {
               $('.checkbox input:checkbox').on('click', function(){
                $(this).closest('.checkbox').find('.ch_for').toggle();
                 })
