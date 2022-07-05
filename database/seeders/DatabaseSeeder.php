@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             SettingSeeder::class,
             ServicesSeeder::class,
             TicketSeeder::class,
+            DetailTicketSeeder::class,
         ]);
     }
 }

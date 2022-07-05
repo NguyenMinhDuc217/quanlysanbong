@@ -15,6 +15,7 @@ class CreateTicketsTable extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
+            $table->integer('user_id');
             $table->string('image');
             $table->string('name');
             $table->string('code_ticket');
@@ -23,6 +24,7 @@ class CreateTicketsTable extends Migration
             $table->string('price');
             $table->string('month');
             $table->integer('discount')->default(0);
+            $table->string('ispay')->default(0);
             $table->integer('status')->default(1);
             $table->timestamps();
         });

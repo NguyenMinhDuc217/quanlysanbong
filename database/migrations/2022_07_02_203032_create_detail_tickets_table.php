@@ -21,7 +21,7 @@ class CreateDetailTicketsTable extends Migration
             $table->dateTime('start_time');
             $table->dateTime('end_time');
             $table->string('pitch_id');
-            $table->string('status');
+            $table->string('status')->default('1');
             $table->timestamps();
         });
     }
