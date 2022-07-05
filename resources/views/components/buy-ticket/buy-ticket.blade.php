@@ -17,7 +17,7 @@
           <p class="date_week"><span id="code_ticket"></span>- <span id="name"></span>- Số ngày trong tuần là <span id="number_day_of_week"></span> - Gói <span id="month"></span> tháng</p>
            <span id="description" class="description"></span>
            <div class="price_total">
-             <p id="price" class="price"></p>
+             <p id="price_dis" class="price"></p>
              <p id="price" class="price_discount"></p>
            </div>
           <div class="clock_pay">
@@ -32,7 +32,7 @@
             <i class="fa-brands fa-cc-amazon-pay"></i>
               <div class="date_clock">
                 <label class="label_buy">Phương thức thanh toán</label>
-                 <span class="credit">Thẻ quốc tế/ Thẻ nội địa/ Trả góp</span>
+                 <span class="credit">Tiền mặt/ VNPAY</span>
               </div>
             </div>
           </div>
@@ -58,9 +58,12 @@
                 </div>
                 <div class="product_item__title_1">{{$ticket['code_ticket']}} - {{$ticket['name']}} - Số ngày trong tuần {{$ticket['number_day_of_week']}} - Gói {{$ticket['month']}} tháng </div>
                 <div class="product_item__vote">
-                    <span class="product_item__vote_num">Giá vé: {{number_format($ticket->price)}}</span>
-                    <span class="product_item__vote_num_discount">{{number_format($ticket->price)}}</span>
-                </div>
+                    <span class="product_item__vote_num">Giá vé: {{number_format($ticket->price*(100-$ticket->discount)/100)}}đ</span>
+                    @if($ticket->discount!=0)
+                    <span class="product_item__vote_num_discount">{{number_format($ticket->price)}}đ</span>
+                    @else
+                    @endif
+                  </div>
                 <div class="product_item__price">
                     <button class="btn btn-primary btn_buy">
                        Mua ngay
@@ -98,6 +101,11 @@
                      $("#number_day_of_week").text(response.data.ticket.number_day_of_week);
                      $("#month").text(response.data.ticket.month);
                      var price= parseInt(response.data.ticket.price);
+                     if(response.data.ticket.discount!=0){
+                      var pricedis=price*(100-response.data.ticket.discount)/100;
+                      pricedis=pricedis.toLocaleString('vi-VN', {style : 'currency', currency : 'VND'});
+                      $("#price_dis").text(pricedis);
+                     }
                      price=price.toLocaleString('vi-VN', {style : 'currency', currency : 'VND'});
                      $("#price").text(price); 
                      var date = new Date(response.data.ticket.timeout);
