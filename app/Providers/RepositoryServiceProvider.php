@@ -10,6 +10,8 @@ use App\Repositories\SetPitchRepository;
 use App\Repositories\Interfaces\SetPitchRepositoryInterface;
 use App\Repositories\TicketRepository;
 use App\Repositories\Interfaces\TicketRepositoryInterface;
+use App\Repositories\TeamRepository;
+use App\Repositories\Interfaces\TeamRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,6 +35,10 @@ class RepositoryServiceProvider extends ServiceProvider
          $this->app->bind(
             TicketRepositoryInterface::class, 
             TicketRepository::class
+         );
+         $this->app->bind(
+            TeamRepositoryInterface::class, 
+            TeamRepository::class
          );
     }
      /**

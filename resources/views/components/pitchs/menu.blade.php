@@ -14,7 +14,17 @@
     <a href="{{route('list_pitch')}}"><span class="navbar__item">TRANG CHỦ</span></a>
     <a href="{{route('list.set.pitch')}}"><span class="navbar__item">SÂN ĐÃ ĐẶT</span></a> 
 
-    <span class="navbar__item">LIÊN HỆ</span>
+    <div class="dropdown">
+        <div class="navbar_dropdown">
+            <span class="dropbtn">ĐỘI BÓNG</span>
+            <i class="dropdown__icon fas fa-angle-down"></i>
+        </div>
+        <div class="dropdown-content">
+           <a class="dropdown-content__item"  href="">TẠO ĐỘI BÓNG</a> 
+           <a class="dropdown-content__item"  href="">TÌM ĐỘI GIAO LƯU</a> 
+         
+        </div>
+    </div>
     <div class="dropdown">
         <div class="navbar_dropdown">
             <span class="dropbtn">VÉ THÁNG</span>
@@ -22,7 +32,7 @@
         </div>
         <div class="dropdown-content">
            <a class="dropdown-content__item"  href="{{route('show.ticket')}}">DANH SÁCH VÉ THÁNG</a> 
-           <a class="dropdown-content__item"  href="{{route('show.ticket')}}">VÉ THÁNG ĐÃ MUA</a> 
+           <a class="dropdown-content__item"  href="#">VÉ THÁNG ĐÃ MUA</a> 
          
         </div>
     </div>
