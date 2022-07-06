@@ -21,7 +21,7 @@
           </div>
         </div>
         <div class="col-md-12">
-          <form method="POST" action="{{route('set_pitchs.update', ['pitchs'=>$pitchs->id])}}" enctype="multipart/form-data">
+          <form method="POST" action="{{route('set_pitchs.update', ['set_pitch'=>$pitchs->id])}}" enctype="multipart/form-data">
           @csrf @method('PUT')
             @if(Session::has('success'))
             <div class="alert alert-success notifi__success">
@@ -32,7 +32,8 @@
             <div class="form-group">
                 <label>Chọn sân sân</label>
                 <select type="pitch" class="form-control" name="type_pitch" id="type_pitch" placeholder="Chọn sân sân" 
-                value="{{$pitch->type_pitch}}">
+                {{dd($pitchs)}}
+                value="{{$pitchs->type_pitch}}">
                 @foreach($pitchs as $pitch)
                   <option value="">{{$pitch->name}}</option>
                   @endforeach

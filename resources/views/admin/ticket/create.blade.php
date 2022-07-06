@@ -129,16 +129,6 @@
                   </span>
                   @enderror
               </div>
-              <!-- Giá vé -->
-              <div class="form-group">
-                <label for="">Giá vé</label>
-                <input type="text" name="price" class="form-control" placeholder="Ex: 250.000 VND">
-                @error('username')
-                <span class="vali_sign" class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-                </span>
-                @enderror
-              </div>
               <!-- Khuyến mãi -->
               <div class="form-group">
                 <label for="">Khuyến mãi</label>

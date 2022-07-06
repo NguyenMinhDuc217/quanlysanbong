@@ -22,6 +22,7 @@
                     </div>
                 </div>
                 <div class="product_item__price">Giá <span class="product_item__price_color">{{number_format($pitch->price)}}</span> / Giờ</div>
+                <div class="product_item__price">Giá <span class="product_item__price_color">{{number_format($pitch->price)}}</span> / Giờ</div>
             </a>
         </div>
         @endforeach

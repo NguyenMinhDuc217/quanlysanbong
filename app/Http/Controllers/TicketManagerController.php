@@ -60,6 +60,7 @@ class TicketManagerController extends Controller
         $timeStart=$request->timeStart;
         $timeEnd=$request->timeEnd;
         $timeDay=$request->timeDay;
+        dd($timeDay);
 
         //kiểm tra vé đã tồn tại hay chưa (ticket)
         $checkTicket = Tickets::where('name',$request->name)->first();
@@ -125,7 +126,7 @@ class TicketManagerController extends Controller
         $tickets->number_day_of_week = $request->number_day;
         // $timeDay;
         $tickets->timeout = $request->timeOut;
-        $tickets->price = $request->price;
+        $tickets->price = 0;
         $tickets->month = $request->month;
         $tickets->discount = $request->discount;
         $tickets->status = $request->get('status');

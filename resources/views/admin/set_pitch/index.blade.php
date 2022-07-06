@@ -47,7 +47,7 @@
                 <td>Chưa thanh toán</td>
                 @endif
                 <td>
-                 <a  href="{{route('set_pitchs.edit',$pitch->id)}}"> <button class="btn btn-btn btn-primary">Sửa</button></a>
+                 <a  href="{{route('set_pitchs.edit',[$pitch->id)}}"> <button class="btn btn-btn btn-primary">Sửa</button></a>
                   <button class="btn btn-btn btn-danger">Xoá</button>
                 </td>
               </tr>
