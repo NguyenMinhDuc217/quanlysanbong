@@ -334,6 +334,13 @@ i {
     text-overflow: ellipsis;
     word-break: break-all;
 }
+.product_item__vote_num_discount,
+.price_discount {
+    font-size: 14px;
+    margin-left: 10px;
+    /* text-decoration: line-through; */
+    color: red;
+}
 
 .product_item__list {
     display: flex;
@@ -361,7 +368,7 @@ i {
 }
 
 .product_item__price_color {
-    color: #FF6700;
+    color: #48d706;
 }
 
 .product_item__title {

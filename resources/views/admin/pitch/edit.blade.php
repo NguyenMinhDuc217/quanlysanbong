@@ -68,8 +68,8 @@
                 <label>Loại sân</label>
                 <select type="name" class="form-control" name="type_pitch" id="type_pitch" placeholder="loại sân" 
                 value="{{$pitch->type_pitch}}">
-                  <option value="5" {{($pitch->type_pitch = 5)?"selected":''}}>5</option>
-                  <option value="7" {{($pitch->type_pitch = 7)?"selected":''}}>7</option>
+                  <option value="5" {{($pitch->type_pitch == 5)?"selected":''}}>5</option>
+                  <option value="7" {{($pitch->type_pitch == 7)?"selected":''}}>7</option>
                 </select>
               </div>
               <!-- Status -->

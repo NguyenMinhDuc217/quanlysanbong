@@ -22,6 +22,7 @@ class DetailTicketSeeder extends Seeder
                 'start_time'=>'2022-07-14',
                 'end_time'=>'2022-08-14',
                 'pitch_id'=>'1',
+                'advise_phone'=>'0988716282',
             ],
             [
                 'ticket_id' => 2,
@@ -30,6 +31,7 @@ class DetailTicketSeeder extends Seeder
                 'start_time'=>'2022-07-16',
                 'end_time'=>'2022-08-16',
                 'pitch_id'=>'2',
+                'advise_phone'=>'0988716282',
             ],
             [
                 'ticket_id' => 3,
@@ -38,6 +40,7 @@ class DetailTicketSeeder extends Seeder
                 'start_time'=>'2022-07-14',
                 'end_time'=>'2022-08-14',
                 'pitch_id'=>'3',
+                'advise_phone'=>'0988716282',
             ],
             [
                 'ticket_id' => 4,
@@ -46,6 +49,7 @@ class DetailTicketSeeder extends Seeder
                 'start_time'=>'2022-07-17',
                 'end_time'=>'2022-08-17',
                 'pitch_id'=>'4',
+                'advise_phone'=>'0988716282',
             ],
             [
                 'ticket_id' => 5,
@@ -54,6 +58,7 @@ class DetailTicketSeeder extends Seeder
                 'start_time'=>'2022-07-15',
                 'end_time'=>'2022-08-15',
                 'pitch_id'=>'5',
+                'advise_phone'=>'0988716282',
             ],
             [
                 'ticket_id' => 6,
@@ -62,6 +67,7 @@ class DetailTicketSeeder extends Seeder
                 'start_time'=>'2022-07-15',
                 'end_time'=>'2022-08-15',
                 'pitch_id'=>'6',
+                'advise_phone'=>'0988716282',
             ],
             [
                 'ticket_id' => 7,
@@ -70,6 +76,7 @@ class DetailTicketSeeder extends Seeder
                 'start_time'=>'2022-07-16',
                 'end_time'=>'2022-08-16',
                 'pitch_id'=>'7',
+                'advise_phone'=>'0988716282',
             ],
             [
                 'ticket_id' => 8,
@@ -78,6 +85,7 @@ class DetailTicketSeeder extends Seeder
                 'start_time'=>'2022-07-14',
                 'end_time'=>'2022-08-14',
                 'pitch_id'=>'8',
+                'advise_phone'=>'0988716282',
             ],
             [
                 'ticket_id' => 9,
@@ -86,6 +94,7 @@ class DetailTicketSeeder extends Seeder
                 'start_time'=>'2022-07-17',
                 'end_time'=>'2022-08-17',
                 'pitch_id'=>'9',
+                'advise_phone'=>'0988716282',
             ],
             [
                 'ticket_id' => 10,
@@ -94,6 +103,7 @@ class DetailTicketSeeder extends Seeder
                 'start_time'=>'2022-07-16',
                 'end_time'=>'2022-08-16',
                 'pitch_id'=>'10',
+                'advise_phone'=>'0988716282',
             ],
             [
                 'ticket_id' => 11,
@@ -102,6 +112,7 @@ class DetailTicketSeeder extends Seeder
                 'start_time'=>'2022-07-14',
                 'end_time'=>'2022-08-14',
                 'pitch_id'=>'11',
+                'advise_phone'=>'0988716282',
             ],
             [
                 'ticket_id' => 12,
@@ -110,6 +121,7 @@ class DetailTicketSeeder extends Seeder
                 'start_time'=>'2022-07-15',
                 'end_time'=>'2022-08-15',
                 'pitch_id'=>'12',
+                'advise_phone'=>'0988716282',
             ],
         ]);
     }

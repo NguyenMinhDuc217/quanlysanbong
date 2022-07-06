@@ -15,6 +15,7 @@ class CreateSetServicesTable extends Migration
     {
         Schema::create('set_services', function (Blueprint $table) {
             $table->id();
+            $table->string('ticket_id')->nullable();
             $table->integer('set_pitch_id');
             $table->integer('service_id');
             $table->string('name',255);

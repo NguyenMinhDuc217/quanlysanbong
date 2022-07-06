@@ -25,4 +25,8 @@ class SetPitchController extends BaseUserController
     public function deleteSetPitch(Request $request){
      return $this->setPitchRepository->deleteSetPitch($request);
     }
+
+    public function detailService(Request $request){
+        return $this->setPitchRepository->detailService($request);
+    }
 }

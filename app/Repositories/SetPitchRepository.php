@@ -10,6 +10,7 @@ use App\Models\Services;
 use App\Models\SetService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use League\OAuth1\Client\Server\Server;
 
 class SetPitchRepository implements SetPitchRepositoryInterface
 {
@@ -72,6 +73,7 @@ class SetPitchRepository implements SetPitchRepositoryInterface
         $setPitch->date_event= $request->timeStart;
         $setPitch->start_time = $request->timeStart;
         $setPitch->end_time = $request->timeEnd;   
+        $setPitch->price_pitch= $pitch->price*$timeSoccer*((PERCENT-$pitch->discount)/PERCENT);   
         $setPitch->total= $pitch->price*$timeSoccer*((PERCENT-$pitch->discount)/PERCENT);   
         $setPitch->save();
 
@@ -83,11 +85,17 @@ class SetPitchRepository implements SetPitchRepositoryInterface
                $setService->service_id=$server_id;
                $setService->name= $service->name;
                $setService->quantity=$request->ch_for[$server_id][0];
-               $setService->total=$request->ch_for[$server_id][0]*$service->price;
+               if($server_id==4){
+                $setService->total=$request->ch_for[$server_id][0]*$timeSoccer*$service->price;
+               }else{
+                $setService->total=$request->ch_for[$server_id][0]*$service->price;
+               }
                $setService->save();
             }
         }
-
+        $totalService=SetService::where('set_pitch_id',$setPitch->id)->sum('total');
+        $setPitch->total= $setPitch->total+$totalService;
+        $setPitch->save();
         $successStart= date_format(date_create($request->timeStart),"Y/m/d H:i:s");
         $successEnd= date_format(date_create($request->timeEnd),"Y/m/d H:i:s");
         return redirect()->route('detail.pitch',['pitchid'=>$pitchid])->with('success',"Bạn đã đặt sân từ $successStart đến $successEnd");
@@ -98,7 +106,7 @@ class SetPitchRepository implements SetPitchRepositoryInterface
        $pitchs[$pitch->id]=$pitch->name;
     }
     $listSetPitch=[];
-    foreach(Detail_set_pitchs::orderby('id','DESC')->where('user_id',Auth::guard('user')->user()->id)->get() as $i=>$detail_set_pitch){
+    foreach(Detail_set_pitchs::orderby('id','DESC')->where('user_id',Auth::guard('user')->user()->id)->where('ticket_id',null)->get() as $i=>$detail_set_pitch){
        $listSetPitch[$i]['detail_set_pitch']=$detail_set_pitch;
        $listSetPitch[$i]['name']=$pitchs[$detail_set_pitch->picth_id];
        foreach(SetService::where('set_pitch_id',$detail_set_pitch->id)->get() as $k=>$setService){
@@ -125,5 +133,14 @@ class SetPitchRepository implements SetPitchRepositoryInterface
         return redirect()->route('list.set.pitch')->with('error',"Bạn đã hủy thành công, số tiền bạn nhận lại là  $refund vnd");
     }
 
+   }
+
+   public function detailService(Request $request)
+   {
+       $service=SetService::where('id',$request->serviceid)->first();
+       return response()->json([
+        'status'=>200,
+        'data'=>$service,
+      ]);
    }
 }

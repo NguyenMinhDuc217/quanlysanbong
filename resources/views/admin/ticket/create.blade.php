@@ -186,16 +186,11 @@
       console.log(this);
       readURL(this);
     });
-    $('#screenshots').imageUploader();
-    $(document).on('click', '.remove-img', function() {
-      $(this).parent('.uploaded-image').remove();
-    });
-    $('#screen').html(html);
   });
 
   const nowTime1 = new Date();
-    nowTime5.setMinutes(nowTime1.getMinutes() - nowTime1.getTimezoneOffset());
-    nowTime5.setHours(nowTime1.getHours() + 5);
+    nowTime1.setMinutes(nowTime1.getMinutes() - nowTime1.getTimezoneOffset());
+    nowTime1.setHours(nowTime1.getHours() + 5);
     document.getElementById('timeOut').value = nowTime1.toISOString().slice(0, 16);
 
   const nowTime3 = new Date();

@@ -22,6 +22,7 @@ class CreateDetailTicketsTable extends Migration
             $table->dateTime('end_time');
             $table->dateTime('detail_time_of_week')->nullable();
             $table->string('pitch_id');
+            $table->string('advise_phone')->nullable();
             $table->string('status')->default('1');
             $table->timestamps();
         });

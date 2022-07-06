@@ -33,7 +33,6 @@ class TicketManagerController extends Controller
         define('PERCENT',100);
         $request->validate([
             'name' => 'required|max:255',
-            'price' => 'required|numeric',
             'describe' => 'required|max:500',
             'number_day' => 'required|digits:1,7',
             'timeOut' => 'required',
@@ -45,8 +44,6 @@ class TicketManagerController extends Controller
             'name.max'=>'Vui lòng nhập tên vé không quá 255 ký tự',
             'describe.required' => 'Vui lòng nhập thông tin',
             'describe.max'=>'Vui lòng nhập tên sân không quá 500 ký tự',
-            'price.required'=>'Vui lòng nhập giá',
-            'price.numeric'=>'Giá phải là số',
             'number_day.required' => 'Vui lòng nhập số ngày',
             'number_day.digits'=>'Vui lòng nhập số ngày trong khoảng từ 1 đến 7',
             'timeOut.required'=>'Vui lòng chọn thời gian bắt đầu',
@@ -60,7 +57,10 @@ class TicketManagerController extends Controller
         $timeStart=$request->timeStart;
         $timeEnd=$request->timeEnd;
         $timeDay=$request->timeDay;
-        dd($timeDay);
+        $timeDay = strtotime('+7 day', strtotime($timeDay));
+        echo $timeDay;
+        echo '<br>';
+        echo date('H', $timeDay);die;
 
         //kiểm tra vé đã tồn tại hay chưa (ticket)
         $checkTicket = Tickets::where('name',$request->name)->first();
