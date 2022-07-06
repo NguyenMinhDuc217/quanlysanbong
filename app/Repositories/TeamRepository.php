@@ -47,6 +47,6 @@ class TeamRepository implements TeamRepositoryInterface
         $teams = Teams::where('team_name','like','%'.($key).'%')->orwhere('team_member','like','%'.($key).'%')->orwhere('user_name','like','%'.($key).'%');
     }
     $teams = $teams->paginate(5)->appends(request()->query());
-    view('list-team.index', compact('teams'));
+    return view('list-team.index', compact('teams'));
 }
 }
