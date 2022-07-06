@@ -11,6 +11,7 @@ use App\Http\Controllers\UserManagerController;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\SetPitchController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\BuyTicketController;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -55,6 +56,8 @@ Route::post('/detail-pitch/{pitchid}', [SetPitchController::class,'setPitch'])->
 Route::get('/list-set-pitch', [SetPitchController::class,'listSetPitch'])->name('list.set.pitch');
 //delete
 Route::post('/delete-set-pitch', [SetPitchController::class,'deleteSetPitch'])->name('delete.set.pitch');
+//show dich vu dat san
+Route::get('/view-service', [SetPitchController::class,'detailService'])->name('detail.service');
 //thanh toan VNPAY
 Route::post('/vnpay-payment', [PayController::class,'vnpay_payment'])->name('vnpay.payment');
 Route::get('/return-vnpay', [PayController::class,'return'])->name('return.payment');
@@ -64,6 +67,8 @@ Route::get('/ticket', [TicketController::class,'showTicket'])->name('show.ticket
 Route::get('/view-ticket', [TicketController::class,'viewTicket'])->name('view.ticket');
 //detail
 Route::get('/detail-ticket', [TicketController::class,'detailTicket'])->name('detail.ticket');
+//buy ticket
+Route::post('/buy-ticket', [BuyTicketController::class,'buyTicket'])->name('buy.ticket');
 
 Route::get('/dang-nhap', [AdminLoginController::class,'showLoginForm'])->name('admin.show.login');
 Route::post('/dang-nhap', [AdminLoginController::class,'login'])->name('admin.login');

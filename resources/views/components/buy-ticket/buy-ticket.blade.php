@@ -1,5 +1,7 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('/css/list-ticket.css') }}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="{{asset('/lib/sweet-alert/sweetalert2@11.js')}}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 
 <div class="modal fade" id="show" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -64,18 +66,21 @@
                     @else
                     @endif
                   </div>
-                <div class="product_item__price">
-                  <form action="" method="POST" enctype="multipart/form-data">
-                    @csrf
-                      <button type="submit" class="btn btn-primary btn_buy">
-                       Mua ngay
+                <div class="product_item__price">   
+                 <form id="btnBuy">
+                 <meta name="csrf-token" content="{{ csrf_token() }}">
+                  <input type="hidden" value="{{$ticket['id']}}" id="ticket">
+                   <button type="button"  class="btn btn-primary btn_buy" >  Mua ngay
                     </button>
-                  </form>
+                 </form>
+            
+                     
                     <button type="button" value="{{$ticket['id']}}" class="btn btn-success btnShow btn-sm btn_view" data-toggle="modal" data-target="#show">
                       Xem nhanh
                   </button>
                 </div>
             </a>
+         
         </div>
         @endforeach
     </div>
@@ -97,7 +102,6 @@
                  type: "GET",
                  url: '/view-ticket?ticketid=' + ticket_id,
                  success: function(response){
-                     console.log(response);
                      $('#image').attr('src', "images/tickets/"+response.data.ticket.image);
                      $("#name").text(response.data.ticket.name);
                      $("#code_ticket").text(response.data.ticket.code_ticket);
@@ -125,4 +129,41 @@
              })
         })
     })
+
+    $(document).ready(function(){
+        $(document).on('click','#btnBuy', function(e){
+            e.preventDefault();
+            var name = $('#name').val();
+            var ticketid=$('#ticket').val();
+            console.log(ticketid);
+            $.ajax({
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: 'POST',
+                url: '/buy-ticket?ticketid=' + ticketid,
+                data: $('#btnBuy').serialize(),
+                dataType: 'json',
+                success: function(response) {
+                  if (response.status === 200) {
+                    return Swal.fire({
+                      icon: 'success',
+                      text: response.data,
+                    }).then((result) => {
+                      window.location.replace("{{route('list_pitch')}}");
+                    })
+              } else {
+              if (response.status != 200) {
+                   return Swal.fire({
+                      icon: 'error',
+                      text: response.data,
+                    }).then((result) => {
+                      window.location.reload();
+                    })
+                    }
+               }  
+          }
+          });
+        })
+      })
 </script>

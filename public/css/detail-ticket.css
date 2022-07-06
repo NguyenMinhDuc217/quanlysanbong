@@ -1,0 +1,120 @@
+.detail_list {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 30px 50px;
+    column-gap: 20px;
+}
+.product_item__img {
+    min-width: 450px;
+}
+.product_item__img img {
+    width: 100%;
+}
+
+.detail_right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.product_item__title_desc,
+.product_item__vote_desc,
+.product_item__vote,
+.detail_phone,
+.buy_pay,
+.date_buy
+ {
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    color: #00305b;
+}
+.product_item__title_desc {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 26px;
+}
+
+.product_item__vote_desc,
+.product_item__vote,
+.detail_phone,
+.buy_pay,
+.date_buy {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+}
+.product_item__vote_desc,
+.detail_phone {
+    margin: 5px 0;
+}
+.btn_buy__now {
+    width: 100px;
+    display: block;
+    margin: 0 auto;
+    padding: 10px 15px;
+    background-color: #008744;
+    border: none;
+    color: #FFFFFF;
+}
+.price_discount {
+    font-size: 14px;
+    margin-left: 10px;
+    text-decoration: line-through;
+    color: red;
+}
+.clock_pay {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.clock {
+    display: flex;
+    align-items: center;
+}
+
+.date_clock {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+.label_buy {
+    margin-bottom: 0 !important;
+}
+
+.price_total {
+    display: flex;
+    align-items: center;
+}
+
+.date_week,
+.description,
+.datepicker,
+.credit {
+    color: #00305b;
+}
+
+.price {
+    font-size: 26px;
+}
+
+.price_discount {
+    font-size: 18px;
+    margin: 5px 0 5px 10px;
+}
+.body_title {
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    color: #00305b;
+    font-size: 25px;
+}
+.body_detail_ticket {
+    align-items: center;
+    margin: 30px 50px;
+    column-gap: 20px;
+}

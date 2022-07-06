@@ -12,7 +12,7 @@
         </button>
       </div>
       <div class="modal-body">
-      <input type="text" name="service_id" id="service_id" />
+      <input type="hidden" name="service_id" id="service_id" />
           <table id="mytable">
               <tr>
                 <th>Tên dịch vụ</th>
@@ -20,9 +20,9 @@
                 <th>Giá</th>
               </tr>
               <tr>
-                <td>Alfreds Futterkiste</td>
-                <td>Maria Anders</td>
-                <td>Germany</td>
+                <td><span id="nameservice"></span></td>
+                <td><span id="quantity"></span></td>
+                <td><span id="total"></span></td>
               </tr>
             </table>
       </div>
@@ -124,7 +124,7 @@
       </form>
     </td>
     @else
-    <td>BẠn đã thnah toán</td>
+    <td>Bạn đã thanh toán</td>
     @endif
     @endforeach
     </tr>
@@ -150,6 +150,16 @@
             var service_id=$(this).val();
             $('#service_id').val(service_id);
              $('#serviceModal').modal('show');  
+             $.ajax({
+              type: "GET",
+                 url: '/view-service?serviceid=' + service_id,
+                 success: function(response){
+                      console.log(response);
+                      $("#nameservice").text(response.data.name);
+                      $("#quantity").text(response.data.quantity);
+                      $("#total").text(response.data.total);
+                 }
+             })
         })
     })
 

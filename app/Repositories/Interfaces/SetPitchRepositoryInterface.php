@@ -10,4 +10,5 @@ interface SetPitchRepositoryInterface
     public function setPitch(Request $request,$pitchid);
     public function listSetPitch();
     public function deleteSetPitch(Request $request);
+    public function detailService(Request $request);
 }

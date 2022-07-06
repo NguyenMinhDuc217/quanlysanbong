@@ -10,6 +10,7 @@ use App\Models\Services;
 use App\Models\SetService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use League\OAuth1\Client\Server\Server;
 
 class SetPitchRepository implements SetPitchRepositoryInterface
 {
@@ -103,10 +104,9 @@ class SetPitchRepository implements SetPitchRepositoryInterface
    public function listSetPitch(){
     foreach(Pitchs::all() as $pitch){
        $pitchs[$pitch->id]=$pitch->name;
-
     }
     $listSetPitch=[];
-    foreach(Detail_set_pitchs::orderby('id','DESC')->where('user_id',Auth::guard('user')->user()->id)->get() as $i=>$detail_set_pitch){
+    foreach(Detail_set_pitchs::orderby('id','DESC')->where('user_id',Auth::guard('user')->user()->id)->where('ticket_id',null)->get() as $i=>$detail_set_pitch){
        $listSetPitch[$i]['detail_set_pitch']=$detail_set_pitch;
        $listSetPitch[$i]['name']=$pitchs[$detail_set_pitch->picth_id];
        foreach(SetService::where('set_pitch_id',$detail_set_pitch->id)->get() as $k=>$setService){
@@ -133,5 +133,14 @@ class SetPitchRepository implements SetPitchRepositoryInterface
         return redirect()->route('list.set.pitch')->with('error',"Bạn đã hủy thành công, số tiền bạn nhận lại là  $refund vnd");
     }
 
+   }
+
+   public function detailService(Request $request)
+   {
+       $service=SetService::where('id',$request->serviceid)->first();
+       return response()->json([
+        'status'=>200,
+        'data'=>$service,
+      ]);
    }
 }

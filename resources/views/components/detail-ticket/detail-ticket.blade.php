@@ -1,138 +1,31 @@
-
-<style>
-.detail_list {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 30px 50px;
-    column-gap: 20px;
-}
-.product_item__img {
-    min-width: 450px;
-}
-.product_item__img img {
-    width: 100%;
-}
-
-.detail_right {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-}
-
-.product_item__title_desc,
-.product_item__vote_desc,
-.product_item__vote,
-.detail_phone,
-.buy_pay,
-.date_buy
- {
-    font-family: 'Roboto', sans-serif;
-    font-style: normal;
-    color: #00305b;
-}
-.product_item__title_desc {
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 26px;
-}
-
-.product_item__vote_desc,
-.product_item__vote,
-.detail_phone,
-.buy_pay,
-.date_buy {
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 22px;
-}
-.product_item__vote_desc,
-.detail_phone {
-    margin: 5px 0;
-}
-.btn_buy__now {
-    width: 100px;
-    display: block;
-    margin: 0 auto;
-    padding: 10px 15px;
-    background-color: #008744;
-    border: none;
-    color: #FFFFFF;
-}
-.price_discount {
-    font-size: 14px;
-    margin-left: 10px;
-    text-decoration: line-through;
-    color: red;
-}
-.clock_pay {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 5px;
-}
-
-.clock {
-    display: flex;
-    align-items: center;
-}
-
-.date_clock {
-    display: flex;
-    flex-direction: column;
-    margin-left: 10px;
-}
-
-.label_buy {
-    margin-bottom: 0 !important;
-}
-
-.price_total {
-    display: flex;
-    align-items: center;
-}
-
-.date_week,
-.description,
-.datepicker,
-.credit {
-    color: #00305b;
-}
-
-.price {
-    font-size: 26px;
-}
-
-.price_discount {
-    font-size: 18px;
-    margin: 5px 0 5px 10px;
-}
-</style>
-
-
+<link rel="stylesheet" type="text/css" href="{{ asset('/css/detail-ticket.css') }}">
 <div class="detail_list">
     <div class="product_item__img">
         <img src="{{ asset('images/tickets') }}/{{$data['ticket']->image}}" />
     </div>
     <div class="detail_right">
-        <span class="product_item__title_desc">{{$data['ticket']->code_ticket}} - {{$data['ticket']->name}} - Số ngày trong tuần {{$data['ticket']->number_day_of_week}} </span>
-        <span class="product_item__vote_desc">{{$data['detail_ticket']->description}}</span>
+        <span class="product_item__title_desc">{{@$data['ticket']->code_ticket}} - {{$data['ticket']->name}} - Số ngày trong tuần {{$data['ticket']->number_day_of_week}} </span>
+        <span class="product_item__vote_desc">{{@$data['detail_ticket']->description}}</span>
         
         <div class="product_item__vote">
-            <span>Giá vé: {{number_format($data['ticket']->price)}}</span>
-            <p class="price_discount">50000</p>
-        </div>
-        <div class="detail_phone">
-            Số điện thoại:24342342342
+            @php
+            $discount=(int)$data['ticket']->discount;
+            $price=(int)$data['ticket']->price;
+            @endphp
+            
+            <span>Giá vé: {{number_format(@$price*(100-$discount)/100)}}đ</span>
+        
+            @if(!empty($data['ticket']->discount))
+            <p class="price_discount"> {{number_format(@$data['ticket']->price)}}đ</p>
+            @else
+            @endif
         </div>
         <div class="clock_pay">
             <div class="clock">
               <i class="fa-solid fa-clock"></i>
-              <div class="date_clock">
+              <div class="date_clock" id="timeout">
                 <label class="label_buy">Mở bán tới ngày</label>
-                 <span id="datePicker" class="datepicker"></span>
+                 <span id="datePicker" class="datepicker"> {{@$data['ticket']->timeout}}</span>
               </div>
             </div>
             <div class="clock">
@@ -145,18 +38,56 @@
             <div class="clock">
                 <i class="fa-solid fa-phone"></i>
               <div class="date_clock">
-                <label class="label_buy">Phương thức thanh toán</label>
-                 <span class="credit">Thẻ quốc tế/ Thẻ nội địa/ Trả góp</span>
+                <label class="label_buy">Số điện thoại tư vấn</label>
+                 <span class="credit"> {{@$data['detail_ticket']->advise_phone}}</span>
               </div>
             </div>
         </div>
-        <div class="product_item__buy">
-            <div id="timeout" class="date_buy">
-                <label>Mở bán tới ngày</label>
-                <span  id="datePicker"> {{$data['ticket']->timeout}}</span>
-            </div>
-        </div>
+
         <button class="btn btn-primary btn_buy__now">Mua ngay</button>
+    </div>
+</div>
+<div class="body_detail_ticket">
+    <div class="body_title">
+        <div>Thông tin chi tiết</div>
+    </div>
+    <div class="body_detail">
+        <div>
+            <div>Thời gian bắt đầu</div>
+            <div>{{@$data['detail_ticket']->start_time}}</div>
+        </div>
+        <div>
+            <div>Thời gian kết thúc</div>
+            <div>{{@$data['detail_ticket']->end_time}}</div>
+        </div>
+        <div>
+            <div>Thông tin thời gian của các ngày trong vé</div>
+            @if(!empty(@$data['setPitch']))
+                @foreach($data['setPitch'] as $i=>$setPitch)
+                     <div>Tên sân: {{$setPitch['pitch']}}</div>
+                     <div>Thời gian bắt đầu ngày thứ {{$i+1}}</div>
+                    <div>{{$setPitch['setPitch']->start_time}}</div>
+                    <div>Thời gian kết thúc ngày thứ {{$i+1}}</div>
+                    <div>{{$setPitch['setPitch']->end_time}}</div>
+                    @endforeach
+                @else
+            <div></div>
+            @endif
+        </div>
+        <div>
+            @if(!empty(@$data['service']))
+            <div>Danh sách các dịch vụ</div>
+                @foreach($data['service'] as $service)
+                <div>{{$service->name}}</div>
+                <div>{{$service->quantity}}</div>
+                @endforeach
+            @else
+            <div></div>
+            @endif
+        </div>
+        <div>
+            <div>Các dịch vụ của sân diễn ra trong suốt thời gian của vé</div>
+        </div>
     </div>
 </div>
 

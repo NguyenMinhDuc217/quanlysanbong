@@ -98,7 +98,7 @@
 
                             </div>
                             <div class='box__filter' id='box__filter'>
-                                
+                                <label>Các loại dịch vụ</label>
                                 @foreach($data['services'] as $service)
                                 <div class="checkbox form-inline">
                                 <label class="main">
