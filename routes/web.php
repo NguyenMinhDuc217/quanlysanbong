@@ -69,6 +69,14 @@ Route::get('/view-ticket', [TicketController::class,'viewTicket'])->name('view.t
 Route::get('/detail-ticket', [TicketController::class,'detailTicket'])->name('detail.ticket');
 //buy ticket
 Route::post('/buy-ticket', [BuyTicketController::class,'buyTicket'])->name('buy.ticket');
+//Team
+   //create
+Route::get('/create-team', [TeamController::class,'showCreateTeam'])->name('show.create.team');
+Route::post('/create-team', [TeamController::class,'createTeam'])->name('create.team');
+   //list
+Route::get('/list-team', [TeamController::class,'listTeam'])->name('list.team');
+  //search
+Route::get('/search-team', [TeamController::class,'searchTeam'])->name('search.team');
 
 Route::get('/dang-nhap', [AdminLoginController::class,'showLoginForm'])->name('admin.show.login');
 Route::post('/dang-nhap', [AdminLoginController::class,'login'])->name('admin.login');

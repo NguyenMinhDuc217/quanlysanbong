@@ -20,8 +20,8 @@
             <i class="dropdown__icon fas fa-angle-down"></i>
         </div>
         <div class="dropdown-content">
-           <a class="dropdown-content__item"  href="">TẠO ĐỘI BÓNG</a> 
-           <a class="dropdown-content__item"  href="">TÌM ĐỘI GIAO LƯU</a> 
+           <a class="dropdown-content__item"  href="{{route('show.create.team')}}">TẠO ĐỘI BÓNG</a> 
+           <a class="dropdown-content__item"  href="{{route('list.team')}}">TÌM ĐỘI GIAO LƯU</a> 
          
         </div>
     </div>

@@ -60,10 +60,13 @@ class TicketManagerController extends Controller
         $timeStart=$request->timeStart;
         $timeEnd=$request->timeEnd;
         $timeDay=$request->timeDay;
+
+        //kiểm tra vé đã tồn tại hay chưa (ticket)
         $checkTicket = Tickets::where('name',$request->name)->first();
         if(!empty($checkTicket)){
             return redirect()->route('tickets.create')->with('error',"Vé đã tồn tại");
         }
+
         if( $timeOut<$now){
             return redirect()->route('tickets.create')->with('error',"Thời gian hạn đặt vé phải lớn hơn hoặc bầng thời gian hiện tại");
         }
@@ -92,9 +95,9 @@ class TicketManagerController extends Controller
         //lấy phần tử cuối cùng trong mảng
         $ticketsTemp = Tickets::all()->toArray();
         $ticketsTemp = end($ticketsTemp);
-        
+
         $detailTicket = new DetailTicket();
-        $detailTicket->ticket_id = $ticketsTemp["id"];
+        $detailTicket->ticket_id = $ticketsTemp["id"]+1;
         $detailTicket->pitch_id = $request->pitch_id;
         $detailTicket->description = $request->describe;
         $detailTicket->sercive_id = $request->type_service;

@@ -3,19 +3,20 @@
 <div class="detail">
     <div class="detail_desc">
         <div id="review_comment">
+        @foreach ($data['comments'] as $rowCmt)
             <div class="review_comment">
                 <div class="review__avt__user__left">
                     <img src="https://picsum.photos/id/237/200/300" alt="avatar user">
                 </div>
                 <div class="review__avt__user__right">
                     <div class="user__right__top">
-                        <p>Tên</p>
-                        <p>Ngày giờ bình luận</p>
+                        <p>{{@$rowCmt["name"]}}</p>
+                        <p>{{date('d/m/Y', @$rowCmt["created_at"])}}</p>
                         <div class="like__dislike" style="font-size: 17px;">
                             <i class='bx bxs-like'></i>
-                            <span class="count-cmt">1</span>
+                            <span class="count-cmt">{{@$rowCmt["like"]}}</span>
                             <i class='bx bxs-dislike'></i>
-                            <span class="dis-cmt">Không thích</span>
+                            <span class="dis-cmt">{{@$rowCmt["dislike"]}}</span>
                         </div>
                     </div>
                     <div class="user__right__bottom">
@@ -26,10 +27,11 @@
                             <span><i class='bx bx-star'></i></span>
                             <span><i class='bx bx-star'></i></span>
                         </div>
-                        <p>nội dung comment</p>
+                        <p>{{@$rowCmt["content"]}}</p>
                     </div>
                 </div>
             </div>
+            @endforeach
 
             <div id="comment__user">
                 <h2 class="title__comment__user">Viết bình luận của bạn...</h2>
