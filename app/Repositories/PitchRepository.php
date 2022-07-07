@@ -19,8 +19,6 @@ class PitchRepository implements PitchRepositoryInterface
 {
     public function ListPitch(Request $request)
     {
-        // $pitch = new Pitchs();
-        // $pitch = Pitchs::all();
         $pitch = Pitchs::orderby('average_rating','DESC')->paginate(8)->appends(request()->query());
         // dd($page);
         return $pitch;
@@ -62,10 +60,13 @@ class PitchRepository implements PitchRepositoryInterface
         $services = Services::all()->toArray();
 
         //lấy thời gian và tình trạng sân trong ngày hôm đó
+        // $now = Carbon::now()->format('Y-m-d H:i:s');
         $now = Carbon::now();
+
         $detail_set_pitchs = Detail_set_pitchs::where('picth_id',$pitchid)->where(function ($query) use ($now) {
-            $query->where('start_time','<=',$now)->where('end_time','>=', $now);
+            $query->whereDate('start_time','<=',$now)->orwhereDate('end_time','>=', $now);
         })->get();
+        // dd($detail_set_pitchs);
         // $detail_set_pitchs = Detail_set_pitchs::where('picth_id', $pitchid)->whereDate('start_time',$now)->orwhereDate('end_time',$now)->get();
         foreach($detail_set_pitchs as $detail){
             $detail['start_time'] = substr($detail['start_time'],11,8);
