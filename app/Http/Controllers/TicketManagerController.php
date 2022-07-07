@@ -157,7 +157,6 @@ class TicketManagerController extends Controller
 
         }
         $detailTicket->detail_time_of_week = json_encode($times) ;
-        dd($detailTicket->detail_time_of_week);
 
         $tickets = new Tickets();
         $tickets->user_id = 0;
