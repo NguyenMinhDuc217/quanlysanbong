@@ -29,4 +29,8 @@ class PitchController extends Controller
     public function commentAjax(Request $request, $id = ''){
         return $comment = $this->pitchRepository->Comment($request, $id);
     }
+    public function sendPhone(Request $request){
+        return $this->pitchRepository->sendPhone($request);
+    }
+
 }

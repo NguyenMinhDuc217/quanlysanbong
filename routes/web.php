@@ -49,6 +49,7 @@ Route::get('/search-pitch', [PitchController::class,'Search'])->name('search.pit
 //detailpitch
 Route::get('/detail-pitch/{pitchid}', [PitchController::class,'DetailPitch'])->name('detail.pitch');
 Route::post('/detail-pitch/{id}/ajax', [PitchController::class,'commentAjax'])->name('pitch.detail.comment.ajax');
+Route::post('/send-phone', [PitchController::class,'sendPhone'])->name('send.phone');
 
 //set pitch
 Route::post('/detail-pitch/{pitchid}', [SetPitchController::class,'setPitch'])->name('search.time');

@@ -68,7 +68,7 @@
                   </div>
                 <div class="product_item__price">   
                  <form id="btnBuy">
-                 <meta name="csrf-token" content="{{ csrf_token() }}">
+                  <meta name="csrf-token" content="{{ csrf_token() }}">
                   <input type="hidden" value="{{$ticket['id']}}" id="ticket">
                    <button type="button"  class="btn btn-primary btn_buy" >  Mua ngay
                     </button>

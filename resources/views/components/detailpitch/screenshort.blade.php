@@ -1,6 +1,8 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('/css/detailProduct.css') }}">
 <!-- <link rel="stylesheet" type="text/css" href="{{ asset('/public/css/homepage.css') }}"> -->
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+<script src="{{asset('/lib/sweet-alert/sweetalert2@11.js')}}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
@@ -46,10 +48,11 @@
             <div class="advise">
                 <span class="advise_title">TƯ VẤN MIỄN PHÍ</span>
                 <div class="advise_form">
-                    <form action="">
+                    <form id="sendphone">
+                       <meta name="csrf-token" content="{{ csrf_token() }}">
                         <div class="advise_form__inputbtn">
-                            <input class="advise_form__input" type="text" placeholder="Để số điện thoại chúng tôi gọi">
-                            <button class="advise_form__btn">Gửi</button>
+                            <input name="phone" class="advise_form__input" type="text" placeholder="Để số điện thoại chúng tôi gọi">
+                            <button  class="advise_form__btn">Gửi</button>
                         </div>
                     </form>
                 </div>
@@ -213,6 +216,38 @@ window.onclick = function(event) {
                $(this).closest('.checkbox').find('.ch_for').toggle();
                 })
     });
+    $(document).ready(function(){
+        $('#sendphone').on('submit', function(e){
+            e.preventDefault();
+            var name = $('#name').val();
+            $.ajax({
+               headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: 'POST',
+                url: "{{route('send.phone')}}",
+                data: $('#sendphone').serialize(),
+                success: function(response) {
+                    console.log(response)
+                  if (response.status === 200) {
+                    return Swal.fire({
+                      icon: 'success',
+                      text: response.success,
+                    }).then((result) => {
+                        window.location.reload();
+                    })
+              } else {
+                  if (response.errors) {
+                   return Swal.fire({
+                      icon: 'error',
+                      text: response.errors,
+                    })
+                    }
+               }  
+          }
+          });
+        })
+      })
 </script>
 <script>
     var swiper = new Swiper(".mySwiper", {
@@ -272,4 +307,6 @@ window.onclick = function(event) {
             box__filter.classList.remove("show__filter");
         }
     });
+
+
 </script>

@@ -36,4 +36,5 @@
          
         </div>
     </div>
+    <a href="{{route('list.set.pitch')}}"><span class="navbar__item">LIÊN HỆ</span></a> 
 </div>
