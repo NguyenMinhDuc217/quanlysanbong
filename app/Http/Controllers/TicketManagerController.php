@@ -60,12 +60,7 @@ class TicketManagerController extends Controller
         $timeEnd = $request->timeEnd;
         $timeDay = $request->timeDay;
 
-        $timeDaystart = $timeDay;
-        $timeDayend = date('d-m-Y H:i:s', strtotime('+1 Hour', strtotime($timeDay)));
-        for ($i = 0; $i <= 2; $i++) {
-            $times[$i]['timeDaystart'] = date('Y-m-d H:i:s', strtotime('+7 day', strtotime($timeDaystart)));
-            $times[$i]['timeDayend'] = date('Y-m-d H:i:s', strtotime('+7 day', strtotime($timeDayend)));
-        }
+        
 
 
         // // echo $timeDay;
@@ -117,6 +112,20 @@ class TicketManagerController extends Controller
         $detailTicket->end_time = $request->timeEnd;
         $detailTicket->status = $request->get('status');
 
+        $timeDaystart = $timeDay;
+        $timeDayend = date('d-m-Y H:i:s', strtotime('+1 Hour', strtotime($timeDay)));
+        
+        $times[0]['timeDaystart'] = date('Y-m-d H:i:s', (strtotime($timeDaystart)));
+        $times[0]['timeDayend'] = date('Y-m-d H:i:s', (strtotime($timeDayend)));
+        
+        $a = date('Y-m-d H:i:s', strtotime('+7 day', strtotime($timeDaystart)));
+        $b = date('Y-m-d H:i:s', strtotime('+7 day', strtotime($timeDayend)));
+        for ($i = 1; $i <= 3; $i++) {
+            $times[$i]['timeDaystart'] = $a;
+            $times[$i]['timeDayend'] = $b;
+            $a = date('Y-m-d H:i:s', strtotime('+7 day', strtotime($a)));
+            $b = date('Y-m-d H:i:s', strtotime('+7 day', strtotime($b)));
+        }
         foreach ($times as $time) {
             $timeStart = $time['timeDaystart'];
             $timeEnd = $time['timeDayend'];
@@ -148,6 +157,7 @@ class TicketManagerController extends Controller
 
         }
         $detailTicket->detail_time_of_week = json_encode($times) ;
+        dd($detailTicket->detail_time_of_week);
 
         $tickets = new Tickets();
         $tickets->user_id = 0;
