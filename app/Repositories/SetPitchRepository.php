@@ -11,6 +11,7 @@ use App\Models\SetService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use League\OAuth1\Client\Server\Server;
+use Illuminate\Support\Facades\Validator;
 
 class SetPitchRepository implements SetPitchRepositoryInterface
 {
@@ -20,33 +21,37 @@ class SetPitchRepository implements SetPitchRepositoryInterface
       define('HAFLANHOUR',30);
       define('SECOND',60);
       define('PERCENT',100);
-      
-        $request->validate(
-         [
-          'timeStart' => 'required',
-          'timeEnd' => 'required',
-         ],
-         [
-          'timeStart.required'=>'Vui lòng chọn thời gian bắt đầu',
-          'timeEnd.required'=>'Vui lòng thời gian kết thúc',
-         ]
+    
+        $validator = Validator::make($request->all(),
+        [
+            'timeStart' => 'required',
+            'timeEnd' => 'required',
+           ],
+           [
+            'timeStart.required'=>'Vui lòng chọn thời gian bắt đầu',
+            'timeEnd.required'=>'Vui lòng thời gian kết thúc',
+           ]
         );
+        if ($validator->fails()) {
+            return response()->json(['status' => 400, 'errors' => $validator->errors()->all()]);
+        }
+
         $timeStart=$request->timeStart;
         $timeEnd=$request->timeEnd;
-        
+     
         if( $timeEnd<$timeStart){
-            return redirect()->route('detail.pitch',['pitchid'=>$pitchid])->with('error',"Thời gian kết thúc phải lớn hơn thời gian bắt đầu");
+            return response()->json(['status' => 401, 'error' => "Thời gian kết thúc phải lớn hơn thời gian bắt đầu"]);
         }
         
         if((strtotime($timeEnd)-strtotime($timeStart))/SECOND<=HAFLANHOUR){
-            return redirect()->route('detail.pitch',['pitchid'=>$pitchid])->with('error',"Thời gian của trận đấu phải lớn hơn 30 phút");
+            return response()->json(['status' => 402, 'error' => "Thời gian của trận đấu phải lớn hơn 30 phút"]);
         }
         
         
         $pitch=Pitchs::where('id',$pitchid)->where('status','1')->first();
          if( $pitch==null){
-            return redirect()->route('detail.pitch',['pitchid'=>$pitchid])->with('error',"Không tìm thấy sân");
-         }
+            return response()->json(['status' => 400, 'error' => "Không tìm thấy sân or sân không hoạt động"]); 
+        }
 
         $timeSoccer= (strtotime($timeEnd)-strtotime($timeStart))/(MINUTE*SECOND);
         
@@ -64,7 +69,7 @@ class SetPitchRepository implements SetPitchRepositoryInterface
                 $setTimeStart=$checkTime->start_time;
                 $setTimeEnd=$checkTime->end_time;
             }
-            return redirect()->route('detail.pitch',['pitchid'=>$pitchid])->with('error',"Sân đã được đặt từ $setTimeStart đến $setTimeEnd");
+            return response()->json(['status' => 400, 'error' => "Sân đã được đặt từ $setTimeStart đến $setTimeEnd"]);
         }
     
         $setPitch=new Detail_set_pitchs();
@@ -98,7 +103,7 @@ class SetPitchRepository implements SetPitchRepositoryInterface
         $setPitch->save();
         $successStart= date_format(date_create($request->timeStart),"Y/m/d H:i:s");
         $successEnd= date_format(date_create($request->timeEnd),"Y/m/d H:i:s");
-        return redirect()->route('detail.pitch',['pitchid'=>$pitchid])->with('success',"Bạn đã đặt sân từ $successStart đến $successEnd");
+        return response()->json(['status'=> 200,'success'=>"Bạn đã đặt sân từ $successStart đến $successEnd"]);
     }
 
    public function listSetPitch(){

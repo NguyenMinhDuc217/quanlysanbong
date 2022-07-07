@@ -1,6 +1,7 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('/css/list-set-pitch.css') }}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="/path/to/bootstrap/js/bootstrap.min.js"></script>
 <!--Modal dich vu-->
 <div class="modal fade" id="serviceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -149,6 +150,7 @@
             e.preventDefault();
             var service_id=$(this).val();
             $('#service_id').val(service_id);
+            console.log(service_id);
              $('#serviceModal').modal('show');  
              $.ajax({
               type: "GET",
