@@ -159,7 +159,7 @@
                       denyButtonText: `Không`,
                     }).then((result) => {
                           if (result.isConfirmed) {
-                            window.location.replace("{{route('list_pitch')}}");
+                            window.location.replace("/pay-ticket?ticketid="+ticketid);
                           } else if (result.isDenied) {
                             window.location.reload();
                           }

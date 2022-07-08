@@ -62,6 +62,9 @@ Route::get('/view-service', [SetPitchController::class,'detailService'])->name('
 //thanh toan VNPAY
 Route::post('/vnpay-payment', [PayController::class,'vnpay_payment'])->name('vnpay.payment');
 Route::get('/return-vnpay', [PayController::class,'return'])->name('return.payment');
+//thanh toan VNPAY
+Route::post('/vnpay-payment-ticket', [PayTicketController::class,'vnpay_payment'])->name('vnpay.payment.ticket');
+Route::get('/return-vnpay-ticket', [PayTicketController::class,'return'])->name('return.payment.ticket');
 //list_ticket
 Route::get('/ticket', [TicketController::class,'showTicket'])->name('show.ticket');
 //view
@@ -72,7 +75,8 @@ Route::get('/detail-ticket', [TicketController::class,'detailTicket'])->name('de
 Route::post('/buy-ticket', [BuyTicketController::class,'buyTicket'])->name('buy.ticket');
 //list-buy-ticket
 Route::get('/list-buy-ticket', [BuyTicketController::class,'listBuyTicket'])->name('list.buy.ticket');
-
+//pay
+Route::get('/pay-ticket', [BuyTicketController::class,'payTicket'])->name('pay.ticket');
 //Team
    //create
 Route::get('/create-team', [TeamController::class,'showCreateTeam'])->name('show.create.team');

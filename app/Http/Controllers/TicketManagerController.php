@@ -155,6 +155,7 @@ class TicketManagerController extends Controller
                 return redirect()->route('tickets.create')->with('error', "Sân đã được đặt từ $setTimeStart đến $setTimeEnd");
             }
 
+            
         }
         $detailTicket->detail_time_of_week = json_encode($times) ;
 

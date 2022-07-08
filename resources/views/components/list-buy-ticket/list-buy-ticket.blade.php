@@ -3,58 +3,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="/path/to/bootstrap/js/bootstrap.min.js"></script>
 <!--Modal dich vu-->
-<div class="modal fade" id="serviceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Dịch vụ</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-      <input type="hidden" name="service_id" id="service_id" />
-          <table id="mytable">
-              <tr>
-                <th>Tên dịch vụ</th>
-                <th>Số lượng</th>
-                <th>Giá</th>
-              </tr>
-              <tr>
-                <td><span id="nameservice"></span></td>
-                <td><span id="quantity"></span></td>
-                <td><span id="total"></span></td>
-              </tr>
-            </table>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-<!--Modal huy-->
-<div class="modal" id="deleteModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <form action="{{route('delete.set.pitch')}}" method="POST" >
-        @csrf
-      <div class="modal-header">
-        <h5 class="modal-title">Hủy đặt sân</h5>
-      </div>
-      <div class="modal-body">
-        <input type="hidden" name="set_pitch_id" id="set_pitch_id">
-        <p> Vui lòng ghi nhớ mã giao dịch. Bạn có chắc chắn muốn huỷ?</p>
-      </div>
-      <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-      <button type="submit" class="btn btn-primary">Đồng ý</button>
-      </div>
-      </form>
 
-    </div>
-  </div>
-</div>
 @if (Session::has('success'))
       <div class="alert alert-success notify_success" style="color:green; font-size:20px">
         <span>{{ Session::get('success') }}</span>
@@ -65,7 +14,7 @@
         <strong> {{ session()->get('error') }}</strong>
         </span>
    @endif
-
+<div>Vui lòng kiểm tra sân đã đặt để biết chi tiết về các móc thời gian của vé</div>
 <table class="table">
   <tr>
     <th>STT</th>
@@ -97,37 +46,8 @@
       <th>{{$end}}</th>
       <th>{{$ticket['ticket']->price}}</th>
       </tr>
+    </div>
       @endforeach
    
 </table>
 
-<script>
-  $(document).ready(function(){
-        $(document).on('click','.deleteSetPitchBtn',function(e){
-          e.preventDefault();
-          var setpitch_id=$(this).val();
-        $('#set_pitch_id').val(setpitch_id);
-        $('#deleteModal').modal('show');
-        })
-  })
-  $(document).ready(function(){
-        $(document).on('click','.btnService', function(e){
-            e.preventDefault();
-            var service_id=$(this).val();
-            $('#service_id').val(service_id);
-            console.log(service_id);
-             $('#serviceModal').modal('show');  
-             $.ajax({
-              type: "GET",
-                 url: '/view-service?serviceid=' + service_id,
-                 success: function(response){
-                      console.log(response);
-                      $("#nameservice").text(response.data.name);
-                      $("#quantity").text(response.data.quantity);
-                      $("#total").text(response.data.total);
-                 }
-             })
-        })
-    })
-
-</script>

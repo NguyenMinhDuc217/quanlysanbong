@@ -19,4 +19,7 @@ class BuyTicketController extends BaseUserController
     public function listBuyTicket(){
         return $this->ticketRepository->listBuyTicket();
     }
+    public function payTicket(Request $request){
+        return $this->ticketRepository->payTicket($request);
+    }
 }

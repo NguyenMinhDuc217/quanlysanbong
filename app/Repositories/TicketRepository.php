@@ -72,5 +72,21 @@ class TicketRepository implements TicketRepositoryInterface
       }
       return view('list-buy-ticket.index',compact('tickets'));
     } 
-  
+   public function payTicket(Request $request){
+      $now=Carbon::now()->format('Y-m-d');
+      foreach(Pitchs::all() as $pitch){
+        $pitchs[$pitch->id]=$pitch->name;
+      }
+      $data=[];
+      $data['ticket']=Tickets::where('id', $request->ticketid)->where('status',1)->where('timeout','>',$now)->first();
+      $data['detail_ticket']=DetailTicket::where('ticket_id', $request->ticketid)->first();
+      foreach(Detail_set_pitchs::where('ticket_id', $request->ticketid)->get() as $i=>$setPitch){
+        $data['setPitch'][$i]['setPitch']=$setPitch;
+        $data['setPitch'][$i]['pitch']=$pitchs[$setPitch->picth_id];
+      }
+      foreach(SetService::where('ticket_id', $request->ticketid)->get() as $i=>$service){
+        $data['service'][$i]=$service;
+      }
+      return view('pay-ticket.index',compact('data'));
+   }
 }

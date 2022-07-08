@@ -15,7 +15,8 @@ class CreateBillsTable extends Migration
     {
         Schema::create('bills', function (Blueprint $table) {
             $table->id();
-            $table->string('detail_set_pitch_id',255);
+            $table->string('detail_set_pitch_id',255)->nullable();
+            $table->string('ticket_id',255)->nullable();
             $table->string('user_id',255);
             $table->string('transaction_id',255)->nullable();
             $table->string('bill_number',255);

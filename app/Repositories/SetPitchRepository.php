@@ -82,7 +82,6 @@ class SetPitchRepository implements SetPitchRepositoryInterface
         $setPitch->start_time = $request->timeStart;
         $setPitch->end_time = $request->timeEnd;   
         $setPitch->price_pitch= $pitch->price*$timeSoccer*((PERCENT-$pitch->discount)/PERCENT);   
-        // dd($pitch->price*$timeSoccer*((PERCENT-$pitch->discount)/PERCENT), $setPitch->price_pitch);
         $setPitch->total= $pitch->price*$timeSoccer*((PERCENT-$pitch->discount)/PERCENT);   
         $setPitch->save();
 
@@ -119,7 +118,7 @@ class SetPitchRepository implements SetPitchRepositoryInterface
             $bills[$bill->detail_set_pitch_id]=$bill->transaction_id;
      }
     $listSetPitch=[];
-    foreach(Detail_set_pitchs::orderby('id','DESC')->where('user_id',Auth::guard('user')->user()->id)->where('ticket_id',null)->get() as $i=>$detail_set_pitch){
+    foreach(Detail_set_pitchs::orderby('id','DESC')->where('user_id',Auth::guard('user')->user()->id)->get() as $i=>$detail_set_pitch){
        $listSetPitch[$i]['detail_set_pitch']=$detail_set_pitch;
        $listSetPitch[$i]['name']=$pitchs[$detail_set_pitch->picth_id];
        foreach(SetService::where('set_pitch_id',$detail_set_pitch->id)->get() as $k=>$setService){
