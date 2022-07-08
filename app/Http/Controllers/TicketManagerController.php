@@ -102,6 +102,8 @@ class TicketManagerController extends Controller
         //lấy phần tử cuối cùng trong mảng
         $ticketsTemp = Tickets::all()->toArray();
         $ticketsTemp = end($ticketsTemp);
+        $detail_set_pitch_Temp = Detail_set_pitchs::all()->toArray();
+        $detail_set_pitch_Temp = end($detail_set_pitch_Temp);
 
         $detailTicket = new DetailTicket();
         $detailTicket->ticket_id = $ticketsTemp["id"] + 1;
@@ -154,9 +156,26 @@ class TicketManagerController extends Controller
                 }
                 return redirect()->route('tickets.create')->with('error', "Sân đã được đặt từ $setTimeStart đến $setTimeEnd");
             }
-
         }
         $detailTicket->detail_time_of_week = json_encode($times) ;
+        // lưu thông tin vô bảng detail set pitch
+        $pitchs = Pitchs::where('id',$detailTicket->pitch_id)->first();
+        $services = Services::where('id',$detailTicket->sercive_id)->first();
+        foreach($times as $time){
+            $detail_set_pitch[] = array(
+                'ticket_id' => $detail_set_pitch_Temp["id"] + 1,
+                'picth_id' => $detailTicket->pitch_id,
+                'user_id' => 0,
+                'date_event' => date('Y-m-h', strtotime($timeDay)),
+                'start_time' => $time["timeDaystart"],
+                'end_time' => $time["timeDayend"],
+                'price_pitch' => $pitchs["price"]* $request->number_day * $request->month * 4,
+                'total' => ($pitchs["price"] + $services["price"]) * $request->number_day * $request->month * 4 - (($pitchs["price"] + $services["price"]) * $request->number_day * $request->month * 4 * $request->discount /100),
+                'ispay' => '1',
+            );
+
+        }
+        Detail_set_pitchs::insert($detail_set_pitch);
 
         $tickets = new Tickets();
         $tickets->user_id = 0;
@@ -178,7 +197,7 @@ class TicketManagerController extends Controller
         $tickets->number_day_of_week = $request->number_day;
         // $timeDay;
         $tickets->timeout = $request->timeOut;
-        $tickets->price = 0;
+        $tickets->price = ($pitchs["price"] + $services["price"]) * $request->number_day * $request->month * 4 - (($pitchs["price"] + $services["price"]) * $request->number_day * $request->month * 4 * $request->discount /100);
         $tickets->month = $request->month;
         $tickets->discount = $request->discount;
         $tickets->status = $request->get('status');
