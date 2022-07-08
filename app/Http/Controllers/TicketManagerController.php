@@ -175,7 +175,7 @@ class TicketManagerController extends Controller
             );
 
         }
-        dd($detail_set_pitch);
+        // dd($detail_set_pitch);
         Detail_set_pitchs::insert($detail_set_pitch);
 
         $tickets = new Tickets();
