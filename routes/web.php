@@ -70,6 +70,9 @@ Route::get('/view-ticket', [TicketController::class,'viewTicket'])->name('view.t
 Route::get('/detail-ticket', [TicketController::class,'detailTicket'])->name('detail.ticket');
 //buy ticket
 Route::post('/buy-ticket', [BuyTicketController::class,'buyTicket'])->name('buy.ticket');
+//list-buy-ticket
+Route::get('/list-buy-ticket', [BuyTicketController::class,'listBuyTicket'])->name('list.buy.ticket');
+
 //Team
    //create
 Route::get('/create-team', [TeamController::class,'showCreateTeam'])->name('show.create.team');

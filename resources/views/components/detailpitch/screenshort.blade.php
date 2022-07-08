@@ -49,10 +49,10 @@
                 <span class="advise_title">TƯ VẤN MIỄN PHÍ</span>
                 <div class="advise_form">
                     <form id="sendphone">
-                       <meta name="csrf-token" content="{{ csrf_token() }}">
+                        <meta name="csrf-token" content="{{ csrf_token() }}">
                         <div class="advise_form__inputbtn">
                             <input name="phone" class="advise_form__input" type="text" placeholder="Để số điện thoại chúng tôi gọi">
-                            <button  class="advise_form__btn">Gửi</button>
+                            <button class="advise_form__btn">Gửi</button>
                         </div>
                     </form>
                 </div>
@@ -73,18 +73,18 @@
                     <div class="detail_find_total">
 
                         <form id="searchTime">
-                           <meta name="csrf-token" content="{{ csrf_token() }}">
-                           <input type="hidden" name="pitchid" id="pitchid" value="{{$data['pitch']['id']}}"/>
+                            <meta name="csrf-token" content="{{ csrf_token() }}">
+                            <input type="hidden" name="pitchid" id="pitchid" value="{{$data['pitch']['id']}}" />
                             <div class="detail_find_list">
                                 <div class="detail_find_from">
                                     <span>Tìm từ giờ:</span>
                                     <input type="datetime-local" name="timeStart" id="timeStart">
-                            
+
                                 </div>
                                 <div class="detail_find_to">
                                     <span>Đến giờ:</span>
                                     <input type="datetime-local" name="timeEnd" id="timeEnd">
-                               
+
                                 </div>
 
                             </div>
@@ -100,7 +100,7 @@
                                 </div>
                                 @endforeach
                             </div>
-                       
+
                             <button>Đặt sân</button>
                         </form>
                     </div>
@@ -131,7 +131,7 @@
                                             <td><span class="leaderboard__name">{{$detail['end_time']}}</span></td>
                                         </tr>
                                         @endforeach
-                       
+
                                     </table>
                                 </div>
                             </td>
@@ -190,90 +190,102 @@
     //   modal.style.display = "none";
     // }
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
-  $(document).ready(function () {
-              $('.checkbox input:checkbox').on('click', function(){
-               $(this).closest('.checkbox').find('.ch_for').toggle();
-                })
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+    $(document).ready(function() {
+        $('.checkbox input:checkbox').on('click', function() {
+            $(this).closest('.checkbox').find('.ch_for').toggle();
+        })
     });
-    $(document).ready(function(){
-        $('#sendphone').on('submit', function(e){
+    $(document).ready(function() {
+        $('#sendphone').on('submit', function(e) {
             e.preventDefault();
             var name = $('#name').val();
             $.ajax({
-               headers: {
-                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 type: 'POST',
                 url: "{{route('send.phone')}}",
                 data: $('#sendphone').serialize(),
                 success: function(response) {
                     console.log(response)
-                  if (response.status === 200) {
-                    return Swal.fire({
-                      icon: 'success',
-                      text: response.success,
-                    }).then((result) => {
-                        window.location.reload();
-                    })
-              } else {
-                  if (response.errors) {
-                   return Swal.fire({
-                      icon: 'error',
-                      text: response.errors,
-                    })
+                    if (response.status === 200) {
+                        return Swal.fire({
+                            icon: 'success',
+                            text: response.success,
+                        }).then((result) => {
+                            window.location.reload();
+                        })
+                    } else {
+                        if (response.errors) {
+                            return Swal.fire({
+                                icon: 'error',
+                                text: response.errors,
+                            })
+                        }
                     }
-               }  
-          }
-          });
+                }
+            });
         })
-      })
-      $(document).ready(function(){
-        $('#searchTime').on('submit', function(e){
+    })
+    $(document).ready(function() {
+        $('#searchTime').on('submit', function(e) {
             e.preventDefault();
             var name = $('#name').val();
-            var pitchid=$('#pitchid').val();
+            var pitchid = $('#pitchid').val();
+            @if(Auth::guard('user')->check())
             $.ajax({
-               headers: {
-                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 type: 'POST',
-                url: '/detail-pitch/'+pitchid,
+                url: '/detail-pitch/' + pitchid,
                 data: $('#searchTime').serialize(),
                 dataType: 'json',
                 success: function(response) {
                     console.log(response)
-                  if (response.status === 200) {
-                    return Swal.fire({
-                      icon: 'success',
-                      text: response.success,
-                    }).then((result) => {
-                        window.location.reload();
-                    })
-              } else {
-                  if (response.errors) {
-                   return Swal.fire({
-                      icon: 'error',
-                      text: response.errors,
-                    })
-                    }else{
-                        if (response.error) {
-                   return Swal.fire({
-                      icon: 'error',
-                      text: response.error,
-                    })
+                    if (response.status === 200) {
+                        return Swal.fire({
+                            icon: 'success',
+                            text: response.success,
+                        }).then((result) => {
+                            window.location.reload();
+                        })
+                    } else {
+                        if (response.errors) {
+                            return Swal.fire({
+                                icon: 'error',
+                                text: response.errors,
+                            })
+                        } else {
+                            if (response.error) {
+                                return Swal.fire({
+                                    icon: 'error',
+                                    text: response.error,
+                                })
+                            }
+                        }
                     }
-                    }
-               }  
-          }
-          });
+                }
+            });
+
+            @else
+            return Swal.fire({
+                icon: 'error',
+                text: 'Vui lòng đăng nhập để được đặt sân',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "{{route('show.login')}}";
+                }
+            });
+            @endif
         })
-      })
+    })
 </script>
 <script>
     var swiper = new Swiper(".mySwiper", {
@@ -333,6 +345,4 @@ window.onclick = function(event) {
             box__filter.classList.remove("show__filter");
         }
     });
-
-
 </script>

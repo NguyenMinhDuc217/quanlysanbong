@@ -11,4 +11,5 @@ interface TicketRepositoryInterface
     public function viewTicket(Request $request);
     public function detailTicket(Request $request);
     public function buyTicket(Request $request);
+    public function listBuyTicket();
 }

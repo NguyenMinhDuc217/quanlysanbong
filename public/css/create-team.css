@@ -53,11 +53,11 @@ h2{
     color:#777;
     display: block;
     margin-bottom: 5px; 
-    width: 40%;
+    width: 25%;
 }
 
 .form-control_notify {
-    width: 60%;
+    flex: 1;
 }
  
 .form-control input
@@ -142,6 +142,22 @@ h2{
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
     transition: all 0.5s ease-out;
     animation: shine 5s infinite;
+    border-radius: 4px;
+}
+
+/* text area */
+.textarea_member {
+    width: 100%;
+    min-height: 135px;
+    font-size: 14px;
+    border-radius: 4px;
+    padding: 10px;
+    border: 2px solid #f0f0f0;
+}
+
+.textarea_member:focus {
+    outline: 0;
+    border-color: #777;
     border-radius: 4px;
 }
 

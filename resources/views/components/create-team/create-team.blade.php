@@ -29,7 +29,7 @@
                     <div class="form_control__custom">
                         <label for="member">Thành viên<span class="require">*</span></label>
                         <div class="form-control_notify">
-                            <input type="textarea" id="member" name="member" placeholder="Nhập tên các thành viên đội" autocomplete="off" >
+                            <textarea class="textarea_member" id="member" name="member" placeholder="Nhập tên các thành viên đội" autocomplete="off" ></textarea>
                             @error('member')
                                     <p class="vali_sign" class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

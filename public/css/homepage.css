@@ -236,6 +236,7 @@ i {
 .dropdown {
     position: relative;
     display: inline-block;
+    margin-right: 50px;
 }
 
 .dropdown-content {

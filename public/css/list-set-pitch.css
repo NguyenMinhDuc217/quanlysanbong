@@ -35,3 +35,8 @@ table{
   tr:nth-child(even) {
     background-color: #dddddd;
   }
+
+  .custom_btn {
+    padding: 2px 5px !important;
+    margin-bottom: 4px;
+  }

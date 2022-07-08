@@ -32,7 +32,7 @@
         </div>
         <div class="dropdown-content">
            <a class="dropdown-content__item"  href="{{route('show.ticket')}}">DANH SÁCH VÉ THÁNG</a> 
-           <a class="dropdown-content__item"  href="#">VÉ THÁNG ĐÃ MUA</a> 
+           <a class="dropdown-content__item"  href="{{route('list.buy.ticket')}}">VÉ THÁNG ĐÃ MUA</a> 
          
         </div>
     </div>

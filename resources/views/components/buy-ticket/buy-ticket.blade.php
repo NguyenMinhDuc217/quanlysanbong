@@ -131,12 +131,16 @@
         })
     })
 
+    //gì mà đỏ lofm vậy e kkk
+    
+
     $(document).ready(function(){
         $(document).on('click','#btnBuy', function(e){
             e.preventDefault();
             var name = $('#name').val();
             var ticketid=$('#ticket').val();
             console.log(ticketid);
+            @if(Auth::guard('user')->check())
             $.ajax({
               headers: {
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -150,8 +154,15 @@
                     return Swal.fire({
                       icon: 'success',
                       text: response.data,
+                      showDenyButton: true,
+                      confirmButtonText: 'Đồng ý',
+                      denyButtonText: `Không`,
                     }).then((result) => {
-                      window.location.replace("{{route('list_pitch')}}");
+                          if (result.isConfirmed) {
+                            window.location.replace("{{route('list_pitch')}}");
+                          } else if (result.isDenied) {
+                            window.location.reload();
+                          }
                     })
               } else {
               if (response.status != 200) {
@@ -165,6 +176,16 @@
                }  
           }
           });
+          @else
+            return Swal.fire({
+                icon: 'error',
+                text: 'Vui lòng đăng nhập để được đặt sân',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "{{route('show.login')}}";
+                }
+            });
+            @endif
         })
       })
 </script>

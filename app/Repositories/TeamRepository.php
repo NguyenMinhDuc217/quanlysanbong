@@ -43,6 +43,7 @@ class TeamRepository implements TeamRepositoryInterface
 
   public function searchTeam(Request $request){
     $key = $request->key;
+    $teams = new Teams();
     if(!empty($key)){
         $teams = Teams::where('team_name','like','%'.($key).'%')->orwhere('team_member','like','%'.($key).'%')->orwhere('user_name','like','%'.($key).'%');
     }

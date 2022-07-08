@@ -69,80 +69,36 @@
 <table class="table">
   <tr>
     <th>STT</th>
-    <th>Tên sân</th>
-    <th>Thời gian bắt đầu</th>
-    <th>Thời gian kết thúc</th>
-    <th>Dịch vụ</th>
-    <th>Tiền sân</th>
-    <th>Tổng tiền</th>
-    <th>Hủy sân</th>
-    <th>Mã giao dịch</th>
-    <th>Phương thức</th>
+    <th>Mã vé</th>
+    <th>Tên vé</th>
+    <th>Số lượng ngày trong tuần</th>
+    <th>Tháng</th>
+    <th>Ngày bắt đầu</th>
+    <th>Ngày kết thúc</th>
+    <th>Giá</th>  
   </tr>
-    @if(!empty($listSetPitch))
-    @foreach($listSetPitch as $i=>$setPitch)
-    <tr>
-    <td>{{$i+1}}</td>
-    <td>{{$setPitch['name']}}</td>
-     @php
-    $date=date_create($setPitch['detail_set_pitch']->start_time);
-    $start= date_format($date,"d/m/Y H:i");
-    @endphp
-    <td>{{$start}}</td>
-    @php
-    $date=date_create($setPitch['detail_set_pitch']->end_time);
-    $end= date_format($date,"d/m/Y H:i");
-     @endphp
-    <td>{{$end}}</td>
-    @if(!empty($setPitch['service']))
-    <td>
-    @foreach($setPitch['service'] as $service)
-      <button type="button" class="btn btn-primary btnService custom_btn" data-toggle="modal" data-target="#serviceModal" value="{{$service->id}}">
-      {{$service->name}}
-     </button>
-     @endforeach
-    </td>
-    @else
-    <td></td>
-    @endif
-    @php
-   $price_pitch=number_format($setPitch['detail_set_pitch']->price_pitch, 0, '', ',');
-   @endphp
-   <td>{{$price_pitch}}đ</td>
-   @php
-   $total=number_format($setPitch['detail_set_pitch']->total, 0, '', ',');
-   @endphp
-    <td>{{$total}}đ</td>
-    @if((strtotime($setPitch['detail_set_pitch']->start_time)-strtotime(date('Y-m-d H:i:s')))/(60)>=120)
-    <td><button type="button" class="btn btn-danger deleteSetPitchBtn" value="{{$setPitch['detail_set_pitch']->id}}">Hủy</button></td>
-    @else
-    <td>Không thể hủy</td>
-    @endif
 
-    @if(!empty($setPitch['transaction_id']))
-    <td>{{$setPitch['transaction_id']}}</td>
-    @else
-    <td></td>
-    @endif
-
-    @if($setPitch['detail_set_pitch']->ispay==0)
-    <td>
-      <form method="POST" action="{{route('vnpay.payment',['id'=>$setPitch['detail_set_pitch']->id])}}">
-       @csrf
-       <button type="submit" name="redirect" class="btn btn-success">Thanh toán VNPAY</button>
-      </form>
-    </td>
-    @else
-    <td>Bạn đã thanh toán</td>
-    @endif
-    
-    @endforeach
-    </tr>
-    @else
-    <tr>
-    <td colspan="9" style="text-align:center;">Bạn chưa đặt sân</td>
-    </tr>
-    @endif
+     @foreach($tickets as $i=>$ticket)
+      <tr>
+      <th>{{$i+1}}</th>
+      <th>{{$ticket['ticket']->code_ticket}}</th>
+      <th>{{$ticket['ticket']->name}}</th>
+      <th>{{$ticket['ticket']->number_day_of_week}}</th>
+      <th>{{$ticket['ticket']->month}}</th>
+        @php
+        $date=date_create($ticket['detail_ticket']->start_time);
+        $start= date_format($date,"d/m/Y");
+        @endphp
+      <th>{{$start}}</th>
+        @php
+        $date=date_create($ticket['detail_ticket']->end_time);
+        $end= date_format($date,"d/m/Y");
+        @endphp
+      <th>{{$end}}</th>
+      <th>{{$ticket['ticket']->price}}</th>
+      </tr>
+      @endforeach
+   
 </table>
 
 <script>
