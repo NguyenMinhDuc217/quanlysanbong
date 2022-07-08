@@ -169,12 +169,13 @@ class TicketManagerController extends Controller
                 'date_event' => date('Y-m-h', strtotime($timeDay)),
                 'start_time' => $time["timeDaystart"],
                 'end_time' => $time["timeDayend"],
-                'price_pitch' => $pitchs["price"]* $request->number_day * $request->month * 4,
-                'total' => ($pitchs["price"] + $services["price"]) * $request->number_day * $request->month * 4 - (($pitchs["price"] + $services["price"]) * $request->number_day * $request->month * 4 * $request->discount /100),
+                'price_pitch' => $pitchs["price"],
+                'total' => ($pitchs["price"] + $services["price"]) - (($pitchs["price"] + $services["price"]) * $request->discount /100),
                 'ispay' => '1',
             );
 
         }
+        dd($detail_set_pitch);
         Detail_set_pitchs::insert($detail_set_pitch);
 
         $tickets = new Tickets();
