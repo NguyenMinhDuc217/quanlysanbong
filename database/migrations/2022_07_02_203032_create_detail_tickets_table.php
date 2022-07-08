@@ -20,6 +20,7 @@ class CreateDetailTicketsTable extends Migration
             $table->string('sercive_id');
             $table->dateTime('start_time');
             $table->dateTime('end_time');
+            $table->longText('detail_time_of_week')->nullable();
             $table->string('pitch_id');
             $table->string('advise_phone')->nullable();
             $table->string('status')->default('1');

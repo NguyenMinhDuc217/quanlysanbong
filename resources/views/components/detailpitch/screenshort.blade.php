@@ -58,16 +58,16 @@
                 </div>
             </div>
             <div class="contact_social">
-                <a class="contact_social__phone" href="">
+                <!-- <a class="contact_social__phone" href="">
                     <span class="contact_social_logo">
                         <div class="contact_social_logo__img">
                             <box-icon name='phone-call'></box-icon>
                         </div>
                         <div class="phone_number">
-                            <span class="contact_social_title">0123456789</span>
+                            <span class="contact_social_title">0356155012</span>
                         </div>
                     </span>
-                </a>
+                </a> -->
                 <div class="detail_find" id="find_hour">
                     <span class="detail_find_hour">Đặt sân</span>
                     <div class="detail_find_total">
@@ -131,7 +131,6 @@
                                             <td><span class="leaderboard__name">{{$detail['end_time']}}</span></td>
                                         </tr>
                                         @endforeach
-
                                     </table>
                                 </div>
                             </td>

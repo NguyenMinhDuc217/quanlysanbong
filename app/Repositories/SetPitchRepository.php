@@ -82,6 +82,7 @@ class SetPitchRepository implements SetPitchRepositoryInterface
         $setPitch->start_time = $request->timeStart;
         $setPitch->end_time = $request->timeEnd;   
         $setPitch->price_pitch= $pitch->price*$timeSoccer*((PERCENT-$pitch->discount)/PERCENT);   
+        // dd($pitch->price*$timeSoccer*((PERCENT-$pitch->discount)/PERCENT), $setPitch->price_pitch);
         $setPitch->total= $pitch->price*$timeSoccer*((PERCENT-$pitch->discount)/PERCENT);   
         $setPitch->save();
 

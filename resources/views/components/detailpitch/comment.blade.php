@@ -1,5 +1,5 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('/css/detailProduct.css') }}">
-
+<link rel="stylesheet" type="text/css" href="{{ asset('/admin/plugins/sweetalert2/sweetalert2.min.css') }}">
 <div class="detail">
     <div class="detail_desc">
         <div id="review_comment">
@@ -10,8 +10,8 @@
                 </div>
                 <div class="review__avt__user__right">
                     <div class="user__right__top">
-                        <p>{{@$rowCmt["name"]}}</p>
-                        <p>{{date('d/m/Y', @$rowCmt["created_at"])}}</p>
+                        <p>{{@$rowCmt["name"]}}</p>date('d-m-Y', strtotime($user->from_date));
+                        <p>{{@$rowCmt["created_at"]}}</p>
                         <div class="like__dislike" style="font-size: 17px;">
                             <i class='bx bxs-like'></i>
                             <span class="count-cmt">{{@$rowCmt["like"]}}</span>
@@ -59,9 +59,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <!-- <script src="https://unpkg.com/boxicons@2.1.2/dist/boxicons.js"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.17/sweetalert2.min.js"
-  integrity="sha512-Kyb4n9EVHqUml4QZsvtNk6NDNGO3+Ta1757DSJqpxe7uJlHX1dgpQ6Sk77OGoYA4zl7QXcOK1AlWf8P61lSLfQ=="
-  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.17/sweetalert2.min.js"></script>
 
 <script>
     
@@ -115,10 +113,11 @@ $('#sm_cmt').on('click', function(e) {
       if (res.status === 200) {
         Swal.fire({
           title: "Success",
-          imageUrl: `{{ asset('/images/alert/bell__success.png') }}`,
-          imageWidth: 100,
-          imageHeight: 100,
-          imageAlt: 'Message',
+          icon: 'success',
+          // imageUrl: `{{ asset('public/theme/images/alert/bell__success.png') }}`,
+          // imageWidth: 100,
+          // imageHeight: 100,
+          // imageAlt: 'Message',
         }).then((result) => {
           if (result.isConfirmed) {
             $this.removeAttr('disabled').html("Gửi");
@@ -130,19 +129,13 @@ $('#sm_cmt').on('click', function(e) {
           $this.removeAttr('disabled').html("Gửi");
           return  Swal.fire({
           title: res.error,
-          imageUrl: `{{ asset('/images/alert/bell.png') }}`,
-          imageWidth: 100,
-          imageHeight: 100,
-          imageAlt: 'Message',
+          icon: 'error',
         })
         } else if (res.errors) {
           $this.removeAttr('disabled').html("Gửi");
           return Swal.fire({
-            imageUrl: `{{ asset('/images/alert/bell.png') }}`,
-            imageWidth: 100,
-            imageHeight: 100,
-            imageAlt: 'Message',
             text: "Error",
+            icon: 'error',
             html: '<span></span>',
             willOpen: () => {
               let b = Swal.getHtmlContainer().querySelector(
@@ -154,11 +147,8 @@ $('#sm_cmt').on('click', function(e) {
           })
         }
         Swal.fire({
-          imageUrl: `{{ asset('/images/alert/bell.png') }}`,
-          imageWidth: 100,
-          imageHeight: 100,
-          imageAlt: 'Message',
           text: "An unknown error !",
+          icon: 'error',
         })
         $this.removeAttr('disabled').html("Gửi");
       }

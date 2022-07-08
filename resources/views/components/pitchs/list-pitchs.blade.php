@@ -21,7 +21,20 @@
                         <span><i class='bx bx-star'></i></span>
                     </div>
                 </div>
-                <div class="product_item__price">Giá <span class="product_item__price_color">{{number_format($pitch->price)}}</span> / Giờ</div>
+                <!-- <div class="product_item__vote">
+                    <span class="product_item__vote_num">Giá: {{number_format($pitch->price)}}đ / Giờ</span>
+                    @if($pitch['discount']!=0)
+                    <span class="product_item__vote_num_discount">{{number_format($pitch['discount'])}}%</span>
+                    @else
+                    @endif
+                  </div> -->
+                <div class="product_item__vote">
+                    <div class="product_item__price">Giá: <span class="product_item__price_color">{{number_format($pitch->price)}}</span> / Giờ</div>
+                    @if($pitch['discount']!=0)
+                        <div><span class="product_item__vote_num_discount">{{number_format($pitch['discount'])}}%</span></div>
+                    @else
+                    @endif
+                </div>
             </a>
         </div>
         @endforeach
