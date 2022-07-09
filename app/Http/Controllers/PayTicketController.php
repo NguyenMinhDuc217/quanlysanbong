@@ -14,6 +14,9 @@ class PayTicketController extends Controller
 {
     public function vnpay_payment(Request $request){
         $ticket = Tickets::where('id', $request->id)->first();
+        if($ticket->ispay==1){
+            return redirect()->route('pay.ticket',['ticketid'=>$ticket->id])->with('error',"Vé đã có người mua");
+        }
         $code_ticket=$ticket->code_ticket;
       
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
@@ -151,10 +154,6 @@ class PayTicketController extends Controller
                        foreach(Detail_set_pitchs::where('ticket_id', $bill->ticket_id)->get() as $setPitch){
                        $setPitch->user_id=$bill->user_id;
                        $setPitch->save();
-                      }
-                      foreach(SetService::where('ticket_id', $request->ticketid)->get() as $service){
-                       $service->user_id=$bill->user_id;
-                       $service->save();
                       }
                     return redirect()->route('list.buy.ticket')->with('success',"Thanh toán thành công");
                 } 

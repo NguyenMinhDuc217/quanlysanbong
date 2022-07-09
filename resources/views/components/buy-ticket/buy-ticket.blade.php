@@ -41,8 +41,14 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" data-dismiss="modal">Mua ngay</button>
-        <button type="button" class="btn btn_detail__view">Xem chi tiết</button>
+          <form id="btnbuyTicket">
+           <input type="hidden" name="ticketid" id="buy">
+         <button type="button" class="btn btn-success" data-dismiss="modal">Mua ngay</button>
+         </form>
+         <form method="GET" action="{{route('detail.ticket')}}">
+           <input type="hidden" name="ticketid" id="detailTicket">
+           <button type="submit" class="btn btn_detail__view">Xem chi tiết</button>
+         </form>
       </div>
     </div>
   </div>
@@ -73,8 +79,6 @@
                    <button type="button"  class="btn btn-primary btn_buy" >  Mua ngay
                     </button>
                  </form>
-            
-                     
                     <button type="button" value="{{$ticket['id']}}" class="btn btn-success btnShow btn-sm btn_view" data-toggle="modal" data-target="#show">
                       Xem nhanh
                   </button>
@@ -92,6 +96,76 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 
 <script>
+   $(document).ready(function(){
+        $(document).on('click','#btnbuyTicket', function(e){
+            e.preventDefault();
+            var name = $('#name').val();
+            var ticketid=$('#ticket').val();
+            @if(Auth::guard('user')->check())
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: 'POST',
+                url: '/buy-ticket?ticketid=' + ticketid,
+                data: $('#btnbuyTicket').serialize(),
+                dataType: 'json',
+                success: function(response) {
+                    console.log(response);
+                    if (response.status === 200) {
+                    return Swal.fire({
+                      icon: 'success',
+                      text: response.data,
+                      showDenyButton: true,
+                      confirmButtonText: 'Đồng ý',
+                      denyButtonText: `Không`,
+                    }).then((result) => {
+                          if (result.isConfirmed) {
+                            window.location.replace("/pay-ticket?ticketid="+ticketid);
+                          } else if (result.isDenied) {
+                            window.location.reload();
+                          }
+                    })
+              } else {
+              if (response.status != 200) {
+                   return Swal.fire({
+                      icon: 'error',
+                      text: response.data,
+                    }).then((result) => {
+                      window.location.reload();
+                    })
+                    }
+               }  
+          }
+          });
+          @else
+            return Swal.fire({
+                icon: 'error',
+                text: 'Vui lòng đăng nhập để được đặt sân',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "{{route('show.login')}}";
+                }
+            });
+            @endif
+        })
+      })
+    $(document).ready(function(){
+        $(document).on('click','.detailTicket', function(e){
+            e.preventDefault();
+            var ticket_id=$(this).val();
+            $('#ticket_id').val(ticket_id);
+             $.ajax({
+                 type: "GET",
+                 url: '/detail-ticket?ticketid=' + ticket_id,
+                 success: function(response){
+                      $("#nameservice").text(response.data.name);
+                      $("#quantity").text(response.data.quantity);
+                      $("#total").text(response.data.total);
+                 }
+             })
+        })
+    })
     $(document).ready(function(){
         $(document).on('click','.btnShow', function(e){
             e.preventDefault();
@@ -103,19 +177,27 @@
                  type: "GET",
                  url: '/view-ticket?ticketid=' + ticket_id,
                  success: function(response){
+                    $('#detailTicket').val(response.data.ticket.id); 
+                    $('#buy').val(response.data.ticket.id); 
+                    console.log(response.data.ticket.id);
                      $('#image').attr('src', "images/tickets/"+response.data.ticket.image);
                      $("#name").text(response.data.ticket.name);
                      $("#code_ticket").text(response.data.ticket.code_ticket);
                      $("#number_day_of_week").text(response.data.ticket.number_day_of_week);
                      $("#month").text(response.data.ticket.month);
                      var price= parseInt(response.data.ticket.price);
+                     var pricedis=null;
                      if(response.data.ticket.discount!=0){
-                      var pricedis=price*(100-response.data.ticket.discount)/100;
+                      pricedis=price*(100-response.data.ticket.discount)/100;
                       pricedis=pricedis.toLocaleString('vi-VN', {style : 'currency', currency : 'VND'});
                       $("#price_dis").text(pricedis);
-                     }
-                     price=price.toLocaleString('vi-VN', {style : 'currency', currency : 'VND'});
+                      price=price.toLocaleString('vi-VN', {style : 'currency', currency : 'VND'});
                      $("#price").text(price); 
+                     }else{
+                      price=price.toLocaleString('vi-VN', {style : 'currency', currency : 'VND'});
+                      $("#price_dis").text(price);
+                      $("#price").text(pricedis); 
+                     }
                      var date = new Date(response.data.ticket.timeout);
                      const yyyy = date.getFullYear();
                      let mm = date.getMonth() + 1; // Months start at 0!
@@ -130,8 +212,6 @@
              })
         })
     })
-
-    //gì mà đỏ lofm vậy e kkk
     
 
     $(document).ready(function(){

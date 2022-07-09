@@ -1,4 +1,7 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('/css/detail-ticket.css') }}">
+<script src="{{asset('/lib/sweet-alert/sweetalert2@11.js')}}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
 <div class="detail_list">
     <div class="product_item__img">
         <img src="{{ asset('images/tickets') }}/{{$data['ticket']->image}}" />
@@ -44,7 +47,12 @@
             </div>
         </div>
 
-        <button class="btn btn-primary btn_buy__now">Mua ngay</button>
+        <form id="btnBuy">
+                  <meta name="csrf-token" content="{{ csrf_token() }}">
+                  <input type="hidden" value="{{$data['ticket']->id}}" id="ticket">
+                   <button type="button"  class="btn btn-primary btn_buy__now" >  Mua ngay
+                    </button>
+             </form>
     </div>
 </div>
 <div class="body_detail_ticket">
@@ -101,4 +109,59 @@
      mm < 10? mm = '0' + mm:dd;
      date = dd + '/' + mm + '/' + yyyy;
      $('#datePicker').text(date);   
+
+     $(document).ready(function(){
+        $(document).on('click','#btnBuy', function(e){
+            e.preventDefault();
+            var name = $('#name').val();
+            var ticketid=$('#ticket').val();
+            @if(Auth::guard('user')->check())
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: 'POST',
+                url: '/buy-ticket?ticketid=' + ticketid,
+                data: $('#btnBuy').serialize(),
+                dataType: 'json',
+                success: function(response) {
+                    console.log(response);
+                    if (response.status === 200) {
+                    return Swal.fire({
+                      icon: 'success',
+                      text: response.data,
+                      showDenyButton: true,
+                      confirmButtonText: 'Đồng ý',
+                      denyButtonText: `Không`,
+                    }).then((result) => {
+                          if (result.isConfirmed) {
+                            window.location.replace("/pay-ticket?ticketid="+ticketid);
+                          } else if (result.isDenied) {
+                            window.location.reload();
+                          }
+                    })
+              } else {
+              if (response.status != 200) {
+                   return Swal.fire({
+                      icon: 'error',
+                      text: response.data,
+                    }).then((result) => {
+                      window.location.reload();
+                    })
+                    }
+               }  
+          }
+          });
+          @else
+            return Swal.fire({
+                icon: 'error',
+                text: 'Vui lòng đăng nhập để được đặt sân',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "{{route('show.login')}}";
+                }
+            });
+            @endif
+        })
+      })
 </script>     

@@ -90,7 +90,7 @@
         <span>{{ Session::get('success') }}</span>
        </div>
  @endif
-      @if(session()->has('error'))
+    @if(session()->has('error'))
           <span class="vali_sign" class="invalid-feedback" role="alert">
         <strong> {{ session()->get('error') }}</strong>
         </span>
