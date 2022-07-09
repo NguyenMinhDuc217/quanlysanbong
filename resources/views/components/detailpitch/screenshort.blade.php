@@ -290,7 +290,7 @@
     var swiper = new Swiper(".mySwiper", {
         loop: true,
         spaceBetween: 60,
-        slidesPerView: 3,
+        slidesPerView: 4,
         effect: 'coverflow',
         freeMode: true,
         navigation: {
@@ -313,8 +313,8 @@
         },
     });
 
-    swiper2.controller.control = sliderTwo;
-    swiper.controller.control = sliderOne;
+    // swiper2.controller.control = sliderTwo;
+    // swiper.controller.control = sliderOne;
 </script>
 <script>
     const nowTime3 = new Date();
@@ -327,16 +327,16 @@
     nowTime5.setHours(nowTime5.getHours() + 5);
     document.getElementById('timeEnd').value = nowTime5.toISOString().slice(0, 16);
 
-    const filter = document.getElementById('filter');
-    const box__filter = document.getElementById('box__filter');
-    filter.addEventListener("click", function() {
+    // const filter = document.getElementById('filter');
+    // const box__filter = document.getElementById('box__filter');
+    // filter.addEventListener("click", function() {
 
-        if (box__filter.classList.contains('show__filter') === true) {
-            box__filter.classList.remove("show__filter");
-        } else {
-            box__filter.classList.add("show__filter");
-        }
-    });
+    //     if (box__filter.classList.contains('show__filter') === true) {
+    //         box__filter.classList.remove("show__filter");
+    //     } else {
+    //         box__filter.classList.add("show__filter");
+    //     }
+    // });
 
     $(document).mouseup(function(e) {
         var container = $(".box__filter");
