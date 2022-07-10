@@ -97,5 +97,6 @@ Route::prefix('admin')->group(function () {
    Route::resource('/pitchs', PitchManagerController::class);
    Route::resource('/set_pitchs', SetPitchManagerController::class);
    Route::resource('/tickets', TicketManagerController::class);
+   Route::get('/image', [ImageManagerController::class,'fileManager'])->name('admin.image');
 });
 

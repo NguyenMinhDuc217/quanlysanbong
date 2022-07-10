@@ -126,7 +126,12 @@
       
             </ul>
           </li>
-          
+          <li class="nav-item">
+                <a href="{{route('admin.image')}}" class="nav-link"> 
+                  <i class="fas fa-image nav-icon"></i>
+                  <p>Quản lý ảnh</p>
+                </a>
+              </li>
       </nav>
       <!-- /.sidebar-menu -->
     </div>
