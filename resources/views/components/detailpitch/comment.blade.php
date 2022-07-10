@@ -20,7 +20,7 @@
                         </div>
                     </div>
                     <div class="user__right__bottom">
-                        <div class="star" starcomment="{{@$rowCmt["rating"]}}">
+                        <div class="star" starcomment="{{@$rowCmt['rating']}}">
                             <span><i class='bx bx-star'></i></span>
                             <span><i class='bx bx-star'></i></span>
                             <span><i class='bx bx-star'></i></span>
@@ -62,19 +62,22 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.17/sweetalert2.min.js"></script>
 
 <script>
-  //   Render number star
-  // const data_total_comment = document.getElementsByClassName('star');
-  // for (let j = 0; j < data_total_comment.length; j++) {
-  //   const star_total_comment = data_total_comment[j].getAttribute('starcomment');
-  //   for (let i = 0; i < data_total_comment[j].childNodes.length; i++) {
-  //     if (i == star_total_comment * 2) break;
-  //     if (data_total_comment[j].hasChildNodes('span')) {
-  //       if (data_total_comment[j].childNodes[i].childNodes.length !== 0) {
-  //         data_total_comment[j].childNodes[i].childNodes[0].classList.add('bxs-star');
-  //       }
-  //     }
-  //   }
-  // }
+  //cc
+  
+  const data_total_commentt = document.getElementsByClassName('star');
+    for (let j = 0; j < data_total_commentt.length; j++) {
+        const star_total_comment = data_total_commentt[j].getAttribute('starcomment');
+        for (let i = 0; i < data_total_commentt[j].childNodes.length; i++) {
+            if (i == star_total_comment * 2) break;
+            if (data_total_commentt[j].hasChildNodes('span')) {
+                if (data_total_commentt[j].childNodes[i].childNodes.length !== 0) {
+                    data_total_commentt[j].childNodes[i].childNodes[0].classList.add('bxs-star');
+        console.log('starcomment');
+        console.log(star_total_comment);
+                }
+            }
+        }
+    }
 
   //Event hover star
   console.log(document.getElementsByClassName('com'));

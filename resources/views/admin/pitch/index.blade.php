@@ -42,7 +42,7 @@
                   @endif
                 </td>
                 <td>
-                 <a  href="{{route('pitchs.edit',$pitch->id)}}"> <button class="btn btn-btn btn-primary">Sửa</button></a>
+                  <a href="{{route('pitchs.edit',$pitch->id)}}"> <button class="btn btn-btn btn-primary">Sửa</button></a>
                   <button class="btn btn-btn btn-danger">Xoá</button>
                 </td>
               </tr>
@@ -59,6 +59,30 @@
     $(document).ready(function() {
       $('#myTable').DataTable({
         responsive: true,
+        language: {
+          "decimal": "",
+          "emptyTable": "No data available in table",
+          "info": "Hiển thị _START_ to _END_ of _TOTAL_ entries",
+          "infoEmpty": "Showing 0 to 0 of 0 entries",
+          "infoFiltered": "(filtered from _MAX_ total entries)",
+          "infoPostFix": "",
+          "thousands": ",",
+          "lengthMenu": "Hiển thị _MENU_ entries",
+          "loadingRecords": "Loading...",
+          "processing": "",
+          "search": "Tìm kiếm:",
+          "zeroRecords": "No matching records found",
+          "paginate": {
+            "first": "First",
+            "last": "Last",
+            "next": "Next",
+            "previous": "Previous"
+          },
+          "aria": {
+            "sortAscending": ": activate to sort column ascending",
+            "sortDescending": ": activate to sort column descending"
+          }
+        },
         // đóng kéo trang theo chiều ngang
         "scrollX": false
       });

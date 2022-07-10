@@ -83,6 +83,11 @@ Route::get('/create-team', [TeamController::class,'showCreateTeam'])->name('show
 Route::post('/create-team', [TeamController::class,'createTeam'])->name('create.team');
    //list
 Route::get('/list-team', [TeamController::class,'listTeam'])->name('list.team');
+Route::get('/my-team', [TeamController::class,'myTeam'])->name('my.team');
+Route::get('/my-team/{id}/edit', [TeamController::class,'editTeam'])->name('my.team.edit');
+Route::post('/my-team/{id}/edit', [TeamController::class,'updateTeam'])->name('my.team.update');
+// Route::get('/apps/{id}/edit', 'ApplicationManagerController@edit')->name('admin.apps.edit');
+// Route::put('/apps/{id}/edit', 'ApplicationManagerController@update')->name('admin.apps.update');
   //search
 Route::get('/search-team', [TeamController::class,'searchTeam'])->name('search.team');
 

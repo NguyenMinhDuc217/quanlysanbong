@@ -16,7 +16,7 @@ class PitchSeeder extends Seeder
     {
         Pitchs::insert([
             [
-                'id' => 1,
+                //'id' => 1,
                 'name' => 'Sân A',
                 'price' => '120000',
                 'discount' => '10',
@@ -30,7 +30,7 @@ class PitchSeeder extends Seeder
                 'status' => '1',
             ],
             [
-                'id' => 2,
+                //'id' => 2,
                 'name' => 'Sân B',
                 'price' => '120000',
                 'discount' => '',
@@ -44,7 +44,7 @@ class PitchSeeder extends Seeder
                 'status' => '1',
             ],
             [
-                'id' => 3,
+                //'id' => 3,
                 'name' => 'Sân C',
                 'price' => '120000',
                 'discount' => '',
@@ -58,7 +58,7 @@ class PitchSeeder extends Seeder
                 'status' => '1',
             ],
             [
-                'id' => 4,
+                //'id' => 4,
                 'name' => 'Sân D',
                 'price' => '120000',
                 'discount' => '10',
@@ -72,7 +72,7 @@ class PitchSeeder extends Seeder
                 'status' => '1',
             ],
             [
-                'id' => 5,
+                //'id' => 5,
                 'name' => 'Sân E',
                 'price' => '120000',
                 'discount' => '20',
@@ -86,7 +86,7 @@ class PitchSeeder extends Seeder
                 'status' => '1',
             ],
             [
-                'id' => 6,
+                //'id' => 6,
                 'name' => 'Sân F',
                 'price' => '120000',
                 'discount' => '',
@@ -100,7 +100,7 @@ class PitchSeeder extends Seeder
                 'status' => '1',
             ],
             [
-                'id' => 7,
+                //'id' => 7,
                 'name' => 'Sân G',
                 'price' => '120000',
                 'discount' => '',
@@ -114,7 +114,7 @@ class PitchSeeder extends Seeder
                 'status' => '1',
             ],
             [
-                'id' => 8,
+                //'id' => 8,
                 'name' => 'Sân H',
                 'price' => '120000',
                 'discount' => '10',
@@ -128,7 +128,7 @@ class PitchSeeder extends Seeder
                 'status' => '1',
             ],
             [
-                'id' => 9,
+                // //'id' => 9,
                 'name' => 'Sân I',
                 'price' => '120000',
                 'discount' => '',
@@ -142,7 +142,7 @@ class PitchSeeder extends Seeder
                 'status' => '1',
             ],
             [
-                'id' => 10,
+                // //'id' => 10,
                 'name' => 'Sân J',
                 'price' => '120000',
                 'discount' => '',
@@ -156,7 +156,7 @@ class PitchSeeder extends Seeder
                 'status' => '1',
             ],
             [
-                'id' => 11,
+                // //'id' => 11,
                 'name' => 'Sân K',
                 'price' => '200000',
                 'discount' => '10',
@@ -170,7 +170,7 @@ class PitchSeeder extends Seeder
                 'status' => '1',
             ],
             [
-                'id' => 12,
+                // //'id' => 12,
                 'name' => 'Sân L',
                 'price' => '200000',
                 'discount' => '',
@@ -184,7 +184,7 @@ class PitchSeeder extends Seeder
                 'status' => '1',
             ],
             [
-                'id' => 13,
+                // //'id' => 13,
                 'name' => 'Sân M',
                 'price' => '200000',
                 'discount' => '',
@@ -198,7 +198,7 @@ class PitchSeeder extends Seeder
                 'status' => '1',
             ],
             [
-                'id' => 14,
+                // //'id' => 14,
                 'name' => 'Sân N',
                 'price' => '200000',
                 'discount' => '20',
@@ -212,7 +212,7 @@ class PitchSeeder extends Seeder
                 'status' => '1',
             ],
             [
-                'id' => 15,
+                // //'id' => 15,
                 'name' => 'Sân O',
                 'price' => '200000',
                 'discount' => '10',

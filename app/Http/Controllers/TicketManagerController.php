@@ -98,15 +98,44 @@ class TicketManagerController extends Controller
                 return redirect()->route('tickets.create')->with('error', "Bạn đã trọn " . $month . " tháng nên thời gian hiệu lực của vé phải là 93 ngày");
             }
         }
+        $pitchs = Pitchs::where('id',$request->pitch_id)->first();
+        $services = Services::where('id',$request->type_service)->first();
+
+        $tickets = new Tickets();
+        $tickets->user_id = 0;
+        $tickets->name = $request->name;
+        //avartar
+        if ($request->hasFile('cover')) {
+            $image = $request->file('cover');
+            $filename = $tickets->name . '.' . 'jpg';
+            $location = public_path('/images/tickets/' . $filename);
+            Image::make($image)->resize(300, 200)->save($location);
+            $tickets->image = $filename;
+        } else {
+            $path = $request->get('cover');
+            $filename = $tickets->name . '.jpg';
+            Image::make($path)->resize(350, 228)->save(public_path('/images/tickets' . $filename));
+            $tickets->image = $filename;
+        }
+        $tickets->code_ticket = "D" .date('d', strtotime($timeDay)) . "M" . date('m', strtotime($month)) . "P" . $request->pitch_id . "-" . $tickets->id;
+        $tickets->number_day_of_week = $request->number_day;
+        $tickets->timeout = $request->timeOut;
+        $tickets->price = $pitchs["price"] * $request->number_day * $request->month * 4;
+        $tickets->month = $request->month;
+        $tickets->discount = $request->discount;
+        $tickets->status = $request->get('status');
+        $tickets->save();
+        $tickets->code_ticket = "D" .date('d', strtotime($timeDay)) . "M" . date('m', strtotime($month)) . "P" . $request->pitch_id . "-" . $tickets->id;
+
 
         //lấy phần tử cuối cùng trong mảng
-        $ticketsTemp = Tickets::all()->toArray();
-        $ticketsTemp = end($ticketsTemp);
-        $detail_set_pitch_Temp = Detail_set_pitchs::all()->toArray();
-        $detail_set_pitch_Temp = end($detail_set_pitch_Temp);
+        // $ticketsTemp = Tickets::all()->toArray();
+        // $ticketsTemp = end($ticketsTemp);
+        // $detail_set_pitch_Temp = Detail_set_pitchs::all()->toArray();
+        // $detail_set_pitch_Temp = end($detail_set_pitch_Temp);
 
         $detailTicket = new DetailTicket();
-        $detailTicket->ticket_id = $ticketsTemp["id"] + 1;
+        $detailTicket->ticket_id = $tickets->id;
         $detailTicket->pitch_id = $request->pitch_id;
         $detailTicket->description = $request->describe;
         $detailTicket->sercive_id = $request->type_service;
@@ -161,11 +190,10 @@ class TicketManagerController extends Controller
         }
         $detailTicket->detail_time_of_week = json_encode($times) ;
         // lưu thông tin vô bảng detail set pitch
-        $pitchs = Pitchs::where('id',$detailTicket->pitch_id)->first();
-        $services = Services::where('id',$detailTicket->sercive_id)->first();
+        
         foreach($times as $time){
             $detail_set_pitch[] = array(
-                'ticket_id' => $detail_set_pitch_Temp["id"] + 1,
+                'ticket_id' => $detailTicket->ticket_id,
                 'picth_id' => $detailTicket->pitch_id,
                 'user_id' => 0,
                 'date_event' => date('Y-m-h', strtotime($timeDay)),
@@ -173,36 +201,13 @@ class TicketManagerController extends Controller
                 'end_time' => $time["timeDayend"],
                 'price_pitch' => $pitchs["price"],
                 'total' => ($pitchs["price"] + $services["price"]) - (($pitchs["price"] + $services["price"]) * $request->discount /100),
-                'ispay' => '1',
+                'ispay' => '0',
             );
 
         }
-        // dd($detail_set_pitch);
         Detail_set_pitchs::insert($detail_set_pitch);
 
-        $tickets = new Tickets();
-        $tickets->user_id = 0;
-        $tickets->name = $request->name;
-        //avartar
-        if ($request->hasFile('cover')) {
-            $image = $request->file('cover');
-            $filename = $tickets->name . '.' . 'jpg';
-            $location = public_path('/images/tickets/' . $filename);
-            Image::make($image)->resize(300, 200)->save($location);
-            $tickets->image = $filename;
-        } else {
-            $path = $request->get('cover');
-            $filename = $tickets->name . '.jpg';
-            Image::make($path)->resize(350, 228)->save(public_path('/images/tickets' . $filename));
-            $tickets->image = $filename;
-        }
-        $tickets->code_ticket = "D" . $timeDay . "M" . $month . "P" . $detailTicket->pitch_id . "-" . $detailTicket->ticket_id;
-        $tickets->number_day_of_week = $request->number_day;
-        $tickets->timeout = $request->timeOut;
-        $tickets->price = ($pitchs["price"] + $services["price"]) * $request->number_day * $request->month * 4 - (($pitchs["price"] + $services["price"]) * $request->number_day * $request->month * 4 * $request->discount /100);
-        $tickets->month = $request->month;
-        $tickets->discount = $request->discount;
-        $tickets->status = $request->get('status');
+        
 
         $detailTicket->save();
         if ($tickets->save()) {

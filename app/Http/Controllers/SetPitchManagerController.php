@@ -134,7 +134,7 @@ class SetPitchManagerController extends BaseAdminController
 
         $timeStart = $request->timeStart;
         $timeEnd = $request->timeEnd;
-        $detail_set_pitch = Detail_set_pitchs::where('id', $id)->get();
+        $detail_set_pitch = Detail_set_pitchs::where('id', $id)->get(); 
 
         if ($timeEnd < $timeStart) {
             return redirect()->route('admin.set_pitch.edit', ['id' => $id])->with('error', "Thời gian kết thúc phải lớn hơn thời gian bắt đầu");

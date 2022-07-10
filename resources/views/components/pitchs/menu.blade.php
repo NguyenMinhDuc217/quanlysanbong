@@ -22,6 +22,7 @@
         <div class="dropdown-content">
            <a class="dropdown-content__item"  href="{{route('show.create.team')}}">TẠO ĐỘI BÓNG</a> 
            <a class="dropdown-content__item"  href="{{route('list.team')}}">TÌM ĐỘI GIAO LƯU</a> 
+           <a class="dropdown-content__item"  href="{{route('my.team')}}">ĐỘI CỦA TÔI</a> 
          
         </div>
     </div>
