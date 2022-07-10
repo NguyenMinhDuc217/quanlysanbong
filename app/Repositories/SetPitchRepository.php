@@ -11,6 +11,10 @@ use App\Models\SetService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use League\OAuth1\Client\Server\Server;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendMail;
+use App\Models\Bill;
 
 class SetPitchRepository implements SetPitchRepositoryInterface
 {
@@ -20,33 +24,37 @@ class SetPitchRepository implements SetPitchRepositoryInterface
       define('HAFLANHOUR',30);
       define('SECOND',60);
       define('PERCENT',100);
-      
-        $request->validate(
-         [
-          'timeStart' => 'required',
-          'timeEnd' => 'required',
-         ],
-         [
-          'timeStart.required'=>'Vui lòng chọn thời gian bắt đầu',
-          'timeEnd.required'=>'Vui lòng thời gian kết thúc',
-         ]
+    
+        $validator = Validator::make($request->all(),
+        [
+            'timeStart' => 'required',
+            'timeEnd' => 'required',
+           ],
+           [
+            'timeStart.required'=>'Vui lòng chọn thời gian bắt đầu',
+            'timeEnd.required'=>'Vui lòng thời gian kết thúc',
+           ]
         );
+        if ($validator->fails()) {
+            return response()->json(['status' => 400, 'errors' => $validator->errors()->all()]);
+        }
+
         $timeStart=$request->timeStart;
         $timeEnd=$request->timeEnd;
-        
+     
         if( $timeEnd<$timeStart){
-            return redirect()->route('detail.pitch',['pitchid'=>$pitchid])->with('error',"Thời gian kết thúc phải lớn hơn thời gian bắt đầu");
+            return response()->json(['status' => 401, 'error' => "Thời gian kết thúc phải lớn hơn thời gian bắt đầu"]);
         }
         
         if((strtotime($timeEnd)-strtotime($timeStart))/SECOND<=HAFLANHOUR){
-            return redirect()->route('detail.pitch',['pitchid'=>$pitchid])->with('error',"Thời gian của trận đấu phải lớn hơn 30 phút");
+            return response()->json(['status' => 402, 'error' => "Thời gian của trận đấu phải lớn hơn 30 phút"]);
         }
         
         
         $pitch=Pitchs::where('id',$pitchid)->where('status','1')->first();
          if( $pitch==null){
-            return redirect()->route('detail.pitch',['pitchid'=>$pitchid])->with('error',"Không tìm thấy sân");
-         }
+            return response()->json(['status' => 400, 'error' => "Không tìm thấy sân or sân không hoạt động"]); 
+        }
 
         $timeSoccer= (strtotime($timeEnd)-strtotime($timeStart))/(MINUTE*SECOND);
         
@@ -64,7 +72,7 @@ class SetPitchRepository implements SetPitchRepositoryInterface
                 $setTimeStart=$checkTime->start_time;
                 $setTimeEnd=$checkTime->end_time;
             }
-            return redirect()->route('detail.pitch',['pitchid'=>$pitchid])->with('error',"Sân đã được đặt từ $setTimeStart đến $setTimeEnd");
+            return response()->json(['status' => 400, 'error' => "Sân đã được đặt từ $setTimeStart đến $setTimeEnd"]);
         }
     
         $setPitch=new Detail_set_pitchs();
@@ -74,7 +82,6 @@ class SetPitchRepository implements SetPitchRepositoryInterface
         $setPitch->start_time = $request->timeStart;
         $setPitch->end_time = $request->timeEnd;   
         $setPitch->price_pitch= $pitch->price*$timeSoccer*((PERCENT-$pitch->discount)/PERCENT);   
-        // dd($pitch->price*$timeSoccer*((PERCENT-$pitch->discount)/PERCENT), $setPitch->price_pitch);
         $setPitch->total= $pitch->price*$timeSoccer*((PERCENT-$pitch->discount)/PERCENT);   
         $setPitch->save();
 
@@ -99,21 +106,29 @@ class SetPitchRepository implements SetPitchRepositoryInterface
         $setPitch->save();
         $successStart= date_format(date_create($request->timeStart),"Y/m/d H:i:s");
         $successEnd= date_format(date_create($request->timeEnd),"Y/m/d H:i:s");
-        return redirect()->route('detail.pitch',['pitchid'=>$pitchid])->with('success',"Bạn đã đặt sân từ $successStart đến $successEnd");
+        return response()->json(['status'=> 200,'success'=>"Bạn đã đặt sân từ $successStart đến $successEnd"]);
     }
 
    public function listSetPitch(){
     foreach(Pitchs::all() as $pitch){
        $pitchs[$pitch->id]=$pitch->name;
     }
+
+    foreach(Bill::all() as $bill){
+            $bills[$bill->detail_set_pitch_id]=$bill->transaction_id;
+     }
     $listSetPitch=[];
-    foreach(Detail_set_pitchs::orderby('id','DESC')->where('user_id',Auth::guard('user')->user()->id)->where('ticket_id',null)->get() as $i=>$detail_set_pitch){
+    foreach(Detail_set_pitchs::orderby('id','DESC')->where('user_id',Auth::guard('user')->user()->id)->get() as $i=>$detail_set_pitch){
        $listSetPitch[$i]['detail_set_pitch']=$detail_set_pitch;
        $listSetPitch[$i]['name']=$pitchs[$detail_set_pitch->picth_id];
        foreach(SetService::where('set_pitch_id',$detail_set_pitch->id)->get() as $k=>$setService){
         $listSetPitch[$i]['service'][$k]= $setService;
        }
+         
+       $listSetPitch[$i]['transaction_id']=$bills[$detail_set_pitch->id]??null;
+
     }
+
     return view('list-set-pitch.index',compact('listSetPitch'));
    }
 
@@ -123,17 +138,32 @@ class SetPitchRepository implements SetPitchRepositoryInterface
     if(Carbon::now()->format('Y-m-d H:i:s')>$pitch->start_time){
         return redirect()->route('list.set.pitch')->with('error',"Thời gian đã diễn ra không thể hủy");
     }
-    if(abs(strtotime($pitch->start_time)-strtotime(Carbon::now()->format('Y-m-d H:i:s')))/(60)>=120){
-        $detail_set_pitch->delete();
-        $listSetPitch=Detail_set_pitchs::where('user_id',Auth::guard('user')->user()->id)->get();
-        return redirect()->route('list.set.pitch')->with('success',"Bạn đã hủy thành công");
-    }
     if(abs(strtotime($pitch->start_time)-strtotime(Carbon::now()->format('Y-m-d H:i:s')))/(60)<120){
-        $detail_set_pitch->delete();
-        $refund=$pitch->total*0.8;
-        return redirect()->route('list.set.pitch')->with('error',"Bạn đã hủy thành công, số tiền bạn nhận lại là  $refund vnd");
+  
+        return redirect()->route('list.set.pitch')->with('error',"Không thể huỷ sân trước 120p");
     }
 
+    if(abs(strtotime($pitch->start_time)-strtotime(Carbon::now()->format('Y-m-d H:i:s')))/(60)>=120){
+        if( $detail_set_pitch->ispay==0){
+            $detail_set_pitch->delete();
+            return redirect()->route('list.set.pitch')->with('success',"Bạn đã hủy thành công");
+        }else{
+            $detail_set_pitch->delete();
+            $subject =null;
+            $details = [
+                'title' => 'Hướng dẫn chi tiết cách nhận lại tiền khi đã thanh toán',
+                'name' => Auth::guard('user')->user()->username,
+                'body'=>"Bạn vui lòng gửi email lại cho chúng tôi về số tài khoản ngân hàng,số momo hoặc số 
+                tài khoản Paypal. Với cú pháp là Tên Sân _Ngày giờ đặt_Mã giao dịch_Số tiền số tài khoản của bạn. 
+                Ví dụ: SânA_7/7/2022-4h00_7/7/2022-5h00_MAGIAODICH99_120.000 9704198526191432198",
+            ];
+             $email=Auth::guard('user')->user()->email;
+            Mail::to( $email)->send(new SendMail($details, $subject));
+            return redirect()->route('list.set.pitch')->with('success',"Bạn đã hủy thành công, vui lòng xem Email để biết cách nhận lại tiền");
+        }
+      
+    }
+  
    }
 
    public function detailService(Request $request)

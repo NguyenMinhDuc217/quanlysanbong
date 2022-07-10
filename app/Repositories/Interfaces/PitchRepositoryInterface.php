@@ -11,4 +11,5 @@ interface PitchRepositoryInterface
     public function Search(Request $request);
     public function DetailPitch($pitchid);
     public function Comment(Request $request, $pitchid);
+    public function sendPhone(Request $request);
 }

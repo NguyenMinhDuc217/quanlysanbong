@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Detail_set_pitchs;
 use App\Models\Bill;
 use Illuminate\Support\Facades\Auth;
- 
+use Illuminate\Support\Str; 
 class PayController extends BaseUserController
 {
    public function vnpay_payment(Request $request){
@@ -19,7 +19,7 @@ class PayController extends BaseUserController
     $vnp_TmnCode = "A05TVYHX";//Mã website tại VNPAY 
     $vnp_HashSecret = "EWPSYFBFTHFCVOILPZNLGMAEKPTGTPTO"; //Chuỗi bí mật
     
-    $vnp_TxnRef = time() +$setPitch->id; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+    $vnp_TxnRef =strtoupper(Str::random(8)).''.$setPitch->id; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
     $vnp_OrderInfo = "Thanh toán tiền sân $timeStart đến $timeEnd";
     $vnp_OrderType = 'billpayment';
     $vnp_Amount =  $setPitch->total * 100;

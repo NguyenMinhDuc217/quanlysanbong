@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendMail;
 
 class PitchRepository implements PitchRepositoryInterface
 {
@@ -216,5 +218,31 @@ class PitchRepository implements PitchRepositoryInterface
         }
         $pitch->save();
         return response()->json(['status' => 200, 'success' => "thành công", "comment" => $comment]);
+    }
+
+    public function sendPhone(Request $request){
+        define('EMAIL','quanlysanbong247@gmail.com');
+        $validator = Validator::make($request->all(), [
+            'phone' => 'required|numeric|digits:10',
+        ], [
+            'phone.required'=>'Vui lòng nhập số điện thoại',
+            'phone.numeric'=>'Số điện thoại phải là số',
+            'phone.digits' => 'Số điện thoại không hợp lệ',
+        ]);
+   
+        if ($validator->fails()) {
+            return response()->json(['status' => 400, 'errors' => $validator->errors()->all()]);
+        }
+
+        $subject =null;
+        $details = [
+            'title' => 'Số điện thoại của khách, vui lòng liên hệ với số điện thoại:',
+            'name' => 'Admin',
+            'body'=>$request->phone,
+        ];
+
+        Mail::to(EMAIL)->send(new SendMail($details, $subject));
+            return response()->json(['status'=> 200,'success'=>'Số điện thoại của bạn đã chuyển đến admin, vui lòng chờ sự phản hồi']);
+          
     }
 }

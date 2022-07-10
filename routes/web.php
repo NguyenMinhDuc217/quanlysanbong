@@ -49,6 +49,7 @@ Route::get('/search-pitch', [PitchController::class,'Search'])->name('search.pit
 //detailpitch
 Route::get('/detail-pitch/{pitchid}', [PitchController::class,'DetailPitch'])->name('detail.pitch');
 Route::post('/detail-pitch/{id}/ajax', [PitchController::class,'commentAjax'])->name('pitch.detail.comment.ajax');
+Route::post('/send-phone', [PitchController::class,'sendPhone'])->name('send.phone');
 
 //set pitch
 Route::post('/detail-pitch/{pitchid}', [SetPitchController::class,'setPitch'])->name('search.time');
@@ -61,6 +62,9 @@ Route::get('/view-service', [SetPitchController::class,'detailService'])->name('
 //thanh toan VNPAY
 Route::post('/vnpay-payment', [PayController::class,'vnpay_payment'])->name('vnpay.payment');
 Route::get('/return-vnpay', [PayController::class,'return'])->name('return.payment');
+//thanh toan VNPAY
+Route::post('/vnpay-payment-ticket', [PayTicketController::class,'vnpay_payment'])->name('vnpay.payment.ticket');
+Route::get('/return-vnpay-ticket', [PayTicketController::class,'return'])->name('return.payment.ticket');
 //list_ticket
 Route::get('/ticket', [TicketController::class,'showTicket'])->name('show.ticket');
 //view
@@ -69,6 +73,18 @@ Route::get('/view-ticket', [TicketController::class,'viewTicket'])->name('view.t
 Route::get('/detail-ticket', [TicketController::class,'detailTicket'])->name('detail.ticket');
 //buy ticket
 Route::post('/buy-ticket', [BuyTicketController::class,'buyTicket'])->name('buy.ticket');
+//list-buy-ticket
+Route::get('/list-buy-ticket', [BuyTicketController::class,'listBuyTicket'])->name('list.buy.ticket');
+//pay
+Route::get('/pay-ticket', [BuyTicketController::class,'payTicket'])->name('pay.ticket');
+//Team
+   //create
+Route::get('/create-team', [TeamController::class,'showCreateTeam'])->name('show.create.team');
+Route::post('/create-team', [TeamController::class,'createTeam'])->name('create.team');
+   //list
+Route::get('/list-team', [TeamController::class,'listTeam'])->name('list.team');
+  //search
+Route::get('/search-team', [TeamController::class,'searchTeam'])->name('search.team');
 
 Route::get('/dang-nhap', [AdminLoginController::class,'showLoginForm'])->name('admin.show.login');
 Route::post('/dang-nhap', [AdminLoginController::class,'login'])->name('admin.login');
@@ -81,5 +97,6 @@ Route::prefix('admin')->group(function () {
    Route::resource('/pitchs', PitchManagerController::class);
    Route::resource('/set_pitchs', SetPitchManagerController::class);
    Route::resource('/tickets', TicketManagerController::class);
+   Route::get('/image', [ImageManagerController::class,'fileManager'])->name('admin.image');
 });
 

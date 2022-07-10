@@ -50,32 +50,43 @@ class TicketRepository implements TicketRepositoryInterface
   }
 
   public function buyTicket(Request $request){
-      $ticket=Tickets::where('id', $request->ticketid)->where('status',1)->first();
-      if(empty($ticket)){
+      $ticket=Tickets::where('id', $request->ticketid)->where('ispay',1)->where('status',1)->first();
+      if(!empty($ticket)){
         return response()->json([
           'status'=>-99999,
           'data'=>'Vé đã được mua',
         ]);
       }
-      $ticket->user_id=Auth::guard('user')->user()->id;
-      $ticket->status=0;
-      $ticket->save();
-      $listSetPitch=Detail_set_pitchs::where('ticket_id', $request->ticketid)->get();
-      if(!empty($listSetPitch)){
-        foreach($listSetPitch as $setPitch){
-          $setPitch->user_id=Auth::guard('user')->user()->id;
-          $setPitch->save();
-        }
-      }  
       return response()->json([
         'status'=>200,
-        'data'=>'Bạn đã mua vé thành công, vui lòng vào mục quản lý vé tháng để thanh toán.',
+        'data'=>'Bạn thực muốn mua?',
       ]);
     }
 
-    public function detailBuyTicket(){
-      
-      return view('detail-buy-ticket.index',compact('data'));
+    public function listBuyTicket(){
+      $user_id=Auth::guard('user')->user()->id;
+      $tickets=[];
+      foreach(Tickets::where('user_id',$user_id)->where('isPay',1)->get() as $i=>$ticket){
+        $tickets[$i]['ticket']=$ticket;
+        $tickets[$i]['detail_ticket']=DetailTicket::where('ticket_id',$ticket->id)->first();
+      }
+      return view('list-buy-ticket.index',compact('tickets'));
     } 
-  
+   public function payTicket(Request $request){
+      $now=Carbon::now()->format('Y-m-d');
+      foreach(Pitchs::all() as $pitch){
+        $pitchs[$pitch->id]=$pitch->name;
+      }
+      $data=[];
+      $data['ticket']=Tickets::where('id', $request->ticketid)->where('status',1)->where('timeout','>',$now)->first();
+      $data['detail_ticket']=DetailTicket::where('ticket_id', $request->ticketid)->first();
+      foreach(Detail_set_pitchs::where('ticket_id', $request->ticketid)->get() as $i=>$setPitch){
+        $data['setPitch'][$i]['setPitch']=$setPitch;
+        $data['setPitch'][$i]['pitch']=$pitchs[$setPitch->picth_id];
+      }
+      foreach(SetService::where('ticket_id', $request->ticketid)->get() as $i=>$service){
+        $data['service'][$i]=$service;
+      }
+      return view('pay-ticket.index',compact('data'));
+   }
 }
