@@ -66,9 +66,9 @@ class PitchRepository implements PitchRepositoryInterface
         $now = Carbon::now();
 
         $detail_set_pitchs = Detail_set_pitchs::where('picth_id',$pitchid)->where(function ($query) use ($now) {
-            $query->whereDate('start_time','<=',$now)->orwhereDate('end_time','>=', $now);
+            $query->whereDate('start_time','<=',$now)->whereDate('end_time','>=', $now);
         })->get();
-        // dd($detail_set_pitchs);
+  
         // $detail_set_pitchs = Detail_set_pitchs::where('picth_id', $pitchid)->whereDate('start_time',$now)->orwhereDate('end_time',$now)->get();
         foreach($detail_set_pitchs as $detail){
             $detail['start_time'] = substr($detail['start_time'],11,8);

@@ -82,9 +82,9 @@ Route::get('/pay-ticket', [BuyTicketController::class,'payTicket'])->name('pay.t
 Route::get('/create-team', [TeamController::class,'showCreateTeam'])->name('show.create.team');
 Route::post('/create-team', [TeamController::class,'createTeam'])->name('create.team');
    //list
-Route::get('/list-team', [TeamController::class,'listTeam'])->name('list.team');
+Route::get('/list-team', [ListTeamController::class,'listTeam'])->name('list.team');
   //search
-Route::get('/search-team', [TeamController::class,'searchTeam'])->name('search.team');
+Route::get('/search-team', [ListTeamController::class,'searchTeam'])->name('search.team');
 
 Route::get('/dang-nhap', [AdminLoginController::class,'showLoginForm'])->name('admin.show.login');
 Route::post('/dang-nhap', [AdminLoginController::class,'login'])->name('admin.login');

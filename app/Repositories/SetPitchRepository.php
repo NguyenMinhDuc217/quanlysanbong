@@ -104,8 +104,8 @@ class SetPitchRepository implements SetPitchRepositoryInterface
         $totalService=SetService::where('set_pitch_id',$setPitch->id)->sum('total');
         $setPitch->total= $setPitch->total+$totalService;
         $setPitch->save();
-        $successStart= date_format(date_create($request->timeStart),"Y/m/d H:i:s");
-        $successEnd= date_format(date_create($request->timeEnd),"Y/m/d H:i:s");
+        $successStart= date_format(date_create($request->timeStart),"d/m/Y H:i");
+        $successEnd= date_format(date_create($request->timeEnd),"d/m/Y H:i");
         return response()->json(['status'=> 200,'success'=>"Bạn đã đặt sân từ $successStart đến $successEnd"]);
     }
 
