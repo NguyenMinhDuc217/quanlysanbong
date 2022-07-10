@@ -9,6 +9,7 @@ use App\Models\Pitchs;
 use App\Models\Services;
 use App\Models\User;
 use App\Models\Setting;
+use App\Models\Tickets;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -27,17 +28,16 @@ class SetPitchManagerController extends BaseAdminController
     /** Create a new controller instance. */
     public function __construct()
     {
-
     }
 
     public function index()
     {
         $detail_set_pitch = Detail_set_pitchs::all();
         $users = [];
-        foreach($detail_set_pitch as $i => $detail){
-            $users = User::where("id",$detail['user_id'])->first();
-            $services = Services::where("id",$detail["service_id"])->first();
-            $pitchs = Pitchs::where("id",$detail["picth_id"])->first();
+        foreach ($detail_set_pitch as $i => $detail) {
+            $users = User::where("id", $detail['user_id'])->first();
+            $services = Services::where("id", $detail["service_id"])->first();
+            $pitchs = Pitchs::where("id", $detail["picth_id"])->first();
             $detail['pitch_name'] = isset($pitchs['name']) ? $pitchs['name'] : "";
             $detail['username'] = isset($users['username']) ? $users['username'] : "";
             $detail['service_name'] = isset($services['name']) ? $services['name'] : "";
@@ -63,7 +63,7 @@ class SetPitchManagerController extends BaseAdminController
      */
     // public function store(Request $request)
     // {
-        
+
     // }
 
     /**
@@ -85,8 +85,13 @@ class SetPitchManagerController extends BaseAdminController
      */
     public function edit($id)
     {
-        $pitchs = Pitchs::where('id', $id)->first();
-        return View('admin.set_pitch.edit',compact('pitchs'));
+        // $pitchs = Pitchs::where('id', $id)->first();
+        $detail_set_pitch = Detail_set_pitchs::where('id', $id)->first();
+        $type_pitchs = Pitchs::all();
+        $ticket = Tickets::where('id', $detail_set_pitch["ticket_id"])->first();
+        $user = User::where('id', $detail_set_pitch->user_id)->first();
+        // dd($detail_set_pitch);
+        return View('admin.set_pitch.edit', compact('detail_set_pitch', 'type_pitchs', 'ticket', 'user'));
     }
 
     /**
@@ -98,34 +103,69 @@ class SetPitchManagerController extends BaseAdminController
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'name' => 'required|max:255',
-            'price' => 'required|numeric',
-            'describe' => 'required|max:500',
-        ],[
-            'name.required'=>'Vui lòng nhập tên sân',
-            'name.max'=>'Vui lòng nhập tên sân không quá 255 ký tự',
-            'price.required'=>'Vui lòng nhập số điện thoại',
-            'price.numeric'=>'Số điện thoại phải là số',
-            'describe.required' => 'Vui lòng nhập thông tin',
-            'describe.max'=>'Vui lòng nhập tên sân không quá 500 ký tự',
-        ]);
-        $pitch = Pitchs::where('id', $id)->first();
+        define('MINUTE', 60);
+        define('HAFLANHOUR', 30);
+        define('SECOND', 60);
+        define('PERCENT', 100);
+        $request->validate(
+            [
+                'ticket' => 'required',
+                'type_pitch' => 'required',
+                'user' => 'required',
+                'date_event' => 'required',
+                'timeStart' => 'required',
+                'timeEnd' => 'required',
+                'price_pitch' => 'required|digits_between:50000,999999',
+                'total' => 'required|digits_between:50000,999999',
+            ],
+            [
+                'ticket.required' => 'Vui lòng chọn vé',
+                'type_pitch.required' => 'Vui lòng chọn sân',
+                'user.required' => 'Vui lòng chọn user',
+                'date_event.required' => 'Vui lòng thời gian diễn ra',
+                'timeStart.required' => 'Vui lòng chọn thời gian bắt đầu',
+                'timeEnd.required' => 'Vui lòng thời gian kết thúc',
+                'price_pitch.required' => 'Vui lòng nhập giá sân',
+                'price_pitch.digits_between' => 'Giá tiền phải là số, phải lớn hơn hoặc bằng 50 000 và nhỏ hơn hoặc bằng 999 999',
+                'total.required' => 'Vui lòng nhập tổng tiền',
+                'total.digits_between' => 'Giá tiền phải là số, phải lớn hơn hoặc bằng 50 000 và nhỏ hơn hoặc bằng 999 999',
+            ]
+        );
 
-        $$detail_set_pitch = Detail_set_pitchs::all();
-        $users = [];
-        foreach($detail_set_pitch as $i => $detail){
-            $users = User::where("id",$detail['user_id'])->first();
-            $services = Services::where("id",$detail["service_id"])->first();
-            $pitchs = Pitchs::where("id",$detail["picth_id"])->first();
-            $detail['pitch_name'] = isset($pitchs['name']) ? $pitchs['name'] : "";
-            $detail['username'] = isset($users['username']) ? $users['username'] : "";
-            $detail['service_name'] = isset($services['name']) ? $services['name'] : "";
+        $timeStart = $request->timeStart;
+        $timeEnd = $request->timeEnd;
+        $detail_set_pitch = Detail_set_pitchs::where('id', $id)->get();
+
+        if ($timeEnd < $timeStart) {
+            return redirect()->route('admin.set_pitch.edit', ['id' => $id])->with('error', "Thời gian kết thúc phải lớn hơn thời gian bắt đầu");
         }
-        if($pitch->save()){
-            return redirect()->route('pitchs.edit',['pitch'=>$pitch->id])->with('success','Cập nhật sân thành công');
-          }
-           return redirect()->route('pitchs.edit',['pitch'=>$pitch->id])->with('error','Xử lí cập nhật thất bại');
+
+        if ((strtotime($timeEnd) - strtotime($timeStart)) / SECOND <= HAFLANHOUR) {
+            return redirect()->route('admin.set_pitch.edit', ['id' => $id])->with('error', "Thời gian của trận đấu phải lớn hơn 30 phút");
+        }
+        $pitch = Pitchs::where('id', $id)->where('status', '1')->first();
+        if ($pitch == null) {
+            return redirect()->route('admin.set_pitch.edit', ['id' => $id])->with('error', "Không tìm thấy sân");
+        }
+
+        $timeSoccer = (strtotime($timeEnd) - strtotime($timeStart)) / (MINUTE * SECOND);
+
+        $checkTimes = Detail_set_pitchs::where('picth_id', $id)->where(function ($query) use ($timeStart, $timeEnd) {
+            $query->where('start_time', '<=', $timeStart)->where('end_time', '>=', $timeEnd);
+        })->get();
+        if ($checkTimes->count() == 0) {
+            $checkTimes = Detail_set_pitchs::where('picth_id', $id)->where(function ($query) use ($timeStart, $timeEnd) {
+                $query->whereBetween('start_time', [$timeStart, $timeEnd])->orwhereBetween('end_time', [$timeStart, $timeEnd]);
+            })->get();
+        }
+
+        if ($checkTimes->count() > 0) {
+            foreach ($checkTimes as $checkTime) {
+                $setTimeStart = $checkTime->start_time;
+                $setTimeEnd = $checkTime->end_time;
+            }
+            return redirect()->route('admin.set_pitch.edit', ['id' => $id])->with('error', "Sân đã được đặt từ $setTimeStart đến $setTimeEnd");
+        }
     }
 
     /**

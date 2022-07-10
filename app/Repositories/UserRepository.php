@@ -111,9 +111,9 @@ class UserRepository implements UserRepositoryInterface
         ],
         [
         'password.required'=>'Vui lòng nhập mật khẩu',
-        'password.min'=>'Mật khẩu có ít nhất 8 kí tự',
+        'password.min'=>'Mật khẩu phải có ít nhất 8 kí tự',
         'confirm_password.required'=>'Vui lòng nhập mật khẩu xác nhận',
-        'confirm_password.min'=>'Mật khẩu xác nhận có ít nhất 8 kí tự',
+        'confirm_password.min'=>'Mật khẩu xác nhận phải có ít nhất 8 kí tự',
         'confirm_password.same'=>'Mật khẩu không trùng khớp',
        ]
        );

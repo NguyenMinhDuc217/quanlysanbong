@@ -62,6 +62,7 @@ class PitchRepository implements PitchRepositoryInterface
         //lấy thời gian và tình trạng sân trong ngày hôm đó
         // $now = Carbon::now()->format('Y-m-d H:i:s');
         $now = Carbon::now();
+        // dd(date('d', strtotime($now)));
 
         $detail_set_pitchs = Detail_set_pitchs::where('picth_id',$pitchid)->where(function ($query) use ($now) {
             $query->whereDate('start_time','<=',$now)->orwhereDate('end_time','>=', $now);

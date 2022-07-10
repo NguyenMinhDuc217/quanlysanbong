@@ -10,8 +10,8 @@
                 </div>
                 <div class="review__avt__user__right">
                     <div class="user__right__top">
-                        <p>{{@$rowCmt["name"]}}</p>date('d-m-Y', strtotime($user->from_date));
-                        <p>{{@$rowCmt["created_at"]}}</p>
+                        <p>{{@$rowCmt["name"]}}</p>
+                        <p>{{date('d-m-Y', @$rowCmt["created_at"])}}</p>
                         <div class="like__dislike" style="font-size: 17px;">
                             <i class='bx bxs-like'></i>
                             <span class="count-cmt">{{@$rowCmt["like"]}}</span>
@@ -20,7 +20,7 @@
                         </div>
                     </div>
                     <div class="user__right__bottom">
-                        <div class="star" starcomment="">
+                        <div class="star" starcomment="{{@$rowCmt["rating"]}}">
                             <span><i class='bx bx-star'></i></span>
                             <span><i class='bx bx-star'></i></span>
                             <span><i class='bx bx-star'></i></span>
@@ -62,8 +62,22 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.17/sweetalert2.min.js"></script>
 
 <script>
-    
+  //   Render number star
+  // const data_total_comment = document.getElementsByClassName('star');
+  // for (let j = 0; j < data_total_comment.length; j++) {
+  //   const star_total_comment = data_total_comment[j].getAttribute('starcomment');
+  //   for (let i = 0; i < data_total_comment[j].childNodes.length; i++) {
+  //     if (i == star_total_comment * 2) break;
+  //     if (data_total_comment[j].hasChildNodes('span')) {
+  //       if (data_total_comment[j].childNodes[i].childNodes.length !== 0) {
+  //         data_total_comment[j].childNodes[i].childNodes[0].classList.add('bxs-star');
+  //       }
+  //     }
+  //   }
+  // }
+
   //Event hover star
+  console.log(document.getElementsByClassName('com'));
   const data_total_user_comment = document.getElementsByClassName('com');
   let check = false;
   for (let i = 0; i < data_total_user_comment.length; i++) {

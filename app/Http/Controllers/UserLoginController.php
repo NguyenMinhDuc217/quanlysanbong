@@ -23,9 +23,9 @@ class UserLoginController extends Controller
             'password' => 'required|min:8'
         ],[
             'email.required' => 'Email không được để trống',
-            'email.email' => 'Bạn phải nhập định dạng Email',
+            'email.email' => 'Bạn phải nhập đúng định dạng Email',
             'password.required' => 'Mật khẩu không được để trống',
-            'password.min' => 'Mật khẩu ít nhất 8 kí tự',
+            'password.min' => 'Mật khẩu phải ít nhất 8 kí tự',
         ]
         );
     if (Auth::guard('user')->attempt(['email' => $request->email, 'password' => $request->password,'status'=>1], $request->remember)) {
