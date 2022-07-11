@@ -42,6 +42,13 @@ Route::get('/user/forget-password', [UserController::class,'showForgetPassword']
 Route::post('/user/forget-password', [UserController::class,'sendForgetPassword'])->name('send.forgetpassword');
 Route::get('/user/change-password', [UserController::class,'changeForgetPassword'])->name('change.forgetpassword');
 Route::post('/user/change-password', [UserController::class,'test'])->name('change.password');
+//my account
+Route::get('/my-account', [UserController::class,'myAccount'])->name('my.account');
+Route::get('/my-account/{id}/edit-information', [UserController::class,'editInformation'])->name('edit.information');
+Route::post('/my-account/{id}/edit-information', [UserController::class,'updateInformation'])->name('update.information');
+Route::get('/my-account/{id}/edit-password', [UserController::class,'editPassword'])->name('edit.password');
+Route::post('/my-account/{id}/edit-password', [UserController::class,'updatePassword'])->name('update.password');
+
 //listpitch
 Route::get('/', [PitchController::class,'ListPitch'])->name('list_pitch');
 Route::get('/search-pitch', [PitchController::class,'Search'])->name('search.pitch');

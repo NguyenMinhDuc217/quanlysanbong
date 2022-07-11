@@ -21,6 +21,9 @@
         <div class="header_top__right">
             @if(!empty(Auth::guard('user')->user()->id))
             <div class="header_top__right__login">
+                <a href="{{route('my.account')}}">Tài Khoản</a>
+            </div>
+            <div class="header_top__right__login">
                 <a href="{{route('logout')}}">Đăng xuất</a>
             </div>
             @else
