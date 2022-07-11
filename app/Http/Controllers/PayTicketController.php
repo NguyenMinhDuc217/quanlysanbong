@@ -153,6 +153,7 @@ class PayTicketController extends Controller
                        $ticket->save();
                        foreach(Detail_set_pitchs::where('ticket_id', $bill->ticket_id)->get() as $setPitch){
                        $setPitch->user_id=$bill->user_id;
+                       $setPitch->ispay='1';
                        $setPitch->save();
                       }
                     return redirect()->route('list.buy.ticket')->with('success',"Thanh toán thành công");

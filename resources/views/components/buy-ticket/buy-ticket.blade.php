@@ -73,12 +73,10 @@
                     @endif
                   </div>
                 <div class="product_item__price">   
-                 <form id="btnBuy">
-                  <meta name="csrf-token" content="{{ csrf_token() }}">
-                  <input type="hidden" value="{{$ticket['id']}}" id="ticket">
-                   <button type="button"  class="btn btn-primary btn_buy" >  Mua ngay
+              
+                   <button type="button"  class="btn btn-primary btnBuy" ticket_id="{{$ticket['id']}}">  Mua ngay
                     </button>
-                 </form>
+            
                     <button type="button" value="{{$ticket['id']}}" class="btn btn-success btnShow btn-sm btn_view" data-toggle="modal" data-target="#show">
                       Xem nhanh
                   </button>
@@ -100,7 +98,7 @@
         $(document).on('click','#btnbuyTicket', function(e){
             e.preventDefault();
             var name = $('#name').val();
-            var ticketid=$('#ticket').val();
+            var ticketid=$('#buy').val();
             @if(Auth::guard('user')->check())
             $.ajax({
                 headers: {
@@ -111,7 +109,6 @@
                 data: $('#btnbuyTicket').serialize(),
                 dataType: 'json',
                 success: function(response) {
-                    console.log(response);
                     if (response.status === 200) {
                     return Swal.fire({
                       icon: 'success',
@@ -179,7 +176,6 @@
                  success: function(response){
                     $('#detailTicket').val(response.data.ticket.id); 
                     $('#buy').val(response.data.ticket.id); 
-                    console.log(response.data.ticket.id);
                      $('#image').attr('src', "images/tickets/"+response.data.ticket.image);
                      $("#name").text(response.data.ticket.name);
                      $("#code_ticket").text(response.data.ticket.code_ticket);
@@ -214,23 +210,24 @@
     })
     
 
-    $(document).ready(function(){
-        $(document).on('click','#btnBuy', function(e){
+  
+     $(document).ready(function(){
+        $(document).on('click','.btnBuy', function(e){
             e.preventDefault();
             var name = $('#name').val();
-            var ticketid=$('#ticket').val();
-            console.log(ticketid);
+            var ticketid=$(this).attr('ticket_id'); 
             @if(Auth::guard('user')->check())
             $.ajax({
-              headers: {
-                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 type: 'POST',
                 url: '/buy-ticket?ticketid=' + ticketid,
                 data: $('#btnBuy').serialize(),
                 dataType: 'json',
                 success: function(response) {
-                  if (response.status === 200) {
+                    console.log(response,ticketid);
+                    if (response.status === 200) {
                     return Swal.fire({
                       icon: 'success',
                       text: response.data,

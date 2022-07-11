@@ -200,7 +200,7 @@ class TicketManagerController extends Controller
         $tickets->number_day_of_week = $request->number_day;
         // $timeDay;
         $tickets->timeout = $request->timeOut;
-        $tickets->price = ($pitchs["price"] + $services["price"]) * $request->number_day * $request->month * 4 - (($pitchs["price"] + $services["price"]) * $request->number_day * $request->month * 4 * $request->discount /100);
+        $tickets->price = $pitchs["price"]* $request->number_day * $request->month * 4;
         $tickets->month = $request->month;
         $tickets->discount = $request->discount;
         $tickets->status = $request->get('status');
