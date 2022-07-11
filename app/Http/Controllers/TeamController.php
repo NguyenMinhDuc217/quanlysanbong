@@ -19,9 +19,6 @@ class TeamController extends  BaseUserController
     public function createTeam(Request $Request){
         return $this->teamRepository->createTeam($Request);
     }
-<<<<<<< HEAD
-
-=======
     public function listTeam(){
         return $this->teamRepository->listTeam();
     }
@@ -37,5 +34,4 @@ class TeamController extends  BaseUserController
     public function searchTeam(Request $Request){
         return $this->teamRepository->searchTeam($Request);
     }
->>>>>>> eeb2a44bd88d806ae4970dfd15e9d41faeedc45a
 }
