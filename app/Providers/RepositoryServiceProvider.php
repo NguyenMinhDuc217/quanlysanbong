@@ -12,6 +12,8 @@ use App\Repositories\TicketRepository;
 use App\Repositories\Interfaces\TicketRepositoryInterface;
 use App\Repositories\TeamRepository;
 use App\Repositories\Interfaces\TeamRepositoryInterface;
+use App\Repositories\NotificationRepository;
+use App\Repositories\Interfaces\NotificationRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Auth;
 
@@ -39,6 +41,10 @@ class RepositoryServiceProvider extends ServiceProvider
          $this->app->bind(
             TeamRepositoryInterface::class, 
             TeamRepository::class
+         );
+         $this->app->bind(
+            NotificationRepositoryInterface::class, 
+            NotificationRepository::class
          );
     }
      /**

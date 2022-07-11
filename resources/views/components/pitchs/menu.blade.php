@@ -37,5 +37,5 @@
          
         </div>
     </div>
-    <a href="{{route('list.set.pitch')}}"><span class="navbar__item">THÔNG BÁO</span></a> 
+    <a href="{{route('notification')}}"><span class="navbar__item">THÔNG BÁO</span></a> 
 </div>

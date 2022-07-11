@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Detail_set_pitchs;
 use App\Models\DetailTicket;
+use App\Models\Notifications;
 use App\Models\Pitchs;
 use App\Models\Services;
 use App\Models\Tickets;
@@ -206,10 +207,13 @@ class TicketManagerController extends Controller
 
         }
         Detail_set_pitchs::insert($detail_set_pitch);
-
-        
-
         $detailTicket->save();
+
+        $notification = new Notifications();
+        $notification->title = 'Vé '.$tickets->name.' mới được tạo';
+        $notification->content = 'Với mức giá chỉ '.number_format($tickets->price).' vnd bạn đã có thể sở hữu chiếc vé "'.$tickets->name.'" có mã là "'.$tickets->code_ticket. '" có thời hạn từ '.date('d-m-Y',strtotime($detailTicket->start_time)).' đến '.date('d-m-Y',strtotime($detailTicket->end_time)).' để có thể thoả mãn đam mê với trái bóng tròn của mình';
+        $notification->save();
+
         if ($tickets->save()) {
             return redirect()->route('tickets.create')->with('success', 'Thêm vé mới thành công');
         }

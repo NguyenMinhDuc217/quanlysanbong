@@ -16,7 +16,7 @@ class ServicesSeeder extends Seeder
     {
         Services::insert([
             [
-                'name' => 'name',
+                'name' => 'Nước suối',
                 'price' => 5000,
             ],
             [

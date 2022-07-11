@@ -48,6 +48,8 @@ Route::get('/my-account/{id}/edit-information', [UserController::class,'editInfo
 Route::post('/my-account/{id}/edit-information', [UserController::class,'updateInformation'])->name('update.information');
 Route::get('/my-account/{id}/edit-password', [UserController::class,'editPassword'])->name('edit.password');
 Route::post('/my-account/{id}/edit-password', [UserController::class,'updatePassword'])->name('update.password');
+//notification 
+Route::get('/notification', [NotificationController::class,'listNotification'])->name('notification');
 
 //listpitch
 Route::get('/', [PitchController::class,'ListPitch'])->name('list_pitch');
