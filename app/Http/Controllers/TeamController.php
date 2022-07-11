@@ -19,5 +19,23 @@ class TeamController extends  BaseUserController
     public function createTeam(Request $Request){
         return $this->teamRepository->createTeam($Request);
     }
+<<<<<<< HEAD
 
+=======
+    public function listTeam(){
+        return $this->teamRepository->listTeam();
+    }
+    public function myTeam(){
+        return $this->teamRepository->myTeam();
+    }
+    public function editTeam($id){
+        return $this->teamRepository->editTeam($id);
+    }
+    public function updateTeam(Request $request, $id){
+        return $this->teamRepository->updateTeam($request, $id);
+    }
+    public function searchTeam(Request $Request){
+        return $this->teamRepository->searchTeam($Request);
+    }
+>>>>>>> eeb2a44bd88d806ae4970dfd15e9d41faeedc45a
 }

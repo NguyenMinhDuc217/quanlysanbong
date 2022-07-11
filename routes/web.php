@@ -44,6 +44,13 @@ Route::get('/user/forget-password', [UserController::class,'showForgetPassword']
 Route::post('/user/forget-password', [UserController::class,'sendForgetPassword'])->name('send.forgetpassword');
 Route::get('/user/change-password', [UserController::class,'changeForgetPassword'])->name('change.forgetpassword');
 Route::post('/user/change-password', [UserController::class,'test'])->name('change.password');
+//my account
+Route::get('/my-account', [UserController::class,'myAccount'])->name('my.account');
+Route::get('/my-account/{id}/edit-information', [UserController::class,'editInformation'])->name('edit.information');
+Route::post('/my-account/{id}/edit-information', [UserController::class,'updateInformation'])->name('update.information');
+Route::get('/my-account/{id}/edit-password', [UserController::class,'editPassword'])->name('edit.password');
+Route::post('/my-account/{id}/edit-password', [UserController::class,'updatePassword'])->name('update.password');
+
 //listpitch
 Route::get('/', [PitchController::class,'ListPitch'])->name('list_pitch');
 Route::get('/search-pitch', [PitchController::class,'Search'])->name('search.pitch');
@@ -84,7 +91,12 @@ Route::get('/pay-ticket', [BuyTicketController::class,'payTicket'])->name('pay.t
 Route::get('/create-team', [TeamController::class,'showCreateTeam'])->name('show.create.team');
 Route::post('/create-team', [TeamController::class,'createTeam'])->name('create.team');
    //list
-Route::get('/list-team', [ListTeamController::class,'listTeam'])->name('list.team');
+Route::get('/list-team', [TeamController::class,'listTeam'])->name('list.team');
+Route::get('/my-team', [TeamController::class,'myTeam'])->name('my.team');
+Route::get('/my-team/{id}/edit', [TeamController::class,'editTeam'])->name('my.team.edit');
+Route::post('/my-team/{id}/edit', [TeamController::class,'updateTeam'])->name('my.team.update');
+// Route::get('/apps/{id}/edit', 'ApplicationManagerController@edit')->name('admin.apps.edit');
+// Route::put('/apps/{id}/edit', 'ApplicationManagerController@update')->name('admin.apps.update');
   //search
 Route::get('/search-team', [ListTeamController::class,'searchTeam'])->name('search.team');
 

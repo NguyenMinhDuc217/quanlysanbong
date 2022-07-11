@@ -37,13 +37,11 @@
                              @enderror   
                     </div>
                     </div>
-       
-           
                 </div>
              
                 <div class="form-control">
                     <div class="form_control__custom">
-                        <label for="link">Social <span class="require">*</span></label>
+                        <label for="link">Liên lạc <span class="require">*</span></label>
                         <div class="form-control_notify">
                             <input type="text" id="link" name="link" placeholder="Bạn có thể nhập số điện thoại hoặc link" autocomplete="off" >
                             @error('link')

@@ -100,6 +100,8 @@
             if (data_total_comment[j].hasChildNodes('span')) {
                 if (data_total_comment[j].childNodes[i].childNodes.length !== 0) {
                     data_total_comment[j].childNodes[i].childNodes[0].classList.add('bxs-star');
+        console.log('starcomment');
+        console.log(star_total_comment);
                 }
             }
         }

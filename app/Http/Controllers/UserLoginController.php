@@ -23,15 +23,15 @@ class UserLoginController extends Controller
             'password' => 'required|min:8'
         ],[
             'email.required' => 'Email không được để trống',
-            'email.email' => 'Bạn phải nhập định dạng Email',
+            'email.email' => 'Bạn phải nhập đúng định dạng Email',
             'password.required' => 'Mật khẩu không được để trống',
-            'password.min' => 'Mật khẩu ít nhất 8 kí tự',
-        ]
+            'password.min' => 'Mật khẩu phải ít nhất 8 kí tự',
+            ]
         );
-    if (Auth::guard('user')->attempt(['email' => $request->email, 'password' => $request->password,'status'=>1], $request->remember)) {
-        return redirect()->route('list_pitch');
-    }
-    if (Auth::guard('user')->attempt(['email' => $request->email, 'password' => $request->password,'status'=>2], $request->remember)) {
+        if (Auth::guard('user')->attempt(['email' => $request->email, 'password' => $request->password,'status'=>1], $request->remember)) {
+            return redirect()->route('list_pitch');
+        }
+        if (Auth::guard('user')->attempt(['email' => $request->email, 'password' => $request->password,'status'=>2], $request->remember)) {
         return redirect()->back()->withInput($request->only('email', 'remember'))->with('error', 'Tài khoản chưa kích hoạt!!!');
     }
     if (Auth::guard('user')->attempt(['email' => $request->email, 'password' => $request->password,'status'=>3], $request->remember)) {

@@ -20,6 +20,12 @@
         </div>
         <div class="header_top__right">
             @if(!empty(Auth::guard('user')->user()->id))
+            <!-- <div class="review__avt__user__left">
+                <img src="https://picsum.photos/id/237/200/300" alt="avatar user">
+            </div> -->
+            <div class="header_top__right__login">
+                <a href="{{route('my.account')}}">Tài Khoản</a>
+            </div>
             <div class="header_top__right__login">
                 <a href="{{route('logout')}}">Đăng xuất</a>
             </div>

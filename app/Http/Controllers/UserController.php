@@ -51,4 +51,19 @@ class UserController extends Controller
    public function test(Request $request){
       return $this->userRepository->changePassword($request);
     }
+    public function myAccount(){
+      return $this->userRepository->myAccount();
+    }
+    public function editInformation($id){
+      return $this->userRepository->editInformation($id);
+    }
+    public function updateInformation(Request $request, $id){
+      return $this->userRepository->updateInformation($request, $id);
+    }
+    public function editPassword($id){
+      return $this->userRepository->editPassword($id);
+    }
+    public function updatePassword(Request $request, $id){
+      return $this->userRepository->updatePassword($request, $id);
+    }
 }

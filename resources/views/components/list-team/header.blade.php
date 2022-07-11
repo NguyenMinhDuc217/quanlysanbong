@@ -3,23 +3,26 @@
 <div class="header">
     <div class="header_top">
         <div class="header_top__left">
-            <div class="header_top__left__hotline">
+        <div class="header_top__left__hotline">
                 <div class="header_top__left__hotline_icon">
                     <box-icon name='phone' type='solid' color='#ffffff'></box-icon>
                 </div>
-                <span class="header_top__left__hotline_title">Showroom</span>
-                <div class="header_top__left__hotline_phone">0123456789</div>
+                <span class="header_top__left__hotline_title">Hotline</span>
+                <div class="header_top__left__hotline_phone">0356155012</div>
             </div>
-            <div class="header_top__left__hotline_tech">
+            <!-- <div class="header_top__left__hotline_tech">
                 <div class="header_top__left__hotline_tech_icon">
                     <box-icon type='solid' name='brightness' color='#ffffff'></box-icon>
                 </div>
                 <span class="header_top__left__hotline_tech_title">Kĩ thuật</span>
                 <div class="header_top__left__hotline_tech_phone">0123456789</div>
-            </div>
+            </div> -->
         </div>
         <div class="header_top__right">
             @if(!empty(Auth::guard('user')->user()->id))
+            <div class="header_top__right__login">
+                <a href="{{route('my.account')}}">Tài Khoản</a>
+            </div>
             <div class="header_top__right__login">
                 <a href="{{route('logout')}}">Đăng xuất</a>
             </div>
