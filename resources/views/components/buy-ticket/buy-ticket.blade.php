@@ -74,7 +74,7 @@
                     @endif
                   </div>
                 <div class="product_item__price">   
-              
+                    <meta name="csrf-token" content="{{ csrf_token() }}">
                    <button type="button"  class="btn btn-primary btnBuy" ticket_id="{{$ticket['id']}}">  Mua ngay
                     </button>
             

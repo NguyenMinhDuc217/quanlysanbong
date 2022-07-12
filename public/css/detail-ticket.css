@@ -120,9 +120,13 @@
     font-style: normal;
     color: #00305b;
     font-size: 25px;
+    margin: 7px;
 }
 .body_detail_ticket {
     align-items: center;
     margin: 30px 50px;
     column-gap: 20px;
+}
+.body_detail_des{
+    margin: 9px;
 }
