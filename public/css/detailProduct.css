@@ -1004,6 +1004,12 @@ p, h2 {
     margin-bottom: 8px;
 }
 
+/*  */
+.form_checkbox {
+    display: flex;
+    justify-content: space-between;
+}
+
 @media (max-width:1366px) {
     .advise_form__input {
         width: 270px;

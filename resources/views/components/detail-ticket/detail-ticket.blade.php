@@ -59,41 +59,66 @@
     <div class="body_title">
         <div>Thông tin chi tiết</div>
     </div>
-    <div class="body_detail">
-        <div>
-            <div>Thời gian bắt đầu</div>
-            <div>{{@$data['detail_ticket']->start_time}}</div>
+    <div class="body_detail_des">
+        <div class="body_detail_des">
+            <div >Thời gian bắt đầu</div>
+                 @php
+                $date=date_create($data['detail_ticket']->start_time);
+                $startTicket= date_format($date,"d/m/Y");
+                @endphp
+            <div>{{$startTicket}}</div>
         </div>
-        <div>
+        <div class="body_detail_des">
             <div>Thời gian kết thúc</div>
-            <div>{{@$data['detail_ticket']->end_time}}</div>
+                 @php
+                $date=date_create($data['detail_ticket']->end_time);
+                $endTicket= date_format($date,"d/m/Y");
+                @endphp
+            <div>{{$endTicket}}</div>
         </div>
         <div>
-            <div>Thông tin thời gian của các ngày trong vé</div>
+            <div class="body_detail_des">Thông tin thời gian của các ngày trong vé:</div>
             @if(!empty(@$data['setPitch']))
                 @foreach($data['setPitch'] as $i=>$setPitch)
-                     <div>Tên sân: {{$setPitch['pitch']}}</div>
-                     <div>Thời gian bắt đầu ngày thứ {{$i+1}}</div>
-                    <div>{{$setPitch['setPitch']->start_time}}</div>
-                    <div>Thời gian kết thúc ngày thứ {{$i+1}}</div>
-                    <div>{{$setPitch['setPitch']->end_time}}</div>
-                    @endforeach
+                <div class="body_detail_des">
+                    <div >Tên sân: {{$setPitch['pitch']}}</div>
+                    <div>
+                    <span>Thời gian bắt đầu ngày thứ {{$i+1}}: </span>
+                        @php
+                        $date=date_create($setPitch['setPitch']->start_time);
+                        $startSetPitch= date_format($date,"d/m/Y H:i");
+                        @endphp
+                    <span>{{$startSetPitch}}</span>
+                    </div>
+                    <div>
+                    <span>Thời gian kết thúc ngày thứ {{$i+1}}: </span>
+                       @php
+                        $date=date_create($setPitch['setPitch']->end_time);
+                        $endSetPitch= date_format($date,"d/m/Y H:i");
+                        @endphp
+                    <span>{{$endSetPitch}}</span>
+                    </div>
+                </div>
+                @endforeach
                 @else
             <div></div>
             @endif
         </div>
-        <div>
+        <div class="body_detail_des">
             @if(!empty(@$data['service']))
-            <div>Danh sách các dịch vụ</div>
+            <div lass="body_detail_des">Danh sách các dịch vụ</div>
                 @foreach($data['service'] as $service)
-                <div>{{$service->name}}</div>
-                <div>{{$service->quantity}}</div>
+                <div>
+                <span >{{$service->name}}</span>
+                <span >{{$service->quantity}}</span>
+                </div>
+              
                 @endforeach
             @else
             <div></div>
             @endif
         </div>
-        <div>
+        <div class="body_detail_des">
             <div>Các dịch vụ của sân diễn ra trong suốt thời gian của vé</div>
         </div>
     </div>

@@ -91,7 +91,7 @@
                             <div class='box__filter' id='box__filter'>
                                 <label>Các loại dịch vụ</label>
                                 @foreach($data['services'] as $service)
-                                <div class="checkbox form-inline">
+                                <div class="checkbox form-inline form_checkbox">
                                     <label class="main">
                                         <input type="checkbox" name="ch_name[]" {{(is_array(\Request::get('service')) && in_array($service['id'], \Request::get('service')) ) ? 'checked' : ((\Request::get('service') == $service['id']) ? 'checked' : "" )}} value="{{$service['id']}}"> {{$service['name']}}
                                         <span class="geekmark"></span>
