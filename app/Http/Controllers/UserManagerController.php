@@ -118,21 +118,16 @@ class UserManagerController extends BaseAdminController
         
         $request->validate([
             'username' => 'required',
-            'email' => 'required|email|unique:users,email',
             'phone' => 'required|numeric|digits:10',
         ],[
             'username.required'=>'Vui lòng nhập Họ và Tên',
-            'email.required'=>'Vui lòng nhập Email',
-            'email.email'=>'Vui lòng nhập định dạng là Email',
             'phone.required'=>'Vui lòng nhập số điện thoại',
             'phone.numeric'=>'Số điện thoại phải là số',
             'phone.digits' => 'Số điện thoại không hợp lệ',
-            'email.unique'=>'Email đã tồn tại',
         ]);
         
         $user = User::find($id);
         $user->username = $request->username;
-        $user->email = $request->email;
         $user->phone_number = $request->phone;
         $user->created_by =Auth::guard('admin')->user()->name;
         $user->status=$request->status;

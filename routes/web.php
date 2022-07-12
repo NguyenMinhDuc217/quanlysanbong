@@ -113,6 +113,8 @@ Route::prefix('admin')->group(function () {
    Route::resource('/pitchs', PitchManagerController::class);
    Route::resource('/set_pitchs', SetPitchManagerController::class);
    Route::resource('/tickets', TicketManagerController::class);
+   Route::resource('/services', ServiceManagerController::class);
+   Route::post('/services/delete', [ServiceManagerController::class,'destroy'])->name('services.delete');
    Route::get('/image', [ImageManagerController::class,'fileManager'])->name('admin.image');
    Route::get('/chart-set-pitch', [StatisticManagerController::class,'showChartSetPitch'])->name('show.chart.set.pitch');
    Route::get('/chart/set-pitch', [StatisticManagerController::class,'chartSetPitch'])->name('chart.set.pitch');

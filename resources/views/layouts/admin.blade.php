@@ -106,6 +106,12 @@
                   <p>Vé</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{route('services.index')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Dịch vụ</p>
+                </a>
+              </li>
             </ul>
           </li>
           <li class="nav-item">
@@ -127,18 +133,6 @@
                 <a href="{{route('show.chart.bill.set.pitch')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Doanh thu khách đặt sân</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Doanh thu bán vé tháng</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/layout/top-nav.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Thời gian đặt</p>
                 </a>
               </li>
             </ul>

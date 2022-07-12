@@ -26,7 +26,6 @@
                 <th>Name</th>
                 <th>Email</th>
                 <th>SĐT</th>
-                <th>Ví</th>
                 <th>Status</th>
                 <th>Người tạo</th>
                 <th>Ngày tạo</th>
@@ -40,7 +39,6 @@
                 <td>{{$user->username}}</td>
                 <td>{{$user->email}}</td>
                 <td>{{$user->phone_number}}</td>
-                <td>{{$user->wallet}}</td>
                 <td>@if($user->status==1)
                   <span style=" color: #2ecc71;">Đang hoạt động</span>
                   @elseif($user->status==2)
