@@ -152,7 +152,7 @@ class UserRepository implements UserRepositoryInterface
                 'password' => 'required|min:8',
             ],
             [
-                'username.required' => 'Tên tài khoản không được để trống',
+                'username.required' => 'Vui lòng nhập tên tài khoản',
                 'phone_number.required' => 'Vui lòng nhập số điện thoại',
                 'phone_number.numeric' => 'Số điện thoại phải là số',
                 'phone_number.digits' => 'Số điện thoại phải là 10 số',
