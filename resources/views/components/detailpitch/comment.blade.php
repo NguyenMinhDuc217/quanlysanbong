@@ -11,7 +11,7 @@
                 <div class="review__avt__user__right">
                     <div class="user__right__top">
                         <p>{{@$rowCmt["name"]}}</p>
-                        <p>{{date('d-m-Y',strtotime(@$rowCmt["created_at"]))}}</p>
+                        <p>{{@$rowCmt["created_at"]}}</p>
                         <div class="like__dislike" style="font-size: 17px;">
                             <i class='bx bxs-like'></i>
                             <span class="count-cmt">{{@$rowCmt["like"]}}</span>

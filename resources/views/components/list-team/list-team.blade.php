@@ -57,10 +57,10 @@
         <span class="list_item_title">Link:</span> 
         <span class="list_item_desc">{{$team->link}}</span>
     </div>
-    <div class="button">
+    <!-- <div class="button">
         <button class="btn_left">aaa</button>
         <button class="btn_right">aaa</button>
-    </div>
+    </div> -->
 </div>
 @endforeach
 

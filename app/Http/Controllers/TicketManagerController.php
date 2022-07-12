@@ -207,6 +207,7 @@ class TicketManagerController extends Controller
 
         }
         Detail_set_pitchs::insert($detail_set_pitch);
+
         $detailTicket->save();
 
         $notification = new Notifications();

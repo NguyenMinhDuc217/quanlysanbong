@@ -12,6 +12,8 @@ use App\Http\Controllers\SocialController;
 use App\Http\Controllers\SetPitchController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\BuyTicketController;
+use App\Models\Detail_set_pitchs;
+use Carbon\Carbon;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -98,19 +100,24 @@ Route::post('/my-team/{id}/edit', [TeamController::class,'updateTeam'])->name('m
 // Route::get('/apps/{id}/edit', 'ApplicationManagerController@edit')->name('admin.apps.edit');
 // Route::put('/apps/{id}/edit', 'ApplicationManagerController@update')->name('admin.apps.update');
   //search
-Route::get('/search-team', [TeamController::class,'searchTeam'])->name('search.team');
+Route::get('/search-team', [ListTeamController::class,'searchTeam'])->name('search.team');
 
-Route::get('/dang-nhap', [AdminLoginController::class,'showLoginForm'])->name('admin.show.login');
-Route::post('/dang-nhap', [AdminLoginController::class,'login'])->name('admin.login');
+Route::get('/login', [AdminLoginController::class,'showLoginForm'])->name('admin.show.login');
+Route::post('/login', [AdminLoginController::class,'login'])->name('admin.login');
 Route::get('/logout', [AdminLoginController::class,'logout'])->name('admin.logout');
 
-Route::get('/dashboard', [AdminController::class,'index'])->name('admin.index');
 
 Route::prefix('admin')->group(function () {
+   Route::get('/home', [AdminController::class,'index'])->name('admin.index');
    Route::resource('/users', UserManagerController::class);
    Route::resource('/pitchs', PitchManagerController::class);
    Route::resource('/set_pitchs', SetPitchManagerController::class);
    Route::resource('/tickets', TicketManagerController::class);
    Route::get('/image', [ImageManagerController::class,'fileManager'])->name('admin.image');
+   Route::get('/chart-set-pitch', [StatisticManagerController::class,'showChartSetPitch'])->name('show.chart.set.pitch');
+   Route::get('/chart/set-pitch', [StatisticManagerController::class,'chartSetPitch'])->name('chart.set.pitch');
+   Route::get('/chart-bill-set-pitch', [StatisticManagerController::class,'showChartBillSetPitch'])->name('show.chart.bill.set.pitch');
+   Route::get('/chart/bill-set-pitch', [StatisticManagerController::class,'chartBillSetPitch'])->name('chart.bill.set.pitch');
+
 });
 

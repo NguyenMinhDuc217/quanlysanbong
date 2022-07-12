@@ -104,8 +104,8 @@ class SetPitchRepository implements SetPitchRepositoryInterface
         $totalService=SetService::where('set_pitch_id',$setPitch->id)->sum('total');
         $setPitch->total= $setPitch->total+$totalService;
         $setPitch->save();
-        $successStart= date_format(date_create($request->timeStart),"Y/m/d H:i:s");
-        $successEnd= date_format(date_create($request->timeEnd),"Y/m/d H:i:s");
+        $successStart= date_format(date_create($request->timeStart),"d/m/Y H:i");
+        $successEnd= date_format(date_create($request->timeEnd),"d/m/Y H:i");
         return response()->json(['status'=> 200,'success'=>"Bạn đã đặt sân từ $successStart đến $successEnd"]);
     }
 
@@ -118,7 +118,7 @@ class SetPitchRepository implements SetPitchRepositoryInterface
             $bills[$bill->detail_set_pitch_id]=$bill->transaction_id;
      }
     $listSetPitch=[];
-    foreach(Detail_set_pitchs::orderby('id','DESC')->where('user_id',Auth::guard('user')->user()->id)->get() as $i=>$detail_set_pitch){
+    foreach(Detail_set_pitchs::orderby('start_time','DESC')->where('user_id',Auth::guard('user')->user()->id)->get() as $i=>$detail_set_pitch){
        $listSetPitch[$i]['detail_set_pitch']=$detail_set_pitch;
        $listSetPitch[$i]['name']=$pitchs[$detail_set_pitch->picth_id];
        foreach(SetService::where('set_pitch_id',$detail_set_pitch->id)->get() as $k=>$setService){

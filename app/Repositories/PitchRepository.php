@@ -41,7 +41,7 @@ class PitchRepository implements PitchRepositoryInterface
             foreach ($comments as &$c) {
                $userComment = User_comments::where('comment_id', $c["id"])->where('user_id', Auth::guard('user')->user()->id)->first();
             //    dd(!empty($userComment['status']) ? $userComment['status'] :'');
-            $c["created_at"] = strtotime($c["created_at"]);
+            $c["created_at"] = date('d-m-Y',strtotime($c["created_at"]));
             $c["status"] = (!empty($userComment['status'])) ? $userComment['status'] :"";
             }
         }
@@ -64,7 +64,7 @@ class PitchRepository implements PitchRepositoryInterface
         $now = Carbon::now();
 
         $detail_set_pitchs = Detail_set_pitchs::where('picth_id',$pitchid)->where(function ($query) use ($now) {
-            $query->whereDate('start_time','<=',$now)->orwhereDate('end_time','>=', $now);
+            $query->whereDate('start_time','<=',$now)->whereDate('end_time','>=', $now);
         })->get();
         foreach($detail_set_pitchs as $detail){
             $detail['start_time'] = substr($detail['start_time'],11,8);
