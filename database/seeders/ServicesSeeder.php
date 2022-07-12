@@ -21,15 +21,15 @@ class ServicesSeeder extends Seeder
             ],
             [
                 'name' => 'Revive chanh muối',
-                'price' => 5000,
+                'price' => 15000,
             ],
             [
                 'name' => 'Áo bib',
-                'price' => 20000,
+                'price' => 10000,
             ],
             [
                 'name' => 'Trọng tài',
-                'price' => 200000,
+                'price' => 100000,
             ]
         ]);
     }
