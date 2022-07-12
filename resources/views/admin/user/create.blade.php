@@ -9,12 +9,12 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title"><b>Users Table</b></h3>
+          <h3 class="card-title"><b>Danh sách người dùng</b></h3>
         </div>
         <div class="container" style="margin: 10px 0px;">
           <div class="row">
             <div class="col-md-2">
-              <a class="btn btn-success uppercase" href="{{route('users.index')}}"> <i class="nav-icon fa fa-long-arrow-left"></i> Back</a>
+              <a class="btn btn-success uppercase" href="{{route('users.index')}}"> <i class="nav-icon fa fa-long-arrow-left"></i> Quay lại</a>
             </div>
           </div>
         </div>
@@ -55,8 +55,8 @@
                                    </span>
                             @enderror   
                   <div class="form-group">
-                    <label for="">Password</label>
-                    <input type="password" name="password" class="form-control" placeholder="Password">
+                    <label for="">Mật khẩu</label>
+                    <input type="password" name="password" class="form-control" placeholder="Mật khẩu">
                   </div>
                   @error('password')
                                    <span class="vali_sign" class="invalid-feedback" role="alert">
@@ -64,8 +64,8 @@
                                    </span>
                      @enderror   
                   <div class="form-group">
-                    <label for="">Confirm Password</label>
-                    <input type="password" name="confirm_password" class="form-control"  placeholder="Confirm password">
+                    <label for="">Xác nhận mật khẩu</label>
+                    <input type="password" name="confirm_password" class="form-control"  placeholder="Xác nhận mật khẩu">
                   </div>
                   @error('confirm_password')
                                    <span class="vali_sign" class="invalid-feedback" role="alert">
@@ -79,7 +79,7 @@
                                 @endif
                 </div>
                 <!-- /.card-body -->
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="submit" class="btn btn-primary">Tạo</button>
               
               </form>
         </div>

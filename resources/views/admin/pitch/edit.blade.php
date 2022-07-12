@@ -11,12 +11,12 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title"><b>Pitchs Table</b></h3>
+          <h3 class="card-title"><b>Danh sách sân</b></h3>
         </div>
         <div class="container" style="margin: 10px 0px;">
           <div class="row">
             <div class="col-md-2">
-              <a class="btn btn-success uppercase" href="{{route('pitchs.index')}}"> <i class="nav-icon fa fa-long-arrow-left"></i> Back</a>
+              <a class="btn btn-success uppercase" href="{{route('pitchs.index')}}"> <i class="nav-icon fa fa-long-arrow-left"></i> Quay lại</a>
             </div>
           </div>
         </div>
@@ -29,10 +29,10 @@
                 <img src="{{ asset('/images/pitch/') }}/{{$pitch->avartar}}" id="appimg" alt="App Cover"
                       class="img-fluid app_cover">
                 <input required type="hidden" name="cover" id="cover">
-                <p class="text-center pt-3">App Image</p>
+                <p class="text-center pt-3">Ảnh đại diện của sân</p>
 
                 <div class="form-group">
-                    <label for="exampleFormControlFile1">Example file input</label>
+                    <label for="exampleFormControlFile1">Chọn hình ảnh</label>
                     <input required value="" type="file" name="cover" class="form-control-file" id="cover_input">
                 </div>
 
@@ -87,7 +87,7 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <div class="input-field">
-                      <label class="active">App Banner Slider </label><span> (Bạn có thể chọn tối đa 8 ảnh. Ảnh nổi bật của bạn phải là tệp PNG hoặc JPEG với kích thước tệp tối đa là 8 MB và độ phân giải ảnh là: 1455 x 500px)</span>
+                      <label class="active"> Ảnh hoạt động</label><span> (Bạn có thể chọn tối đa 8 ảnh. Ảnh nổi bật của bạn phải là tệp PNG hoặc JPEG với kích thước tệp tối đa là 8 MB và độ phân giải ảnh là: 1455 x 500px)</span>
                       <div id="screenshots" class="screenshots" style="padding-top: .5rem;"></div>
                     </div>
                   </div>
@@ -114,7 +114,7 @@
               @endif
             </div>
             <!-- /.card-body -->
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Cập nhật</button>
 
           </form>
         </div>

@@ -2,7 +2,7 @@
 
 @section('content')
 
-@section('content_header', 'Set Pitchs')
+@section('content_header', 'Pitchs')
 <link rel="stylesheet" type="text/css" href="{{asset('admin/dist/css/style.css') }}">
 <div class="container">
   <div class="row">
@@ -62,12 +62,12 @@
         language: {
           "decimal": "",
           "emptyTable": "No data available in table",
-          "info": "Hiển thị _START_ to _END_ of _TOTAL_ entries",
+          "info": "Hiển thị _START_ đến _END_ trong _TOTAL_ mục",
           "infoEmpty": "Showing 0 to 0 of 0 entries",
           "infoFiltered": "(filtered from _MAX_ total entries)",
           "infoPostFix": "",
           "thousands": ",",
-          "lengthMenu": "Hiển thị _MENU_ entries",
+          "lengthMenu": "Hiển thị _MENU_ mục",
           "loadingRecords": "Loading...",
           "processing": "",
           "search": "Tìm kiếm:",
@@ -75,8 +75,8 @@
           "paginate": {
             "first": "First",
             "last": "Last",
-            "next": "Next",
-            "previous": "Previous"
+            "next": "Kế tiếp",
+            "previous": "Quay lại"
           },
           "aria": {
             "sortAscending": ": activate to sort column ascending",

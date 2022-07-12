@@ -9,7 +9,7 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title"><b>Users Table</b></h3>
+          <h3 class="card-title"><b>Danh sách người dùng</b></h3>
         </div>
         <div class="container" style="margin: 10px 0px;">
           <div class="row">
@@ -23,14 +23,14 @@
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Name</th>
+                <th>Tên</th>
                 <th>Email</th>
                 <th>SĐT</th>
-                <th>Ví</th>
-                <th>Status</th>
-                <th>Người tạo</th>
+                <!-- <th>Ví</th> -->
+                <th>Trình trạng</th>
+                <!-- <th>Người tạo</th> -->
                 <th>Ngày tạo</th>
-                <th>Action</th>
+                <th>Chức năng</th>
               </tr>
             </thead>
             <tbody>
@@ -40,7 +40,7 @@
                 <td>{{$user->username}}</td>
                 <td>{{$user->email}}</td>
                 <td>{{$user->phone_number}}</td>
-                <td>{{$user->wallet}}</td>
+                <!-- <td>{{$user->wallet}}</td> -->
                 <td>@if($user->status==1)
                   <span style=" color: #2ecc71;">Đang hoạt động</span>
                   @elseif($user->status==2)
@@ -49,12 +49,12 @@
                   <span style=" color: red;">Bị khóa</span>
                   @endif
                 </td>
-                <td>{{$user->created_by}}</td>
+                <!-- <td>{{$user->created_by}}</td> -->
                 <td>@if(@$user->created_at) {{ $user->created_at->format('d/m/Y')}} @endif</td>
                 <td>
-                 <a  href="{{route('users.edit',['user'=>$user->id])}}"> <button class="btn btn-btn btn-primary">Edit</button></a>
-                  <button class="btn btn-btn btn-success">Reset Password</button>
-                  <button class="btn btn-btn btn-danger">Delete</button>
+                 <a  href="{{route('users.edit',['user'=>$user->id])}}"> <button class="btn btn-btn btn-primary">Sửa</button></a>
+                  <button class="btn btn-btn btn-success">Làm mới mật khẩu</button>
+                  <button class="btn btn-btn btn-danger">Xoá</button>
                 </td>
               </tr>
               @endforeach
@@ -67,10 +67,35 @@
   </div>
   <script src="//cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
   <script>
-    $(document).ready(function() {
+   $(document).ready(function() {
       $('#myTable').DataTable({
         responsive: true,
-        "scrollX": true
+        language: {
+          "decimal": "",
+          "emptyTable": "No data available in table",
+          "info": "Hiển thị _START_ đến _END_ trong _TOTAL_ mục",
+          "infoEmpty": "Showing 0 to 0 of 0 entries",
+          "infoFiltered": "(filtered from _MAX_ total entries)",
+          "infoPostFix": "",
+          "thousands": ",",
+          "lengthMenu": "Hiển thị _MENU_ mục",
+          "loadingRecords": "Loading...",
+          "processing": "",
+          "search": "Tìm kiếm:",
+          "zeroRecords": "No matching records found",
+          "paginate": {
+            "first": "First",
+            "last": "Last",
+            "next": "Kế tiếp",
+            "previous": "Quay lại"
+          },
+          "aria": {
+            "sortAscending": ": activate to sort column ascending",
+            "sortDescending": ": activate to sort column descending"
+          }
+        },
+        // đóng kéo trang theo chiều ngang
+        "scrollX": false
       });
     });
   </script>

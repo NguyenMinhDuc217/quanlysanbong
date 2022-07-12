@@ -9,12 +9,12 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title"><b>Users Table</b></h3>
+          <h3 class="card-title"><b>Danh sách người dùng</b></h3>
         </div>
         <div class="container" style="margin: 10px 0px;">
           <div class="row">
             <div class="col-md-2">
-              <a class="btn btn-success uppercase" href="{{route('users.index')}}"> <i class="nav-icon fa fa-long-arrow-left"></i> Back</a>
+              <a class="btn btn-success uppercase" href="{{route('users.index')}}"> <i class="nav-icon fa fa-long-arrow-left"></i> Quay lại</a>
             </div>
           </div>
         </div>
@@ -55,7 +55,7 @@
                                    </span>
                             @enderror   
                  <div class="form-group">
-                    <label for="">Status</label>
+                    <label for="">Tình trạng</label>
                     <div class="upload_select">
                                             <select name="status" class="select">
                                                 <option class="select" value="1" {{$users->status == 1 ? 'selected' : ''}} >Đang hoạt động</option>
@@ -76,7 +76,7 @@
                                 @endif
                 </div>
                 <!-- /.card-body -->
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="submit" class="btn btn-primary">Cập nhật</button>
               
               </form>
         </div>
