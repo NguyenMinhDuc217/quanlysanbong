@@ -52,7 +52,32 @@
     $(document).ready(function() {
       $('#myTable').DataTable({
         responsive: true,
-           "scrollX": true
+        language: {
+          "decimal": "",
+          "emptyTable": "No data available in table",
+          "info": "Hiển thị _START_ đến _END_ trong _TOTAL_ mục",
+          "infoEmpty": "Showing 0 to 0 of 0 entries",
+          "infoFiltered": "(filtered from _MAX_ total entries)",
+          "infoPostFix": "",
+          "thousands": ",",
+          "lengthMenu": "Hiển thị _MENU_ mục",
+          "loadingRecords": "Loading...",
+          "processing": "",
+          "search": "Tìm kiếm:",
+          "zeroRecords": "No matching records found",
+          "paginate": {
+            "first": "First",
+            "last": "Last",
+            "next": "Kế tiếp",
+            "previous": "Quay lại"
+          },
+          "aria": {
+            "sortAscending": ": activate to sort column ascending",
+            "sortDescending": ": activate to sort column descending"
+          }
+        },
+        // đóng kéo trang theo chiều ngang
+        "scrollX": true
       });
     });
 

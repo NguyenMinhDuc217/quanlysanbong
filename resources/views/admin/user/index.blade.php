@@ -95,7 +95,7 @@
           }
         },
         // đóng kéo trang theo chiều ngang
-        "scrollX": false
+        "scrollX": true
       });
     });
   </script>
