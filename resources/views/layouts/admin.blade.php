@@ -112,6 +112,12 @@
                   <p>Dịch vụ</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{route('bills.index')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Hóa đơn</p>
+                </a>
+              </li>
             </ul>
           </li>
           <li class="nav-item">
