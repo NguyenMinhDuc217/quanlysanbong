@@ -7,7 +7,12 @@
     @include('components.list-team.header')
     @include('components.pitchs.menu')
     <div class="container_register">
-    <a class="btn btn-success uppercase" href="{{route('my.team')}}"><button class="back_button"> <i class="nav-icon fa fa-long-arrow-left"></i> Quay lại</button></a>
+    <a class="btn btn-success uppercase" href="{{route('my.team')}}">
+        <button class="back_button"> 
+            <i class="nav-icon fa fa-long-arrow-left"></i>
+             Quay lại
+        </button>
+    </a>
         <form class="form" id="register" method="POST" action="{{route('my.team.update',['id'=>$my_teams->id])}}" enctype="multipart/form-data">
             @csrf
             <h2>ĐỘI CỦA TÔI</h2>

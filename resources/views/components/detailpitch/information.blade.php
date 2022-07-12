@@ -29,9 +29,9 @@
                 <div class="viewall__buynow left_right__custom">
                     <div class="desc_list__item">
                         <span class="desc__title">{{$data['pitch']['name']}}</span>
-                        <span class="desc__content">Sân bóng CLB Bóng Đá Quang Tuyến 3 được đầu tư xây dựng gồm 1 sân đơn 5
+                        <span class="desc__content">Sân bóng {{$data['pitch']['name']}} được đầu tư xây dựng là sân đơn 5
                             người đá, với kích thước sân 20x40m.</span>
-                        <span class="desc__content">Được đầu tư khai thác một thời gian dài nên mặt sân bóng Quang Tuyến 3 có
+                        <span class="desc__content">Được đầu tư khai thác một thời gian dài nên mặt sân bóng {{$data['pitch']['name']}} có
                             dấu hiệu xuống cấp, mặt cỏ xước và gãy ngọn nhiều. Hệ thống đèn chiếu còn tốt. Sân sẽ tuyệt vời hơn
                             khi được nâng cấp và cải thiện phần mặt cỏ. Tuy nhiên với giá thuê sân rẻ và không gian thoáng mát
                             nên sân vẫn là địa điểm yêu thích của nhiều phủi thủ.</span>
@@ -40,17 +40,17 @@
                             <li>Có Wifi miễn phí</li>
                             <li>Đèn chiếu sáng ban đêm</li>
                             <li>Bãi để xe máy</li>
-                            <li>Có dịch vụ cho thuê giày, bóng, đồ thi đấu khác</li>
+                            <li>Có dịch vụ nước uống, cho thuê trọng tài, đồ thi đấu khác</li>
                         </ul>
                         <sapn class="desc_price">Bảng giá thuê sân</sapn>
                         <ul class="desc__tienich">
-                            <li>Tùy vào mỗi khung giờ khác nhau mà giá thuê sân ở đây sẽ là {{$data['pitch']['price']}}/trận</li>
+                            <li>Tùy vào mỗi khung giờ khác nhau mà giá thuê sân ở đây sẽ là {{number_format($data['pitch']['price'])}} vnd/trận</li>
                         </ul>
-                        <span class="detail_desc_us">Về chúng tôi</span>
+                        <!-- <span class="detail_desc_us">Về chúng tôi</span>
                         <span class="detail_desc_us__title">Thế Giới Thể Thao là đơn vị đi đầu trong việc đem đến giải pháp
                             toàn diện cho sân bóng đá, bao gồm: thi công sân cỏ nhân tạo, hợp tác đầu tư sân và dịch vụ vận hành
                             sân bóng đá chuyên nghiệp. Chúng tôi cũng cung cấp: Quả bóng đá, giày bóng đá, trang phục và thiết
-                            bị thể thao.... đến tận tay người tiêu dùng.</span>
+                            bị thể thao.... đến tận tay người tiêu dùng.</span> -->
                     </div>
                     <div class="detail_desc_right">
                         <!-- <span class="detail_desc_right__title">Địa chỉ Sân bóng CLB Bóng Đá Quang Tuyến</span>

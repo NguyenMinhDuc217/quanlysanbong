@@ -11,7 +11,7 @@
                 <div class="review__avt__user__right">
                     <div class="user__right__top">
                         <p>{{@$rowCmt["name"]}}</p>
-                        <p>{{date('d-m-Y', @$rowCmt["created_at"])}}</p>
+                        <p>{{date('d-m-Y',strtotime(@$rowCmt["created_at"]))}}</p>
                         <div class="like__dislike" style="font-size: 17px;">
                             <i class='bx bxs-like'></i>
                             <span class="count-cmt">{{@$rowCmt["like"]}}</span>
@@ -129,7 +129,7 @@ $('#sm_cmt').on('click', function(e) {
     success: function(res) {
       if (res.status === 200) {
         Swal.fire({
-          title: "Success",
+          title: "Bình luận, đánh giá thành công",
           icon: 'success',
           // imageUrl: `{{ asset('public/theme/images/alert/bell__success.png') }}`,
           // imageWidth: 100,

@@ -22,7 +22,6 @@ class PitchRepository implements PitchRepositoryInterface
     public function ListPitch(Request $request)
     {
         $pitch = Pitchs::orderby('average_rating','DESC')->paginate(8)->appends(request()->query());
-        // dd($page);
         return $pitch;
     }
     public function Search(Request $request){
@@ -62,15 +61,11 @@ class PitchRepository implements PitchRepositoryInterface
         $services = Services::all()->toArray();
 
         //lấy thời gian và tình trạng sân trong ngày hôm đó
-        // $now = Carbon::now()->format('Y-m-d H:i:s');
         $now = Carbon::now();
-        // dd(date('d', strtotime($now)));
 
         $detail_set_pitchs = Detail_set_pitchs::where('picth_id',$pitchid)->where(function ($query) use ($now) {
             $query->whereDate('start_time','<=',$now)->orwhereDate('end_time','>=', $now);
         })->get();
-        // dd($detail_set_pitchs);
-        // $detail_set_pitchs = Detail_set_pitchs::where('picth_id', $pitchid)->whereDate('start_time',$now)->orwhereDate('end_time',$now)->get();
         foreach($detail_set_pitchs as $detail){
             $detail['start_time'] = substr($detail['start_time'],11,8);
             $detail['end_time'] = substr($detail['end_time'],11,8);
@@ -91,7 +86,7 @@ class PitchRepository implements PitchRepositoryInterface
             'comment' => 'required|string|max:255',
         ], [
             'comment.required' => "Vui lòng nhập nội dung",
-            'comment.max' => "Vui lòng nhập, tối đa :max ký tự",
+            'comment.max' => "Vui lòng nhập không quá :max ký tự",
         ]);
         if ($validator->fails()) {
             return response()->json(['status' => 400, 'errors' => $validator->errors()->all()]);
@@ -102,6 +97,7 @@ class PitchRepository implements PitchRepositoryInterface
         }
         //nếu chưa đăng nhập
         if (empty(Auth::guard('user')->user()->id)) {
+            // return redirect()-route('show.login')->with('error', 'Vui đăng nhập');
             $comment = new Comments();
             $comment->picth_id = $pitch['id'];
             $comment->user_id = 0;
@@ -190,6 +186,8 @@ class PitchRepository implements PitchRepositoryInterface
                         $pitch['one'] = $pitch['one'] - 1;
                     }
                     $pitch->save();
+                    
+                    $check->name = Auth::guard('user')->user()->username;
                     $check->rating = $request->get('rating');
                 }
                 $check->save();

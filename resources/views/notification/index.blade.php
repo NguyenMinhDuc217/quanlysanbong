@@ -1,8 +1,11 @@
 <style>
     .list {
-        border: 1px solid #ccc;
+        display: block;
+        margin: 30px auto;
+        max-width: 1200px;
+        height: 120px;
         padding: 10px;
-        margin: 20px 20px;
+        box-shadow: 0 5px 7px -1px rgb(51 51 51 / 23%);
         border-radius: 4px;
     }
 
@@ -11,8 +14,15 @@
     }
 
     .list_item_title {
-        font-size: 20px;
+        font-size: 22px;
+        line-height: 25px;
         font-weight: 600;
+    }
+
+    .list_item_desc {
+        font-size: 20px;
+        line-height: 26px;
+        font-weight: 400;
     }
 
     .button {
@@ -47,6 +57,11 @@
     .btn_left {
         margin-right: 10px;
     }
+
+    .list_hover:hover {
+        transform: scale(1.2);
+        box-shadow: 0 9px 47px 11px rgb(51 51 51 / 18%)
+    }
 </style>
 
 @extends('layouts.home')
@@ -60,7 +75,7 @@
     </div>
     @endif
     @foreach($notifications as $notification)
-    <div class="list">
+    <div class="list list_hover">
         <div class="list_item">
             <span class="list_item_title">Tiêu đề:</span>
             <span class="list_item_desc">{{$notification->title}}</span>

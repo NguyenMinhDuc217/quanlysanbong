@@ -1,11 +1,26 @@
 <style>
+
+    .info_total {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 30px 0;
+    }
+
+    
+    
     .list {
-        border: 1px solid #ccc;
+        width: calc(100% / 2 - 70px);
+        box-shadow: 0 5px 7px -1px rgb(51 51 51 / 23%);
         padding: 10px;
         margin: 20px 20px;
         border-radius: 4px;
     }
-
+    
+    .list:hover {
+        transform: scaleY(1.1);
+        box-shadow: 0 9px 47px 11px rgb(51 51 51 / 18%)
+    }
     .list_item {
         margin: 10px 0;
     }
@@ -59,33 +74,35 @@
         <span>{{ Session::get('success') }}</span>
     </div>
     @endif
-    @foreach($teams as $team)
-    <div class="list">
-        <div class="list_item">
-            <span class="list_item_title">Tên đội:</span>
-            <span class="list_item_desc">{{$team->team_name}}</span>
+    <div class="info_total">
+        @foreach($teams as $team)
+        <div class="list">
+            <div class="list_item">
+                <span class="list_item_title">Tên đội:</span>
+                <span class="list_item_desc">{{$team->team_name}}</span>
+            </div>
+            <div class="list_item">
+                <span class="list_item_title">Đội trưởng:</span>
+                <span class="list_item_desc">{{$team->user_name}}</span>
+            </div>
+            <div class="list_item">
+                <span class="list_item_title">Thành viên:</span>
+                <span class="list_item_desc">{{$team->team_member}}</span>
+            </div>
+            <div class="list_item">
+                <span class="list_item_title">Link:</span>
+                <span class="list_item_desc">{{$team->link}}</span>
+            </div>
+            <div class="button">
+                <a href="{{route('my.team.edit',['id'=>$team->id])}}"> <button class="btn_left">Sửa</button></a>
+                <button class="btn_right">Xoá</button>
+                <!-- <a href="javascript:void(0);" data-url="" 
+                data-id="{{$team->id}}" 
+                class="btn btn-primary btn-sm waves-effect _delete_data"><i class="notika-icon notika-trash">Xoá</i></a> -->
+            </div>
         </div>
-        <div class="list_item">
-            <span class="list_item_title">Đội trưởng:</span>
-            <span class="list_item_desc">{{$team->user_name}}</span>
-        </div>
-        <div class="list_item">
-            <span class="list_item_title">Thành viên:</span>
-            <span class="list_item_desc">{{$team->team_member}}</span>
-        </div>
-        <div class="list_item">
-            <span class="list_item_title">Link:</span>
-            <span class="list_item_desc">{{$team->link}}</span>
-        </div>
-        <div class="button">
-            <a href="{{route('my.team.edit',['id'=>$team->id])}}"> <button class="btn_left">Sửa</button></a>
-            <button class="btn_right">Xoá</button>
-            <!-- <a href="javascript:void(0);" data-url="" 
-            data-id="{{$team->id}}" 
-            class="btn btn-primary btn-sm waves-effect _delete_data"><i class="notika-icon notika-trash">Xoá</i></a> -->
-        </div>
+        @endforeach
     </div>
-    @endforeach
 
     <div class="hompage_pagination">
         {{$teams->links('components.pagination.custom')}}

@@ -53,7 +53,7 @@ class SetPitchRepository implements SetPitchRepositoryInterface
         
         $pitch=Pitchs::where('id',$pitchid)->where('status','1')->first();
          if( $pitch==null){
-            return response()->json(['status' => 400, 'error' => "Không tìm thấy sân or sân không hoạt động"]); 
+            return response()->json(['status' => 400, 'error' => "Không tìm thấy sân Hoặc sân không hoạt động"]); 
         }
 
         $timeSoccer= (strtotime($timeEnd)-strtotime($timeStart))/(MINUTE*SECOND);
