@@ -42,13 +42,33 @@ class SetPitchRepository implements SetPitchRepositoryInterface
         $timeStart=$request->timeStart;
         $timeEnd=$request->timeEnd;
   
+        $dayStart= date_format(date_create($request->timeStart),"d");
+        $dayEnd= date_format(date_create($request->timeEnd),"d"); 
+        if($dayStart<$dayEnd){
+            return response()->json(['status' => 401, 'error' => "Sân bóng hoạt động từ 7h00 đến 23h59"]); 
+        }
+
         $hourStart= date_format(date_create($request->timeStart),"H:i");
         $hourEnd= date_format(date_create($request->timeEnd),"H:i");
-     
-        dd(strtotime($hourStart),strtotime($hourEnd));
+      
+        $timeStartNo=date('H:i',mktime(0,0));
+        $timeEndNo=date('H:i',mktime(7,0));
+       
 
-        if($hourStart>0){
+        if($timeStartNo<=$hourStart&&$hourStart<=$timeEndNo){
+            return response()->json(['status' => 401, 'error' => "Sân bóng hoạt động từ 7h00 đến 23h59"]);
+        }
 
+        if($timeStartNo<=$hourEnd&&$hourEnd<=$timeEndNo){
+            return response()->json(['status' => 401, 'error' => "Sân bóng hoạt động từ 7h00 đến 23h59"]);
+        }
+
+        if($timeStartNo<=$hourStart&&$hourEnd<=$timeEndNo){
+            return response()->json(['status' => 401, 'error' => "Sân bóng hoạt động từ 7h00 đến 23h59"]);
+        }
+
+        if($timeStartNo>=$hourStart&&$hourEnd>=$timeEndNo){
+            return response()->json(['status' => 401, 'error' => "Sân bóng hoạt động từ 7h00 đến 23h59"]);
         }
 
         if( $timeEnd<$timeStart){
