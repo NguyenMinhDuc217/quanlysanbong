@@ -122,7 +122,9 @@ class PitchRepository implements PitchRepositoryInterface
         }
         //nếu đã đăng nhập
         else{
-            $checksetpitch = Detail_set_pitchs::where('user_id', Auth::guard('user')->user()->id)->where('picth_id', $pitch['id'])->exists();
+            $now = Carbon::now();
+            $checksetpitch = Detail_set_pitchs::where('user_id', Auth::guard('user')->user()->id)->where('picth_id', $pitch['id'])->where(date('d-m-Y H:i:s','end_time'),date('d-m-y H:i:s',strtotime($now)))->exists();
+            dd($checksetpitch);
          
             if(!$checksetpitch){
                 return response()->json(['status' => 400, 'error' => "Để bình luận bàn cần đặt sân"]);
