@@ -41,7 +41,16 @@ class SetPitchRepository implements SetPitchRepositoryInterface
 
         $timeStart=$request->timeStart;
         $timeEnd=$request->timeEnd;
+  
+        $hourStart= date_format(date_create($request->timeStart),"H:i");
+        $hourEnd= date_format(date_create($request->timeEnd),"H:i");
      
+        dd(strtotime($hourStart),strtotime($hourEnd));
+
+        if($hourStart>0){
+
+        }
+
         if( $timeEnd<$timeStart){
             return response()->json(['status' => 401, 'error' => "Thời gian kết thúc phải lớn hơn thời gian bắt đầu"]);
         }
@@ -135,6 +144,7 @@ class SetPitchRepository implements SetPitchRepositoryInterface
    public function deleteSetPitch(Request $request){ 
     $pitch = Detail_set_pitchs::where('id', $request->set_pitch_id)->first();
     $detail_set_pitch=Detail_set_pitchs::find($request->set_pitch_id);
+    $bill=Bill::where('detail_set_pitch_id', $detail_set_pitch->id)->first();
     if(Carbon::now()->format('Y-m-d H:i:s')>$pitch->start_time){
         return redirect()->route('list.set.pitch')->with('error',"Thời gian đã diễn ra không thể hủy");
     }
@@ -155,7 +165,8 @@ class SetPitchRepository implements SetPitchRepositoryInterface
                 'name' => Auth::guard('user')->user()->username,
                 'body'=>"Bạn vui lòng gửi email lại cho chúng tôi về số tài khoản ngân hàng,số momo hoặc số 
                 tài khoản Paypal. Với cú pháp là Tên Sân _Ngày giờ đặt_Mã giao dịch_Số tiền số tài khoản của bạn. 
-                Ví dụ: SânA_7/7/2022-4h00_7/7/2022-5h00_MAGIAODICH99_120.000 9704198526191432198",
+                Ví dụ: SânA_7/7/2022-4h00_7/7/2022-5h00_MAGIAODICH99_120.000 9704198526191432198 $bill->transaction_id",
+                
             ];
              $email=Auth::guard('user')->user()->email;
             Mail::to( $email)->send(new SendMail($details, $subject));
