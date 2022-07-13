@@ -122,6 +122,11 @@ class PitchRepository implements PitchRepositoryInterface
         }
         //nếu đã đăng nhập
         else{
+            $checksetpitch = Detail_set_pitchs::where('user_id', Auth::guard('user')->user()->id)->where('picth_id', $pitch['id'])->exists();
+         
+            if(!$checksetpitch){
+                return response()->json(['status' => 400, 'error' => "Để bình luận bàn cần đặt sân"]);
+            }
             $check = Comments::where('picth_id', $pitch['id'])->where('user_id', Auth::guard('user')->user()->id)->first();
             $comment = [];
             if(empty($check)){

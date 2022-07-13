@@ -34,6 +34,11 @@
                   <label for="exampleFormControlFile1">Chọn hình ảnh</label>
                   <input value="" required type="file" name="cover" class="form-control-file" id="cover_input">
                 </div>
+                @error('cover')
+                <span class="vali_sign" class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+                </span>
+                @enderror
               </div>
             </div>
 
@@ -87,6 +92,11 @@
                       <label class="active">Ảnh Hoạt Động </label><span> (Bạn có thể chọn tối đa 8 ảnh. Ảnh nổi bật của bạn phải là tệp PNG hoặc JPEG với kích thước tệp tối đa là 8 MB và độ phân giải ảnh là: 1455 x 500px)</span>
                       <div id="screenshots" class="screenshots" style="padding-top: .5rem;"></div>
                     </div>
+                    @error('screenshots')
+                    <span class="vali_sign" class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
                   </div>
                 </div>
               </div>
@@ -114,29 +124,29 @@
   </div>
   <script src="{{asset('admin/dist/js/image-upload/image-uploader.min.js') }}"></script>
 
-<script>
-  function readURL(input) {
-    if (input.files && input.files[0]) {
-      var reader = new FileReader();
+  <script>
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
 
-      reader.onload = function(e) {
-        $('#appimg').attr('src', e.target.result);
+        reader.onload = function(e) {
+          $('#appimg').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]); // convert to base64 string
       }
-
-      reader.readAsDataURL(input.files[0]); // convert to base64 string
     }
-  }
 
-  $(document).ready(function() {
-    $("#cover_input").change(function() {
-      console.log(this);
-      readURL(this);
+    $(document).ready(function() {
+      $("#cover_input").change(function() {
+        console.log(this);
+        readURL(this);
+      });
+      $('#screenshots').imageUploader();
+      $(document).on('click', '.remove-img', function() {
+        $(this).parent('.uploaded-image').remove();
+      });
+      $('#screen').html(html);
     });
-    $('#screenshots').imageUploader();
-    $(document).on('click', '.remove-img', function() {
-      $(this).parent('.uploaded-image').remove();
-    });
-    $('#screen').html(html);
-  });
-</script>
+  </script>
   @endsection

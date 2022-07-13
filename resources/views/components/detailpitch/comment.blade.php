@@ -121,6 +121,7 @@ $('#sm_cmt').on('click', function(e) {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
   });
+  @if(Auth::guard('user')->check())
   $.ajax({
     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
     type: 'post',
@@ -171,6 +172,16 @@ $('#sm_cmt').on('click', function(e) {
       }
     }
   });
+  @else
+            return Swal.fire({
+                icon: 'error',
+                text: 'Vui lòng đăng nhập để được bình luận',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "{{route('show.login')}}";
+                }
+            });
+            @endif
 });
 });
 </script>

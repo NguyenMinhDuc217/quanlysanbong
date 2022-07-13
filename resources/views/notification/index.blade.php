@@ -58,10 +58,10 @@
         margin-right: 10px;
     }
 
-    .list_hover:hover {
+    /* .list_hover:hover {
         transform: scale(1.2);
         box-shadow: 0 9px 47px 11px rgb(51 51 51 / 18%)
-    }
+    } */
 </style>
 
 @extends('layouts.home')
