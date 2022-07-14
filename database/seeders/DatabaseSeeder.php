@@ -22,6 +22,8 @@ class DatabaseSeeder extends Seeder
             ServicesSeeder::class,
             TicketSeeder::class,
             DetailTicketSeeder::class,
+            TeamSeeder::class,
+            NotiSeeder::class,
         ]);
     }
 }

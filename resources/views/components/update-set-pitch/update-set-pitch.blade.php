@@ -7,6 +7,7 @@
 <form id="searchTime" >
  
     <meta name="csrf-token" content="{{ csrf_token() }}">
+ 
     <select name="pitchid" id="myselect">
         @foreach($pitchs as $pitch)
             <option value="{{$pitch->id}}" {{$pitch->id==$setPitch->picth_id?'selected':''}}>{{$pitch->name}}</option>
@@ -47,7 +48,7 @@
 
     </div>
 
-    <button>Thay đổi</button>
+    <button class="btnChange" setpitch_id="{{$setPitch->id}}">Thay đổi</button>
 </form>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -64,10 +65,11 @@
     });
 
     $(document).ready(function() {
-        $('#searchTime').on('submit', function(e) {
+        $(document).on('click','.btnChange', function(e) {
             e.preventDefault();
             var name = $('#name').val();
-            var id=$("#myselect" ).val();
+            var id=$(this).attr('setpitch_id'); 
+            console.log(id);
             @if(Auth::guard('user')->check())
             $.ajax({
                 headers: {
@@ -84,7 +86,9 @@
                             icon: 'success',
                             text: response.success,
                         }).then((result) => {
-                            window.location.reload();
+                            if (result.isConfirmed) {
+                                window.location.href = "{{route('list.set.pitch')}}";
+                            }
                         })
                     } else {
                         if (response.errors) {

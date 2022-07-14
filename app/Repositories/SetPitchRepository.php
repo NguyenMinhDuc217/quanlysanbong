@@ -123,7 +123,7 @@ class SetPitchRepository implements SetPitchRepositoryInterface
                $setService->service_id=$server_id;
                $setService->name= $service->name;
                $setService->quantity=$request->ch_for[$server_id][0];
-               if($server_id==4){
+               if($service->type==1){
                 $setService->total=$request->ch_for[$server_id][0]*$timeSoccer*$service->price;
                }else{
                 $setService->total=$request->ch_for[$server_id][0]*$service->price;
@@ -321,6 +321,16 @@ class SetPitchRepository implements SetPitchRepositoryInterface
       $setPitch->total= $pitch->price*$timeSoccer*((PERCEN-$pitch->discount)/PERCEN);   
       $setPitch->save();
 
+      $deleteService=SetService::where('set_pitch_id',$id)->get();
+      foreach($deleteService as $setService){
+          foreach($request->ch_name as $service_id){
+                unset($deleteService[$service_id-1]);
+        }
+      }
+      foreach($deleteService as $delete){
+        $delete->delete();
+      }
+
       if($request->ch_name!=null){
           foreach($request->ch_name as $server_id){
               $service=Services::where('id',$server_id)->first();
@@ -330,7 +340,7 @@ class SetPitchRepository implements SetPitchRepositoryInterface
                 $setService->service_id=$server_id;
                 $setService->name= $service->name;
                 $setService->quantity=$request->ch_for[$server_id][0];
-                if($server_id==4){
+                if($service->type==1){
                  $setService->total=$request->ch_for[$server_id][0]*$timeSoccer*$service->price;
                 }else{
                  $setService->total=$request->ch_for[$server_id][0]*$service->price;
@@ -342,7 +352,7 @@ class SetPitchRepository implements SetPitchRepositoryInterface
                 $setService->service_id=$server_id;
                 $setService->name= $service->name;
                 $setService->quantity=$request->ch_for[$server_id][0];
-                if($server_id==4){
+                if($service->type==1){
                  $setService->total=$request->ch_for[$server_id][0]*$timeSoccer*$service->price;
                 }else{
                  $setService->total=$request->ch_for[$server_id][0]*$service->price;
@@ -356,8 +366,6 @@ class SetPitchRepository implements SetPitchRepositoryInterface
       $totalService=SetService::where('set_pitch_id',$setPitch->id)->sum('total');
       $setPitch->total= $setPitch->total+$totalService;
       $setPitch->save();
-      $successStart= date_format(date_create($request->timeStart),"d/m/Y H:i");
-      $successEnd= date_format(date_create($request->timeEnd),"d/m/Y H:i");
       return response()->json(['status'=> 200,'success'=>"Bạn đã thay đổi thành công"]);
    }
 }

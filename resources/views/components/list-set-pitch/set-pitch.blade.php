@@ -221,7 +221,9 @@
                  success: function(response){
                       $("#nameservice").text(response.data.name);
                       $("#quantity").text(response.data.quantity);
-                      $("#total").text(response.data.total);
+                      var price= parseInt(response.data.total);
+                      price=price.toLocaleString('vi-VN', {style : 'currency', currency : 'VND'});
+                      $("#total").text(price);
                  }
              })
         })

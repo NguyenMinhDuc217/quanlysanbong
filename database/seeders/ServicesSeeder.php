@@ -30,6 +30,7 @@ class ServicesSeeder extends Seeder
             [
                 'name' => 'Trọng tài',
                 'price' => 100000,
+                'type' => 1,
             ]
         ]);
     }

@@ -29,8 +29,10 @@ class PayController extends BaseUserController
     //Add Params of 2.0.1 Version
     //$vnp_ExpireDate = $_POST['txtexpire'];
     //Billing
-    $vnp_CreateDate=date('YmdHis');
 
+    $vnp_CreateDate=date('YmdHis');
+    $vnp_Bill_FirstName = Auth::guard('user')->user()->username;
+  
     $inputData = array(
         "vnp_Version" => "2.1.0",
         "vnp_TmnCode" => $vnp_TmnCode,
@@ -44,6 +46,7 @@ class PayController extends BaseUserController
         "vnp_OrderType" => $vnp_OrderType,
         "vnp_ReturnUrl" => $vnp_Returnurl,
         "vnp_TxnRef" => $vnp_TxnRef,
+        "vnp_Bill_FirstName"=>$vnp_Bill_FirstName,
     );
     
     if (isset($vnp_BankCode) && $vnp_BankCode != "") {
