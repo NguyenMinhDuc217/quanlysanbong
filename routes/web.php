@@ -66,6 +66,10 @@ Route::post('/send-phone', [PitchController::class,'sendPhone'])->name('send.pho
 Route::post('/detail-pitch/{pitchid}', [SetPitchController::class,'setPitch'])->name('search.time');
 //list set pitch
 Route::get('/list-set-pitch', [SetPitchController::class,'listSetPitch'])->name('list.set.pitch');
+//show update
+Route::post('/set-pitch/update/{id}', [SetPitchController::class,'showUpdateSetPitch'])->name('show.update.set.pitch');
+//show update
+Route::post('/update/{id}/set-pitch', [SetPitchController::class,'updateSetPitch'])->name('update.set.pitch');
 //delete
 Route::post('/delete-set-pitch', [SetPitchController::class,'deleteSetPitch'])->name('delete.set.pitch');
 //show dich vu dat san

@@ -107,6 +107,7 @@
     <th>Tổng tiền</th>
     <th>Hủy sân</th>
     <th>Mã giao dịch</th>
+    <th></th>
     <th>Phương thức</th>
   </tr>
     @if(!empty($listSetPitch))
@@ -161,6 +162,17 @@
         @else
         <td></td>
         @endif
+     
+        @if((strtotime($setPitch['detail_set_pitch']->start_time)-strtotime(date('Y-m-d H:i:s')))/(60)>=120)
+        <td>
+        <form method="POST" action="{{route('show.update.set.pitch',['id'=>$setPitch['detail_set_pitch']->id])}}">
+          @csrf
+           <button type="submit" class="btn btn-warning">Sửa</button>
+        </form>
+        </td>
+        @else
+        <td>Không thể sửa</td>
+        @endif
 
         @if($setPitch['detail_set_pitch']->ispay==0)
         <td>
@@ -181,7 +193,7 @@
     </tr>
     @else
     <tr>
-    <td colspan="9" style="text-align:center;">Bạn chưa đặt sân</td>
+    <td colspan="10" style="text-align:center;">Bạn chưa đặt sân</td>
     </tr>
     @endif
 

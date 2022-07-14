@@ -93,7 +93,7 @@
                                 @foreach($data['services'] as $service)
                                 <div class="checkbox form-inline form_checkbox">
                                     <label class="main">
-                                        <input type="checkbox" name="ch_name[]" {{(is_array(\Request::get('service')) && in_array($service['id'], \Request::get('service')) ) ? 'checked' : ((\Request::get('service') == $service['id']) ? 'checked' : "" )}} value="{{$service['id']}}"> {{$service['name']}}
+                                        <input type="checkbox" name="ch_name[]" value="{{$service['id']}}"> {{$service['name']}}
                                         <span class="geekmark"></span>
                                     </label>
                                     <input type="number" name="ch_for[{{$service['id']}}][]" value="1" placeholder="Nhập số lượng" class="form-control ch_for hide" min="1">
