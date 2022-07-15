@@ -46,13 +46,25 @@
                                    </span>
                             @enderror   
               
-                     @if(session()->has('error'))
+               
+                </div>
+                <div class="form-group">
+                    <label for="">Loại dịch vụ: </label>
+                    <select name="type">
+                    <option value="0" selected>Số lượng</option>
+                    <option value="1">Giờ</option>
+                 </select>
+                  </div>
+                  @error('type')
+                                   <span class="vali_sign" class="invalid-feedback" role="alert">
+                                   <strong>{{ $message }}</strong>
+                                   </span>
+                            @enderror  
+                  @if(session()->has('error'))
                                 <p class="vali_sign"  class="invalid-feedback" role="alert">
                                    <strong>{{ session()->get('error') }}</strong>
                                  </p>
                                 @endif
-                </div>
-                <!-- /.card-body -->
                   <button type="submit" class="btn btn-primary">Tạo dịch vụ</button>
               
               </form>

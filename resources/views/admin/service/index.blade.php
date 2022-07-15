@@ -6,7 +6,6 @@
 <link rel="stylesheet" type="text/css" href="{{asset('admin/dist/css/style.css') }}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-  <script src="/path/to/bootstrap/js/bootstrap.min.js"></script>
 
 <div class="modal" id="deleteModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
@@ -14,7 +13,7 @@
       <form action="{{route('services.delete')}}" method="POST" >
         @csrf
       <div class="modal-header">
-        <h5 class="modal-title">Hủy đặt sân</h5>
+        <h5 class="modal-title">Xóa dịch vụ</h5>
       </div>
       <div class="modal-body">
         <input type="hidden" name="id" id="set_pitch_id">
@@ -59,7 +58,8 @@
               <tr>
                 <th>STT</th>
                 <th>Tên dịch vụ</th>
-                <th>Giá</th>
+                <th>Loại dịch vụ</th>
+                <th>Giá</th>  
                 <th>Chức năng</th>
               </tr>
             </thead>
@@ -68,8 +68,8 @@
               <tr>
                 <th>{{$i+1}}</th>
                 <th>{{$service->name}}</th>
+                <th>@if($service->type==1) Giờ @else Số lượng @endif</th>
                 <th>{{$service->price}}đ</th>
-
                 <th>
                 <a href="{{route('services.edit',['service'=>$service->id])}}"> <button class="btn btn-btn btn-primary">Sửa</button></a>
                 <button class="btn btn-btn btn-danger deleteSetPitchBtn" value="{{$service->id}}">Xóa</button></a>

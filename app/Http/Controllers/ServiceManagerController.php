@@ -45,15 +45,18 @@ class ServiceManagerController extends BaseAdminController
         $request->validate([
             'nameservice' => 'required|unique:services,name',
             'price' => 'required|numeric',
+            'type'=>'required'
         ],[
             'nameservice.required'=>'Vui lòng nhập tên dịch vụ',
             'nameservice.unique'=>'Tên dịch vụ đã tồn tại',
             'price.required'=>'Vui lòng nhập giá',
             'price.numeric'=>'Giá phải là số',
+            'type.required'=>'Loại không thể để trống'
         ]);
         $service = new Services();
         $service->name = $request->nameservice;
         $service->price = $request->price;
+        $service->type = $request->type;
       if($service->save()){
         return redirect()->route('services.create')->with('success','Thêm sân mới thành công');
       }
@@ -100,14 +103,17 @@ class ServiceManagerController extends BaseAdminController
         $request->validate([
             'nameservice' => 'required',
             'price' => 'required|numeric',
+            'type'=>'required'
         ],[
             'nameservice.required'=>'Vui lòng nhập tên dịch vụ',
             'price.required'=>'Vui lòng nhập giá',
             'price.numeric'=>'Giá phải là số',
+            'type.required'=>'Loại không thể để trống'
         ]);
         $service =Services::find($id);
         $service->name = $request->nameservice;
         $service->price = $request->price;
+        $service->type = $request->type;
       if($service->save()){
         return redirect()->route('services.index')->with('success','Sửa dịch vụ thành công');
       }

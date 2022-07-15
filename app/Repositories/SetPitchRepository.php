@@ -166,6 +166,7 @@ class SetPitchRepository implements SetPitchRepositoryInterface
     $pitch = Detail_set_pitchs::where('id', $request->set_pitch_id)->first();
     $detail_set_pitch=Detail_set_pitchs::find($request->set_pitch_id);
     $bill=Bill::where('detail_set_pitch_id', $detail_set_pitch->id)->first();
+    $deleteService=SetService::where('set_pitch_id',$detail_set_pitch->id)->get();
     if(Carbon::now()->format('Y-m-d H:i:s')>$pitch->start_time){
         return redirect()->route('list.set.pitch')->with('error',"Thời gian đã diễn ra không thể hủy");
     }
@@ -177,6 +178,10 @@ class SetPitchRepository implements SetPitchRepositoryInterface
     if(abs(strtotime($pitch->start_time)-strtotime(Carbon::now()->format('Y-m-d H:i:s')))/(60)>=120){
         if( $detail_set_pitch->ispay==0){
             $detail_set_pitch->delete();
+            foreach($deleteService as $delete){
+                $delete->delete();
+            }
+           
             return redirect()->route('list.set.pitch')->with('success',"Bạn đã hủy thành công");
         }else{
             $detail_set_pitch->delete();

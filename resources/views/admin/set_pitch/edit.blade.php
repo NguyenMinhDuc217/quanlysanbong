@@ -38,7 +38,7 @@
               <!-- Vé đã mua -->
               <div class="form-group">
                 <label>Vé đã mua</label>
-                <select disabled type="ticket" class="form-control" name="ticket" id="ticket" placeholder="Chọn vé" value="{{@$detail_set_pitch->ticket_id}}">
+                <select disabled readonly type="ticket" class="form-control" name="ticket" id="ticket" placeholder="Chọn vé" value="{{@$detail_set_pitch->ticket_id}}">
                   <option value="">{{@$ticket['name'] ? $ticket['name'] : "Không có vé"}}</option>
                 </select>
               </div>
@@ -54,7 +54,7 @@
               <!-- người đặt -->
               <div class="form-group">
                 <label>Người đặt</label>
-                <select disabled type="user" class="form-control" name="user" id="user" placeholder="Chọn vé" value="{{@$detail_set_pitch->user_id}}">
+                <select disabled readonly type="user" class="form-control" name="user" id="user" placeholder="Chọn vé" value="{{@$detail_set_pitch->user_id}}">
                   <option value="">{{@$user['username'] ? $user['username'] : "Người dùng"}}</option>
                 </select>
               </div>
