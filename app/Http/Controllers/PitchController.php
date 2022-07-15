@@ -15,7 +15,6 @@ class PitchController extends Controller
     }
     public function ListPitch(Request $request){
         $pitchs = $this->pitchRepository->ListPitch($request);
-        // return view('layouts.home', ['listPitch' => $listPitch]);
         return view('pitchs.index', compact('pitchs'));
     }
     public function Search(Request $request){

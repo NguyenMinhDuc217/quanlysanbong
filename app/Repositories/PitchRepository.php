@@ -123,11 +123,15 @@ class PitchRepository implements PitchRepositoryInterface
         //nếu đã đăng nhập
         else{
             $now = Carbon::now();
-            $checksetpitch = Detail_set_pitchs::where('user_id', Auth::guard('user')->user()->id)->where('picth_id', $pitch['id'])->where(date('d-m-Y H:i:s','end_time'),date('d-m-y H:i:s',strtotime($now)))->exists();
-            dd($checksetpitch);
-         
+            // dd(date('d-m-Y H:i:s',strtotime($now)));
+            $checksetpitch = Detail_set_pitchs::where('user_id', Auth::guard('user')->user()->id)->where('picth_id', $pitch['id'])->exists();
+            $checkplayed = Detail_set_pitchs::where('user_id', Auth::guard('user')->user()->id)->where('picth_id', $pitch['id'])->where('ispay',1)->where('end_time','<',date('Y-m-d H:i:s',strtotime($now)))->exists();
+   
             if(!$checksetpitch){
-                return response()->json(['status' => 400, 'error' => "Để bình luận bàn cần đặt sân"]);
+                return response()->json(['status' => 400, 'error' => "Để bình luận bạn cần đặt sân"]);
+            }
+            if($checkplayed == false){
+                return response()->json(['status' => 400, 'error' => "Để bình luận bạn cần phải thanh toán và đá rồi"]);
             }
             $check = Comments::where('picth_id', $pitch['id'])->where('user_id', Auth::guard('user')->user()->id)->first();
             $comment = [];

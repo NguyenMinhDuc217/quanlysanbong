@@ -15,4 +15,7 @@ class NotificationController extends Controller
     public function listNotification(){
         return $this->notificationRepository->listNotification();
     }
+    public function searchNotification(Request $request){
+        return $this->notificationRepository->searchNotification($request);
+    }
 }

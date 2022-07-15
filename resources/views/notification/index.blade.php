@@ -67,7 +67,7 @@
 @extends('layouts.home')
 @section('content')
 <div class="block_left col-sm-9 col-xs-12">
-    @include('components.pitchs.header')
+    @include('components.notification.header')
     @include('components.pitchs.menu')
     @if(Session::has('success'))
     <div class="alert alert-success notifi__success">

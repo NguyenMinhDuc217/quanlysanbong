@@ -15,16 +15,17 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendMail;
 use App\Models\Bill;
+use App\Models\DetailTicket;
 
 class SetPitchRepository implements SetPitchRepositoryInterface
 {
-    public function setPitch(Request $request,$pitchid=''){
-     
-      define('MINUTE',60);
-      define('HAFLANHOUR',30);
-      define('SECOND',60);
-      define('PERCENT',100);
-    
+    public function setPitch(Request $request,$pitchid='')
+    {
+        define('MINUTE',60);
+        define('HAFLANHOUR',30);
+        define('SECOND',60);
+        define('PERCENT',100);
+
         $validator = Validator::make($request->all(),
         [
             'timeStart' => 'required',
@@ -122,7 +123,7 @@ class SetPitchRepository implements SetPitchRepositoryInterface
                $setService->service_id=$server_id;
                $setService->name= $service->name;
                $setService->quantity=$request->ch_for[$server_id][0];
-               if($server_id==4){
+               if($service->type==1){
                 $setService->total=$request->ch_for[$server_id][0]*$timeSoccer*$service->price;
                }else{
                 $setService->total=$request->ch_for[$server_id][0]*$service->price;
@@ -183,7 +184,7 @@ class SetPitchRepository implements SetPitchRepositoryInterface
             $details = [
                 'title' => 'Hướng dẫn chi tiết cách nhận lại tiền khi đã thanh toán',
                 'name' => Auth::guard('user')->user()->username,
-                'body'=>"Bạn vui lòng gửi email lại cho chúng tôi về số tài khoản ngân hàng,số momo hoặc số 
+                'body'=>"Mã giao dịch của bạn là $bill->transaction_id. Bạn vui lòng gửi email lại cho chúng tôi về số tài khoản ngân hàng,số momo hoặc số 
                 tài khoản Paypal. Với cú pháp là Tên Sân _Ngày giờ đặt_Mã giao dịch_Số tiền số tài khoản của bạn. 
                 Ví dụ: SânA_7/7/2022-4h00_7/7/2022-5h00_MAGIAODICH99_120.000 9704198526191432198 $bill->transaction_id",
                 
@@ -204,5 +205,167 @@ class SetPitchRepository implements SetPitchRepositoryInterface
         'status'=>200,
         'data'=>$service,
       ]);
+   }
+   public function showUpdateSetPitch($id=''){  
+    $setPitch=Detail_set_pitchs::where('id',$id)->first();
+    $setServices=SetService::where('set_pitch_id',$setPitch->id)->get();
+    $pitchs=Pitchs::all();
+    $services=Services::get();
+
+    foreach($services as $i=>$service){
+        foreach($setServices as $setservice){
+             if($service->id==$setservice->service_id){
+               unset($services[$i]);
+             }
+        }  
+    }
+    return view('update-set-pitch.index',compact('setPitch','setServices','pitchs','services'));
+   }
+
+   public function updateSetPitch(Request $request,$id='')
+   {
+    define('MINUT',60);
+    define('HAFLANHOU',30);
+    define('SECON',60);
+    define('PERCEN',100);
+      $validator = Validator::make($request->all(),
+      [
+          'timeStart' => 'required',
+          'timeEnd' => 'required',
+         ],
+         [
+          'timeStart.required'=>'Vui lòng chọn thời gian bắt đầu',
+          'timeEnd.required'=>'Vui lòng thời gian kết thúc',
+         ]
+      );
+      if ($validator->fails()) {
+          return response()->json(['status' => 400, 'errors' => $validator->errors()->all()]);
+      }
+
+      $timeStart=$request->timeStart;
+      $timeEnd=$request->timeEnd;
+
+      $dayStart= date_format(date_create($request->timeStart),"d");
+      $dayEnd= date_format(date_create($request->timeEnd),"d"); 
+      if($dayStart<$dayEnd){
+          return response()->json(['status' => 401, 'error' => "Sân bóng hoạt động từ 7h00 đến 23h59"]); 
+      }
+
+      $hourStart= date_format(date_create($request->timeStart),"H:i");
+      $hourEnd= date_format(date_create($request->timeEnd),"H:i");
+    
+      $timeStartNo=date('H:i',mktime(0,0));
+      $timeEndNo=date('H:i',mktime(7,0));
+     
+
+      if($timeStartNo<=$hourStart&&$hourStart<=$timeEndNo){
+          return response()->json(['status' => 401, 'error' => "Sân bóng hoạt động từ 7h00 đến 23h59"]);
+      }
+
+      if($timeStartNo<=$hourEnd&&$hourEnd<=$timeEndNo){
+          return response()->json(['status' => 401, 'error' => "Sân bóng hoạt động từ 7h00 đến 23h59"]);
+      }
+
+      if($timeStartNo<=$hourStart&&$hourEnd<=$timeEndNo){
+          return response()->json(['status' => 401, 'error' => "Sân bóng hoạt động từ 7h00 đến 23h59"]);
+      }
+
+      if($timeStartNo>=$hourStart&&$hourEnd>=$timeEndNo){
+          return response()->json(['status' => 401, 'error' => "Sân bóng hoạt động từ 7h00 đến 23h59"]);
+      }
+
+      if( $timeEnd<$timeStart){
+          return response()->json(['status' => 401, 'error' => "Thời gian kết thúc phải lớn hơn thời gian bắt đầu"]);
+      }
+      
+      if((strtotime($timeEnd)-strtotime($timeStart))/SECON<=HAFLANHOU){
+          return response()->json(['status' => 402, 'error' => "Thời gian của trận đấu phải lớn hơn 30 phút"]);
+      }
+      
+      if(abs(strtotime($timeStart)-strtotime(Carbon::now()->format('Y-m-d H:i:s')))/(60)<120){
+        return response()->json(['status' => 402, 'error' => "Không thể thay đổi trước 120p"]);
+    }
+    
+      
+      $pitch=Pitchs::where('id',$request->pitchid)->where('status','1')->first();
+       if( $pitch==null){
+          return response()->json(['status' => 400, 'error' => "Không tìm thấy sân Hoặc sân không hoạt động"]); 
+      }
+
+      $timeSoccer= (strtotime($timeEnd)-strtotime($timeStart))/(MINUT*SECON);
+      
+      $checkTimes=Detail_set_pitchs::where('picth_id',$request->pitchid)->where('id','!=',$id)->where(function ($query) use ($timeStart, $timeEnd) {
+          $query->where('start_time','<=',$timeStart)->where('end_time','>=', $timeEnd);
+      })->get();
+      if($checkTimes->count()==0){
+          $checkTimes=Detail_set_pitchs::where('picth_id',$request->pitchid)->where('id','!=',$id)->where(function ($query) use ($timeStart, $timeEnd) {
+              $query->whereBetween('start_time', [$timeStart, $timeEnd])->orwhereBetween('end_time', [$timeStart, $timeEnd]);
+          })->get();
+      }
+      
+      if($checkTimes->count()>0){
+          foreach ($checkTimes as $checkTime) {
+              $setTimeStart=$checkTime->start_time;
+              $setTimeEnd=$checkTime->end_time;
+          }
+          return response()->json(['status' => 400, 'error' => "Sân đã được đặt từ $setTimeStart đến $setTimeEnd"]);
+      }
+  
+      $setPitch=Detail_set_pitchs::find($id);
+      $setPitch->picth_id=$request->pitchid;
+      $setPitch->user_id=Auth::guard('user')->user()->id;
+      $setPitch->date_event= $request->timeStart;
+      $setPitch->start_time = $request->timeStart;
+      $setPitch->end_time = $request->timeEnd;   
+      $setPitch->price_pitch= $pitch->price*$timeSoccer*((PERCEN-$pitch->discount)/PERCEN);   
+      $setPitch->total= $pitch->price*$timeSoccer*((PERCEN-$pitch->discount)/PERCEN);   
+      $setPitch->save();
+
+      $deleteService=SetService::where('set_pitch_id',$id)->get();
+      foreach($deleteService as $setService){
+          foreach($request->ch_name as $service_id){
+                unset($deleteService[$service_id-1]);
+        }
+      }
+      foreach($deleteService as $delete){
+        $delete->delete();
+      }
+
+      if($request->ch_name!=null){
+          foreach($request->ch_name as $server_id){
+              $service=Services::where('id',$server_id)->first();
+              $setService=SetService::where('set_pitch_id',$id)->where('service_id',$server_id)->first();
+             if(!empty($setService)){
+                $setService->set_pitch_id= $setPitch->id;
+                $setService->service_id=$server_id;
+                $setService->name= $service->name;
+                $setService->quantity=$request->ch_for[$server_id][0];
+                if($service->type==1){
+                 $setService->total=$request->ch_for[$server_id][0]*$timeSoccer*$service->price;
+                }else{
+                 $setService->total=$request->ch_for[$server_id][0]*$service->price;
+                }
+                $setService->save();
+             }else{
+                $setService=new SetService();
+                $setService->set_pitch_id= $setPitch->id;
+                $setService->service_id=$server_id;
+                $setService->name= $service->name;
+                $setService->quantity=$request->ch_for[$server_id][0];
+                if($service->type==1){
+                 $setService->total=$request->ch_for[$server_id][0]*$timeSoccer*$service->price;
+                }else{
+                 $setService->total=$request->ch_for[$server_id][0]*$service->price;
+                }
+                $setService->save();
+             }
+          
+          }
+      }
+
+      $totalService=SetService::where('set_pitch_id',$setPitch->id)->sum('total');
+      $setPitch->total= $setPitch->total+$totalService;
+      $setPitch->save();
+      return response()->json(['status'=> 200,'success'=>"Bạn đã thay đổi thành công"]);
    }
 }

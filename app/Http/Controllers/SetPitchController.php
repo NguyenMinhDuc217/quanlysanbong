@@ -29,4 +29,10 @@ class SetPitchController extends BaseUserController
     public function detailService(Request $request){
         return $this->setPitchRepository->detailService($request);
     }
+    public function showUpdateSetPitch($id){
+        return $this->setPitchRepository->showUpdateSetPitch($id);
+    }
+    public function updateSetPitch(Request $request,$id){
+        return $this->setPitchRepository->updateSetPitch($request,$id);
+    }
 }
