@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\BaseAdminController;
+use App\Models\Detail_set_pitchs;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class UserManagerController extends BaseAdminController
 {
@@ -145,8 +147,21 @@ class UserManagerController extends BaseAdminController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete(Request $request)
     {
-        //
+           $timeFinsh=Detail_set_pitchs::where('user_id',$request->user)->max('start_time');
+           
+           if(empty($timeFinsh)){
+            User::where('id', $request->user)->delete();
+            return redirect()->route('users.index')->with('success','Xóa người dùng thành công');
+           }
+
+           if((strtotime(Carbon::now()->format('Y-m-d H:i:s'))-strtotime($timeFinsh))/(60*60*24)<365){
+             return redirect()->route('users.index')->with('error','Thời gian đặt gần nhất của tài khoản phải lớn hơn 1 năm');
+           }else{
+            User::where('id', $request->user)->delete();
+            return redirect()->route('users.index')->with('success','Xóa người dùng thành công');
+           }
+
     }
 }

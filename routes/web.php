@@ -114,6 +114,7 @@ Route::get('/logout', [AdminLoginController::class,'logout'])->name('admin.logou
 Route::prefix('admin')->group(function () {
    Route::get('/home', [AdminController::class,'index'])->name('admin.index');
    Route::resource('/users', UserManagerController::class);
+   Route::post('/users/delete', [UserManagerController::class,'delete'])->name('users.delete');
    Route::resource('/pitchs', PitchManagerController::class);
    Route::resource('/set_pitchs', SetPitchManagerController::class);
    Route::resource('/tickets', TicketManagerController::class);

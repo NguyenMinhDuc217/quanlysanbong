@@ -74,7 +74,7 @@
       </div>
       <div class="modal-body">
         <input type="hidden" name="set_pitch_id" id="set_pitch_id">
-        <p> Vui lòng ghi nhớ mã giao dịch. Bạn có chắc chắn muốn huỷ?</p>
+        <p> Bạn có chắc chắn muốn huỷ?</p>
       </div>
       <div class="modal-footer">
       <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
@@ -107,7 +107,7 @@
     <th>Tổng tiền</th>
     <th>Hủy sân</th>
     <th>Mã giao dịch</th>
-    <th></th>
+    <th>Sửa sân</th>
     <th>Phương thức</th>
   </tr>
     @if(!empty($listSetPitch))
