@@ -56,7 +56,7 @@
               </div>
               <div class="form-group">
                 <label for="">Giá</label>
-                <input type="text" value="{{$pitch->price}}" name="price" class="form-control" placeholder="giá">
+                <input type="text" value="{{number_format(@$pitch->price)}}" name="price" class="form-control" placeholder="giá">
               </div>
               <!-- Describe -->
               <div class="form-group">

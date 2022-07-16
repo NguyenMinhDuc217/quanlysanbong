@@ -134,7 +134,7 @@ class SetPitchManagerController extends BaseAdminController
                 'ispay.required' => 'Vui lòng chọn sân',
             ],
         );
-        ddđ(1);
+        dd(1);
         $timeStart = $request->timeStart;
         $timeEnd = $request->timeEnd;
         $detail_set_pitch = Detail_set_pitchs::where('id', $id)->get(); 
