@@ -52,7 +52,7 @@ class PayController extends BaseUserController
         "vnp_TxnRef" => $vnp_TxnRef,
         "vnp_Bill_FirstName"=>$vnp_Bill_FirstName,
     );
-    
+   
     if (isset($vnp_BankCode) && $vnp_BankCode != "") {
         $inputData['vnp_BankCode'] = $vnp_BankCode;
     }
@@ -104,7 +104,6 @@ class PayController extends BaseUserController
         $bill->save();
     }
 
-
     $returnData = array('code' => '00'
         , 'message' => 'success'
         , 'data' => $vnp_Url);
@@ -112,22 +111,23 @@ class PayController extends BaseUserController
         if (isset($_POST['redirect'])) {
             header('Location: ' . $vnp_Url);
             die();
-            dd(42342);
         } else {
             echo json_encode($returnData);
         }
    }
    public function return(Request $request)
 {
+    
     $vnp_HashSecret = "EWPSYFBFTHFCVOILPZNLGMAEKPTGTPTO";
     $vnp_SecureHash = $_GET['vnp_SecureHash'];
+ 
         $inputData = array();
         foreach ($_GET as $key => $value) {
             if (substr($key, 0, 4) == "vnp_") {
                 $inputData[$key] = $value;
             }
         }
-        
+   
         unset($inputData['vnp_SecureHash']);
         ksort($inputData);
         $i = 0;
@@ -142,6 +142,7 @@ class PayController extends BaseUserController
         }
 
         $secureHash = hash_hmac('sha512', $hashData, $vnp_HashSecret);
+     
         if ($secureHash == $vnp_SecureHash) {
             if ($_GET['vnp_ResponseCode'] == '00') {
                    $bill=Bill::where('bill_number',$inputData['vnp_TxnRef'])->first();
