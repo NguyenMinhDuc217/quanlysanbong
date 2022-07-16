@@ -152,7 +152,7 @@ class SetPitchRepository implements SetPitchRepositoryInterface
             $bills[$bill->detail_set_pitch_id]=$bill->transaction_id;
      }
     $listSetPitch=[];
-    foreach(Detail_set_pitchs::orderby('start_time','DESC')->where('user_id',Auth::guard('user')->user()->id)->paginate(10) as $i=>$detail_set_pitch){
+    foreach(Detail_set_pitchs::orderby('start_time','DESC')->where('user_id',Auth::guard('user')->user()->id)->get() as $i=>$detail_set_pitch){
        $listSetPitch[$i]['detail_set_pitch']=$detail_set_pitch;
        $listSetPitch[$i]['name']=$pitchs[$detail_set_pitch->picth_id];
        foreach(SetService::where('set_pitch_id',$detail_set_pitch->id)->get() as $k=>$setService){
