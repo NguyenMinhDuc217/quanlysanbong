@@ -96,7 +96,7 @@
                                         <input type="checkbox" name="ch_name[]" value="{{$service['id']}}"> {{$service['name']}}
                                         <span class="geekmark"></span>
                                     </label>
-                                    <input type="number" name="ch_for[{{$service['id']}}][]" value="1" placeholder="Nhập số lượng" class="form-control ch_for hide" min="1">
+                                    <input type="number" name="ch_for[{{$service['id']}}][]" value="1" placeholder="Nhập số lượng" class="form-control ch_for hide ipt_value" min="1" max="300">
                                 </div>
                                 @endforeach
                             </div>

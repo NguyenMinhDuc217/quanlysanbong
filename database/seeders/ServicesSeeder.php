@@ -18,14 +18,17 @@ class ServicesSeeder extends Seeder
             [
                 'name' => 'Nước suối',
                 'price' => 5000,
+                'type' => 0,
             ],
             [
                 'name' => 'Revive chanh muối',
                 'price' => 15000,
+                'type' => 0,
             ],
             [
                 'name' => 'Áo bib',
                 'price' => 10000,
+                'type' => 0,
             ],
             [
                 'name' => 'Trọng tài',

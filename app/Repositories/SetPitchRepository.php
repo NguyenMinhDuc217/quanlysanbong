@@ -71,7 +71,7 @@ class SetPitchRepository implements SetPitchRepositoryInterface
         if($timeStartNo>=$hourStart&&$hourEnd>=$timeEndNo){
             return response()->json(['status' => 401, 'error' => "Sân bóng hoạt động từ 7h00 đến 23h59"]);
         }
-
+      
         if( $timeEnd<$timeStart){
             return response()->json(['status' => 401, 'error' => "Thời gian kết thúc phải lớn hơn thời gian bắt đầu"]);
         }
@@ -79,10 +79,13 @@ class SetPitchRepository implements SetPitchRepositoryInterface
         if((strtotime($timeEnd)-strtotime($timeStart))/SECOND<=HAFLANHOUR){
             return response()->json(['status' => 402, 'error' => "Thời gian của trận đấu phải lớn hơn 30 phút"]);
         }
-        
+
+        if(strtotime(Carbon::now()->format('Y-m-d H:i:s'))-strtotime($timeStart)>0||strtotime(Carbon::now()->format('Y-m-d H:i:s'))-strtotime($timeEnd)>0){
+            return response()->json(['status' => 402, 'error' => "Thời gian của trận đấu phải lớn hơn thời gian hiện tại"]);
+        }
         
         $pitch=Pitchs::where('id',$pitchid)->where('status','1')->first();
-         if( $pitch==null){
+         if($pitch==null){
             return response()->json(['status' => 400, 'error' => "Không tìm thấy sân Hoặc sân không hoạt động"]); 
         }
 
@@ -136,6 +139,7 @@ class SetPitchRepository implements SetPitchRepositoryInterface
         $setPitch->save();
         $successStart= date_format(date_create($request->timeStart),"d/m/Y H:i");
         $successEnd= date_format(date_create($request->timeEnd),"d/m/Y H:i");
+
         return response()->json(['status'=> 200,'success'=>"Bạn đã đặt sân từ $successStart đến $successEnd"]);
     }
 
