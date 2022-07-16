@@ -198,9 +198,7 @@
     @endif
 
 </table>
-<div class="hompage_pagination">
-    {{$listSetPitch->links('components.pagination.custom')}}
-        </div>
+
 
 <script>
   $(document).ready(function(){
