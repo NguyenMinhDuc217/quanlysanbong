@@ -22,7 +22,7 @@
         <div class="container" style="margin: 10px 0px;">
           <div class="row">
             <div class="col-md-2">
-              <a class="btn btn-success uppercase" href="{{route('set_pitchs.index')}}"> <i class="nav-icon fa fa-long-arrow-left"></i> Back</a>
+              <a class="btn btn-success uppercase" href="{{route('set_pitchs.index')}}"> <i class="nav-icon fa fa-long-arrow-left"></i> Quay lại</a>
             </div>
           </div>
         </div>
@@ -65,7 +65,7 @@
                     <label for="">Ngày diễn ra</label>
                   </div>
                   <div class="col-8">
-                    <input type="date" name="date_event" id="date_event" value="{{date('Y-m-d',strtotime($detail_set_pitch->date_event)) }}">
+                    <input type="date" name="date_event" id="date_event" value="{{date('d-m-Y',strtotime($detail_set_pitch->date_event)) }}">
                   </div>
                 </div>
                 @error('timeOut')
@@ -132,7 +132,7 @@
               @endif
             </div>
             <!-- /.card-body -->
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Cập nhật</button>
 
           </form>
         </div>

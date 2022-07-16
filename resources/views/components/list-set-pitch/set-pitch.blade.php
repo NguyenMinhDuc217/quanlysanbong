@@ -199,6 +199,7 @@
 
 </table>
 
+
 <script>
   $(document).ready(function(){
         $(document).on('click','.deleteSetPitchBtn',function(e){

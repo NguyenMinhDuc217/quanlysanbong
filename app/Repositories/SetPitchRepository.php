@@ -152,7 +152,7 @@ class SetPitchRepository implements SetPitchRepositoryInterface
             $bills[$bill->detail_set_pitch_id]=$bill->transaction_id;
      }
     $listSetPitch=[];
-    foreach(Detail_set_pitchs::orderby('start_time','DESC')->where('user_id',Auth::guard('user')->user()->id)->get() as $i=>$detail_set_pitch){
+    foreach(Detail_set_pitchs::orderby('start_time','DESC')->where('user_id',Auth::guard('user')->user()->id)->paginate(10) as $i=>$detail_set_pitch){
        $listSetPitch[$i]['detail_set_pitch']=$detail_set_pitch;
        $listSetPitch[$i]['name']=$pitchs[$detail_set_pitch->picth_id];
        foreach(SetService::where('set_pitch_id',$detail_set_pitch->id)->get() as $k=>$setService){
@@ -295,6 +295,9 @@ class SetPitchRepository implements SetPitchRepositoryInterface
         return response()->json(['status' => 402, 'error' => "Không thể thay đổi trước 120p"]);
     }
     
+    if(strtotime(Carbon::now()->format('Y-m-d H:i:s'))-strtotime($timeStart)>0||strtotime(Carbon::now()->format('Y-m-d H:i:s'))-strtotime($timeEnd)>0){
+        return response()->json(['status' => 402, 'error' => "Thời gian của trận đấu phải lớn hơn thời gian hiện tại"]);
+    }
       
       $pitch=Pitchs::where('id',$request->pitchid)->where('status','1')->first();
        if( $pitch==null){
@@ -317,7 +320,7 @@ class SetPitchRepository implements SetPitchRepositoryInterface
               $setTimeStart=$checkTime->start_time;
               $setTimeEnd=$checkTime->end_time;
           }
-          return response()->json(['status' => 400, 'error' => "Sân đã được đặt từ $setTimeStart đến $setTimeEnd"]);
+          return response()->json(['status' => 400, 'error' => "Vui lòng chọn sân khác"]);
       }
   
       $setPitch=Detail_set_pitchs::find($id);
