@@ -122,6 +122,7 @@ Route::prefix('admin')->group(function () {
    Route::get('/my-account/{id}/edit-password', [AdminController::class,'editPassword'])->name('admin.my.account.edit.password');
    Route::post('/my-account/{id}/edit-password', [AdminController::class,'updatepassword'])->name('admin.my.account.update.password');
    Route::resource('/users', UserManagerController::class);
+   Route::post('/users/reset-password', [UserManagerController::class,'resetPassword'])->name('users.resetpassword');
    Route::post('/users/delete', [UserManagerController::class,'delete'])->name('users.delete');
    Route::resource('/pitchs', PitchManagerController::class);
    Route::resource('/set_pitchs', SetPitchManagerController::class);

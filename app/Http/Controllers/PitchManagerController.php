@@ -54,22 +54,35 @@ class PitchManagerController extends BaseAdminController
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'cover' => 'required',
-            'name' => 'required|max:255',
-            'price' => 'required|numeric',
-            'describe' => 'required|max:500',
-            'screenshots' => 'required',
-        ],[
-            'cover.required'=>'Vui lòng chọn hình ảnh',
-            'name.required'=>'Vui lòng nhập tên sân',
-            'name.max'=>'Vui lòng nhập tên sân không quá 255 ký tự',
-            'price.required'=>'Vui lòng nhập giá',
-            'price.numeric'=>'Giá phải là số',
-            'describe.required' => 'Vui lòng nhập thông tin',
-            'describe.max'=>'Vui lòng nhập tên sân không quá 500 ký tự',
-            'screenshots.required' => 'Vui lòng chọn hình ảnh',
-        ]);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'cover' => 'required',
+                'name' => 'required|max:255',
+                'price' => 'required|numeric',
+                'describe' => 'required|max:500',
+                // 'images' => ['required', 'mimes:jpg,jpeg,png,bmp,tiff', 'max:8192']
+                'images' => ['required', 'max:8192']
+            ],
+            $messages = [
+                'cover.required' => 'Vui lòng chọn hình ảnh abc',
+                'name.required' => 'Vui lòng nhập tên sân',
+                'name.max' => 'Vui lòng nhập tên sân không quá 255 ký tự',
+                'price.required' => 'Vui lòng nhập giá',
+                'price.numeric' => 'Giá phải là số',
+                'describe.required' => 'Vui lòng nhập thông tin',
+                'describe.max' => 'Vui lòng nhập tên sân không quá 500 ký tự',
+                'screenshots.required' => 'Vui lòng chọn hình ảnh',
+                'images.required' => 'Vui lòng chọn hình ảnh',
+                // 'images.mimes' => 'Định dạng file chưa đúng',
+                'images.max' => 'Vui lòng chọn hình ảnh dưới 8 MB',
+            ]
+        );
+        // dd($request->file('images'));
+        if ($validator->fails())   //check all validations are fine, if not then redirect and show error messages
+        {
+            return back()->withInput()->withErrors($validator);
+        }
         
         $pitch = new Pitchs();
         $pitch->name = $request->name;
@@ -84,13 +97,14 @@ class PitchManagerController extends BaseAdminController
             $pitch->avartar = $filename;
         } else {
             $path = $request->get('cover');
-            // $filename = $request->appid . '.jpg';
+            $filename = $request->appid . '.jpg';
             $filename = public_path('/images/pitch/' . $filename);
             Image::make($path)->resize(350, 228)->save(public_path('/images/pitch' . $filename));
             $pitch->avartar = $filename;
         }
         $pitch->type_pitch = $request->get('type_pitch');
         $pitch->status = $request->get('status');
+        
         $count_s = [];
         if ($request->hasFile('images')) {
             $screenshots = $request->file('images');
@@ -119,10 +133,10 @@ class PitchManagerController extends BaseAdminController
             }
         }
         $pitch->screenshort = json_encode($count_s);
-        if($pitch->save()){
-            return redirect()->route('pitchs.create')->with('success','Thêm User mới thành công');
-          }
-           return redirect()->route('pitchs.create')->with('error','Xử lí thêm thất bại');
+        if ($pitch->save()) {
+            return redirect()->route('pitchs.create')->with('success', 'Thêm sân mới thành công');
+        }
+        return redirect()->route('pitchs.create')->with('error', 'Xử lí thêm thất bại');
     }
 
     /**
@@ -145,7 +159,7 @@ class PitchManagerController extends BaseAdminController
     public function edit($id)
     {
         $pitch = Pitchs::where('id', $id)->first();
-        return View('admin.pitch.edit',compact('pitch'));
+        return View('admin.pitch.edit', compact('pitch'));
     }
 
     /**
@@ -161,14 +175,15 @@ class PitchManagerController extends BaseAdminController
             'name' => 'required|max:255',
             'price' => 'required|numeric',
             'describe' => 'required|max:500',
-        ],[
-            'name.required'=>'Vui lòng nhập tên sân',
-            'name.max'=>'Vui lòng nhập tên sân không quá 255 ký tự',
-            'price.required'=>'Vui lòng nhập số điện thoại',
-            'price.numeric'=>'Số điện thoại phải là số',
+        ], [
+            'name.required' => 'Vui lòng nhập tên sân',
+            'name.max' => 'Vui lòng nhập tên sân không quá 255 ký tự',
+            'price.required' => 'Vui lòng nhập giá sân',
+            'price.numeric' => 'giá sân phải là số',
             'describe.required' => 'Vui lòng nhập thông tin',
-            'describe.max'=>'Vui lòng nhập tên sân không quá 500 ký tự',
+            'describe.max' => 'Vui lòng nhập tên sân không quá 500 ký tự',
         ]);
+
         $pitch = Pitchs::where('id', $id)->first();
 
         $pitch->name = $request->name;
@@ -206,10 +221,11 @@ class PitchManagerController extends BaseAdminController
             }
         }
         $pitch->screenshort = json_encode($count_s);
-        if($pitch->save()){
-            return redirect()->route('pitchs.edit',['pitch'=>$pitch->id])->with('success','Cập nhật sân thành công');
-          }
-           return redirect()->route('pitchs.edit',['pitch'=>$pitch->id])->with('error','Xử lí cập nhật thất bại');
+
+        if ($pitch->save()) {
+            return redirect()->route('pitchs.edit', ['pitch' => $pitch->id])->with('success', 'Cập nhật sân thành công');
+        }
+        return redirect()->route('pitchs.edit', ['pitch' => $pitch->id])->with('error', 'Xử lí cập nhật thất bại');
     }
 
     /**

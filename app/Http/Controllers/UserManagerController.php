@@ -25,6 +25,14 @@ class UserManagerController extends BaseAdminController
     public function index()
     {
       $users=User::all();
+
+      foreach($users as $user){
+          if($user->time_login != null){
+              if((strtotime(Carbon::now()->format('Y-m-d H:i:s'))-strtotime($user->time_out))/(60*60*24)>365){
+                $user->delete();
+              }
+          }
+      }
         return view('admin.user.index',compact('users'));
     }
 
@@ -141,6 +149,22 @@ class UserManagerController extends BaseAdminController
            return redirect()->route('users.edit',['user'=>$user->id])->with('error','Xử lí cập nhật thất bại');
     }
 
+    public function resetPassword(Request $request)
+    {
+           $user = User::where('id',$request->user)->where('status',1)->first();
+           
+           if(empty($user)){
+            return redirect()->route('users.index')->with('error','Không tìm thấy người dùng');
+           }
+            $user->password = bcrypt('12345678');
+            if(!$user->save()){
+                return redirect()->route('users.index')->with('error','Làm mới mật khẩu người dùng không thành công');
+            }
+            return redirect()->route('users.index')->with('success','Làm mới mật khẩu người dùng thành công');
+
+
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -149,7 +173,8 @@ class UserManagerController extends BaseAdminController
      */
     public function delete(Request $request)
     {
-           $timeFinsh=Detail_set_pitchs::where('user_id',$request->user)->max('start_time');
+        $timeFinsh=Detail_set_pitchs::where('user_id',$request->user)->max('start_time');
+
            
            if(empty($timeFinsh)){
             User::where('id', $request->user)->delete();

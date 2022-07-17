@@ -28,12 +28,12 @@
             <div class="inbox-left-sd">
                 <img src="{{ asset('/images/pitch/') }}/{{$pitch->avartar}}" id="appimg" alt="App Cover"
                       class="img-fluid app_cover">
-                <input required type="hidden" name="cover" id="cover">
+                <input  type="hidden" name="cover" id="cover">
                 <p class="text-center pt-3">Ảnh đại diện của sân</p>
 
                 <div class="form-group">
                     <label for="exampleFormControlFile1">Chọn hình ảnh</label>
-                    <input required value="" type="file" name="cover" class="form-control-file" id="cover_input">
+                    <input  value="" type="file" name="cover" class="form-control-file" id="cover_input">
                 </div>
 
             </div>
@@ -48,7 +48,7 @@
               <div class="form-group">
                 <label for="">Tên</label>
                 <input type="text" value="{{$pitch->name}}" name="name" class="form-control" placeholder="Tên sân">
-                @error('username')
+                @error('name')
                 <span class="vali_sign" class="invalid-feedback" role="alert">
                   <strong>{{ $message }}</strong>
                 </span>
@@ -56,12 +56,22 @@
               </div>
               <div class="form-group">
                 <label for="">Giá</label>
-                <input type="text" value="{{number_format(@$pitch->price)}}" name="price" class="form-control" placeholder="giá">
+                <input type="text" value="{{@$pitch->price}}" name="price" class="form-control" placeholder="giá">
+                @error('price')
+                <span class="vali_sign" class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+                </span>
+                @enderror
               </div>
               <!-- Describe -->
               <div class="form-group">
                 <label>Thông tin <span class="text-danger"></span></label>
                 <textarea class="form-control html-editor-cm" id="describe" name="describe" placeholder="Thông tin">{{$pitch->describe}}</textarea>
+                @error('describe')
+                <span class="vali_sign" class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+                </span>
+                @enderror
               </div>
               <!-- Type Pitch -->
               <div class="form-group">
@@ -146,7 +156,6 @@
     $(document).on('click', '.remove-img', function() {
       $(this).parent('.uploaded-image').remove();
     });
-    $('#screen').html(html);
   });
 </script>
   @endsection

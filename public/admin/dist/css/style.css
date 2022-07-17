@@ -32,3 +32,30 @@
     border-radius: 5px;
     cursor: pointer;
 }
+
+/* chọn dịch vụ */
+.box__filter {
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+    margin-bottom: 8px;
+}
+
+.form_checkbox {
+    display: flex;
+    justify-content: space-between;
+}
+
+.ipt_value {
+    min-width: 250px;
+}
+
+@media (max-width:1366px) {
+    .advise_form__input {
+        width: 270px;
+    }
+}
+
+.hide{
+    display:none;
+}
