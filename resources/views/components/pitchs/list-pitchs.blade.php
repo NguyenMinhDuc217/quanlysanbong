@@ -30,10 +30,14 @@
                   </div> -->
                 <div class="product_item__vote">
                     <div class="product_item__price">Giá: <span class="product_item__price_color">{{number_format($pitch->price)}}</span> / Giờ</div>
-                    @if($pitch['discount']!=0)
-                        <div><span class="product_item__vote_num_discount">{{number_format($pitch['discount'])}}%</span></div>
-                    @else
-                    @endif
+                   
+                    @foreach($discounts as $discount)
+                            @if($pitch['id']==$discount->pitch_id&&$discount->end_discount>=date('Y-m-d'))
+                                <div><span class="product_item__vote_num_discount">{{number_format($discount->discount)}}%</span></div>
+                            @else
+                            @endif
+                     @endforeach
+                 
                 </div>
             </a>
         </div>

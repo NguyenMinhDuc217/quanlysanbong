@@ -66,11 +66,12 @@ class TicketRepository implements TicketRepositoryInterface
     public function listBuyTicket(){
       $user_id=Auth::guard('user')->user()->id;
       $tickets=[];
-      foreach(Tickets::where('user_id',$user_id)->where('isPay',1)->get() as $i=>$ticket){
+       $paginate=Tickets::where('user_id',$user_id)->where('isPay',1)->paginate(10);
+      foreach(Tickets::where('user_id',$user_id)->where('isPay',1)->paginate(10) as $i=>$ticket){
         $tickets[$i]['ticket']=$ticket;
         $tickets[$i]['detail_ticket']=DetailTicket::where('ticket_id',$ticket->id)->first();
       }
-      return view('list-buy-ticket.index',compact('tickets'));
+      return view('list-buy-ticket.index',compact('tickets','paginate'));
     } 
    public function payTicket(Request $request){
       $now=Carbon::now()->format('Y-m-d');

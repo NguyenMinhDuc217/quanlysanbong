@@ -77,7 +77,7 @@
                             <input type="hidden" name="pitchid" id="pitchid" value="{{$data['pitch']['id']}}" />
                             <div class="detail_find_list">
                                 <div class="detail_find_from">
-                                    <span>Tìm từ giờ:</span>
+                                    <span>Chọn giờ từ:</span>
                                     <input type="datetime-local" name="timeStart" id="timeStart">
 
                                 </div>

@@ -144,11 +144,11 @@
     @endif
     @if(empty($setPitch['detail_set_pitch']->ticket_id))
         @php
-      $price_pitch=number_format($setPitch['detail_set_pitch']->price_pitch, 0, '', ',');
+      $price_pitch=number_format($setPitch['detail_set_pitch']->price_pitch, 0, '', '.');
       @endphp
       <td>{{$price_pitch}}đ</td>
       @php
-      $total=number_format($setPitch['detail_set_pitch']->total, 0, '', ',');
+      $total=number_format($setPitch['detail_set_pitch']->total, 0, '', '.');
       @endphp
         <td>{{$total}}đ</td>
         @if((strtotime($setPitch['detail_set_pitch']->start_time)-strtotime(date('Y-m-d H:i:s')))/(60)>=120)
@@ -198,7 +198,9 @@
     @endif
 
 </table>
-
+<div class="hompage_pagination">
+    {{$paginate->appends($listSetPitch)->links('components.pagination.custom')}}
+      </div>
 
 <script>
   $(document).ready(function(){
