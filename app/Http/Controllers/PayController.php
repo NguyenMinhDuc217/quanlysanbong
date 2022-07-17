@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str; 
 class PayController extends BaseUserController
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
    public function vnpay_payment(Request $request){
     $setPitch = Detail_set_pitchs::where('id', $request->id)->first();
     $timeStart=$setPitch->start_time;

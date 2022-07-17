@@ -10,8 +10,13 @@ use App\Models\Bill;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str; 
 
-class PayTicketController extends Controller
+class PayTicketController extends BaseUserController
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     public function vnpay_payment(Request $request){
         $ticket = Tickets::where('id', $request->id)->first();
         if($ticket->ispay==1){

@@ -58,16 +58,16 @@
         margin-right: 10px;
     }
 
-    .list_hover:hover {
+    /* .list_hover:hover {
         transform: scale(1.2);
         box-shadow: 0 9px 47px 11px rgb(51 51 51 / 18%)
-    }
+    } */
 </style>
 
 @extends('layouts.home')
 @section('content')
 <div class="block_left col-sm-9 col-xs-12">
-    @include('components.pitchs.header')
+    @include('components.notification.header')
     @include('components.pitchs.menu')
     @if(Session::has('success'))
     <div class="alert alert-success notifi__success">

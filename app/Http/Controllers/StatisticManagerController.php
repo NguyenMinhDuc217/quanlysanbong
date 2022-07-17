@@ -27,6 +27,7 @@ class StatisticManagerController extends Controller
       } 
       if($request->fillter==1){
         $stats = Detail_set_pitchs::whereBetween('start_time', [$rangeStart,$rangeEnd])
+        ->where('ticket_id',null)
         ->groupBy('date')
         ->orderBy('date', 'ASC')
         ->get([
@@ -41,7 +42,7 @@ class StatisticManagerController extends Controller
         $rangeYearStart=date("Y", strtotime($rangeStart));
         $rangeYearEnd=date("Y",  strtotime($rangeEnd));
         $stats = Detail_set_pitchs::wheremonth('start_time','>=', $rangeMonthStart)->wheremonth('start_time','<=',$rangeMonthEnd)
-        ->whereyear('start_time','>=', $rangeYearStart)->whereyear('start_time','<=',$rangeYearEnd)
+        ->whereyear('start_time','>=', $rangeYearStart)->whereyear('start_time','<=',$rangeYearEnd)->where('ticket_id',null)
         ->groupBy('date')
         ->orderBy('date', 'ASC')
         ->get([
@@ -51,7 +52,7 @@ class StatisticManagerController extends Controller
       if($request->fillter==365){
         $rangeStart=date("Y", strtotime($rangeStart));
         $rangeEnd=date("Y",  strtotime($rangeEnd));
-        $stats = Detail_set_pitchs::whereyear('start_time','>=', $rangeStart)->whereyear('start_time','<=', $rangeEnd)
+        $stats = Detail_set_pitchs::whereyear('start_time','>=', $rangeStart)->whereyear('start_time','<=', $rangeEnd)->where('ticket_id',null)
         ->groupBy('date')
         ->orderBy('date', 'ASC')
         ->get([

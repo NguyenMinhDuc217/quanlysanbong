@@ -22,6 +22,7 @@ class CreateTableUsers extends Migration
             $table->string('wallet',255)->nullable();
             $table->string('status',255)->nullable();
             $table->string('created_by',255)->nullable();
+            $table->string('time_login',255)->nullable();
             $table->string('token');
             $table->rememberToken();
             $table->timestamps();

@@ -80,8 +80,7 @@
                  <a  href="{{route('users.edit',['user'=>$user->id])}}"> <button class="btn btn-btn btn-primary">Sửa</button></a>
                   <button class="btn btn-btn btn-success">Làm mới mật khẩu</button>
                 <button class="btn btn-btn btn-danger deleteUserBtn" value="{{$user->id}}">Xóa</button>
-               
-  
+              
                </th>
                 </td>
               </tr>

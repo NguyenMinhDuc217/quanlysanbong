@@ -90,7 +90,6 @@ class SetPitchManagerController extends BaseAdminController
         $type_pitchs = Pitchs::all();
         $ticket = Tickets::where('id', $detail_set_pitch["ticket_id"])->first();
         $user = User::where('id', $detail_set_pitch->user_id)->first();
-        // dd($detail_set_pitch);
         return View('admin.set_pitch.edit', compact('detail_set_pitch', 'type_pitchs', 'ticket', 'user'));
     }
 
@@ -107,21 +106,24 @@ class SetPitchManagerController extends BaseAdminController
         define('HAFLANHOUR', 30);
         define('SECOND', 60);
         define('PERCENT', 100);
+        // dd($id);die;
+
         $request->validate(
             [
-                'ticket' => 'required',
+                // 'ticket' => 'required',
                 'type_pitch' => 'required',
-                'user' => 'required',
+                // 'user' => 'required',
                 'date_event' => 'required',
                 'timeStart' => 'required',
                 'timeEnd' => 'required',
                 'price_pitch' => 'required|digits_between:50000,999999',
                 'total' => 'required|digits_between:50000,999999',
+                'ispay' => 'required',
             ],
             [
-                'ticket.required' => 'Vui lòng chọn vé',
+                // 'ticket.required' => 'Vui lòng chọn vé',
                 'type_pitch.required' => 'Vui lòng chọn sân',
-                'user.required' => 'Vui lòng chọn user',
+                // 'user.required' => 'Vui lòng chọn user',
                 'date_event.required' => 'Vui lòng thời gian diễn ra',
                 'timeStart.required' => 'Vui lòng chọn thời gian bắt đầu',
                 'timeEnd.required' => 'Vui lòng thời gian kết thúc',
@@ -129,9 +131,10 @@ class SetPitchManagerController extends BaseAdminController
                 'price_pitch.digits_between' => 'Giá tiền phải là số, phải lớn hơn hoặc bằng 50 000 và nhỏ hơn hoặc bằng 999 999',
                 'total.required' => 'Vui lòng nhập tổng tiền',
                 'total.digits_between' => 'Giá tiền phải là số, phải lớn hơn hoặc bằng 50 000 và nhỏ hơn hoặc bằng 999 999',
-            ]
+                'ispay.required' => 'Vui lòng chọn sân',
+            ],
         );
-
+        dd(1);
         $timeStart = $request->timeStart;
         $timeEnd = $request->timeEnd;
         $detail_set_pitch = Detail_set_pitchs::where('id', $id)->get(); 
@@ -166,6 +169,12 @@ class SetPitchManagerController extends BaseAdminController
             }
             return redirect()->route('admin.set_pitch.edit', ['id' => $id])->with('error', "Sân đã được đặt từ $setTimeStart đến $setTimeEnd");
         }
+        dd($checkTimes);
+        if($pitch->save()){
+            return redirect()->route('pitchs.edit',['pitch'=>$pitch->id])->with('success','Cập nhật sân thành công');
+          }
+           return redirect()->route('pitchs.edit',['pitch'=>$pitch->id])->with('error','Xử lí cập nhật thất bại');
+    
     }
 
     /**

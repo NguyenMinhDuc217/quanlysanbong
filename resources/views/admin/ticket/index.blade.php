@@ -36,7 +36,7 @@
                 <td>{{@$ticket->id}}</td>
                 <td>{{@$ticket->name}}</td>
                 <td>{{@$ticket->timeout}}</td>
-                <td>{{@$ticket->price}}</td>
+                <td>{{number_format(@$ticket->price)}}</td>
                 @if(@$ticket->status == 1)
                 <td>Còn hoạt động</td>
                 @elseif(@$ticket->status == 0)

@@ -8,4 +8,5 @@ use App\Repositories\TeamRepository;
 interface NotificationRepositoryInterface
 {
     public function listNotification();
+    public function searchNotification(Request $request);
 }

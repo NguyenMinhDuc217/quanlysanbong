@@ -26,6 +26,7 @@ class User extends Authenticatable
         'phone_number',
         'wallet',
         'status',
+        'time_login',
     ];
 
     /**

@@ -213,7 +213,7 @@ class SetPitchRepository implements SetPitchRepositoryInterface
             $details = [
                 'title' => 'Hướng dẫn chi tiết cách nhận lại tiền khi đã thanh toán',
                 'name' => Auth::guard('user')->user()->username,
-                'body'=>"Bạn vui lòng gửi email lại cho chúng tôi về số tài khoản ngân hàng,số momo hoặc số 
+                'body'=>"Mã giao dịch của bạn là $bill->transaction_id. Bạn vui lòng gửi email lại cho chúng tôi về số tài khoản ngân hàng,số momo hoặc số 
                 tài khoản Paypal. Với cú pháp là Tên Sân _Ngày giờ đặt_Mã giao dịch_Số tiền số tài khoản của bạn. 
                 Ví dụ: SânA_7/7/2022-4h00_7/7/2022-5h00_MAGIAODICH99_120.000 9704198526191432198 $bill->transaction_id",
                 

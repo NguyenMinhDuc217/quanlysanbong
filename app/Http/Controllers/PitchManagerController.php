@@ -55,16 +55,20 @@ class PitchManagerController extends BaseAdminController
     public function store(Request $request)
     {
         $request->validate([
+            'cover' => 'required',
             'name' => 'required|max:255',
             'price' => 'required|numeric',
             'describe' => 'required|max:500',
+            'screenshots' => 'required',
         ],[
+            'cover.required'=>'Vui lòng chọn hình ảnh',
             'name.required'=>'Vui lòng nhập tên sân',
             'name.max'=>'Vui lòng nhập tên sân không quá 255 ký tự',
             'price.required'=>'Vui lòng nhập giá',
             'price.numeric'=>'Giá phải là số',
             'describe.required' => 'Vui lòng nhập thông tin',
             'describe.max'=>'Vui lòng nhập tên sân không quá 500 ký tự',
+            'screenshots.required' => 'Vui lòng chọn hình ảnh',
         ]);
         
         $pitch = new Pitchs();
@@ -80,7 +84,8 @@ class PitchManagerController extends BaseAdminController
             $pitch->avartar = $filename;
         } else {
             $path = $request->get('cover');
-            $filename = $request->appid . '.jpg';
+            // $filename = $request->appid . '.jpg';
+            $filename = public_path('/images/pitch/' . $filename);
             Image::make($path)->resize(350, 228)->save(public_path('/images/pitch' . $filename));
             $pitch->avartar = $filename;
         }

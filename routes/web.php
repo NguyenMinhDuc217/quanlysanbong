@@ -52,6 +52,9 @@ Route::get('/my-account/{id}/edit-password', [UserController::class,'editPasswor
 Route::post('/my-account/{id}/edit-password', [UserController::class,'updatePassword'])->name('update.password');
 //notification 
 Route::get('/notification', [NotificationController::class,'listNotification'])->name('notification');
+Route::get('/search-notification', [NotificationController::class,'searchNotification'])->name('search.notification');
+
+
 
 //listpitch
 Route::get('/', [PitchController::class,'ListPitch'])->name('list_pitch');
@@ -113,6 +116,11 @@ Route::get('/logout', [AdminLoginController::class,'logout'])->name('admin.logou
 
 Route::prefix('admin')->group(function () {
    Route::get('/home', [AdminController::class,'index'])->name('admin.index');
+   Route::get('/my-account', [AdminController::class,'myAccount'])->name('admin.my.account');
+   Route::get('/my-account/{id}/edit-information', [AdminController::class,'editInformation'])->name('admin.my.edit.information');
+   Route::post('/my-account/{id}/edit-information', [AdminController::class,'updateInformation'])->name('admin.my.update.information');
+   Route::get('/my-account/{id}/edit-password', [AdminController::class,'editPassword'])->name('admin.my.account.edit.password');
+   Route::post('/my-account/{id}/edit-password', [AdminController::class,'updatepassword'])->name('admin.my.account.update.password');
    Route::resource('/users', UserManagerController::class);
    Route::post('/users/delete', [UserManagerController::class,'delete'])->name('users.delete');
    Route::resource('/pitchs', PitchManagerController::class);
