@@ -256,7 +256,6 @@ class TicketManagerController extends Controller
             foreach ($checkSetService as $setService) {
                 $totalService = $totalService + $setService['total'];
             }
-            // dd($totalService, $checkSetService);
             $detailSetPitch->update([
                 'total' => $detailSetPitch['price_pitch'] + $totalService,
             ]);
