@@ -163,6 +163,7 @@
         <td></td>
         @endif
      
+        @if($setPitch['detail_set_pitch']->ispay==0)
         @if((strtotime($setPitch['detail_set_pitch']->start_time)-strtotime(date('Y-m-d H:i:s')))/(60)>=120)
         <td>
         <form method="POST" action="{{route('show.update.set.pitch',['id'=>$setPitch['detail_set_pitch']->id])}}">
@@ -172,6 +173,9 @@
         </td>
         @else
         <td>Không thể sửa</td>
+        @endif
+        @else
+        <td>Bạn đã thanh toán</td>
         @endif
 
         @if($setPitch['detail_set_pitch']->ispay==0)
