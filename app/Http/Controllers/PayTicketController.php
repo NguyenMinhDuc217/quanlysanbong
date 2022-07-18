@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Tickets;
 use App\Models\Detail_set_pitchs;
-use App\Models\SetService;
+use App\Models\Discount;
 use App\Models\Bill;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str; 
@@ -22,6 +22,12 @@ class PayTicketController extends BaseUserController
         if($ticket->ispay==1){
             return redirect()->route('pay.ticket',['ticketid'=>$ticket->id])->with('error',"Vé đã có người mua");
         }
+        $dis=0;
+        foreach(Discount::all() as $discount){
+            if($ticket->id==$discount->ticket_id&&$discount->start_discount<=date('Y-m-d')&&$discount->end_discount>=date('Y-m-d')){
+                $dis=$discount->discount;
+            }
+        }
         $code_ticket=$ticket->code_ticket;
       
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
@@ -32,13 +38,11 @@ class PayTicketController extends BaseUserController
         $vnp_TxnRef =strtoupper(Str::random(8)).''.$ticket->id; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
         $vnp_OrderInfo = "Thanh toán vé mã là $code_ticket";
         $vnp_OrderType = 'billpayment';
-        $vnp_Amount =  $ticket->price * 100;
+        $vnp_Amount =  $ticket->price * 100*(100-$dis)/100;
         $vnp_Locale = 'vn';
         $vnp_BankCode = 'NCB';
         $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
-        //Add Params of 2.0.1 Version
-        //$vnp_ExpireDate = $_POST['txtexpire'];
-        //Billing
+  
         $vnp_CreateDate=date('YmdHis');
     
         $inputData = array(

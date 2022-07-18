@@ -11,17 +11,27 @@
         <span class="product_item__vote_desc">{{@$data['detail_ticket']->description}}</span>
         
         <div class="product_item__vote">
+
             @php
-            $discount=(int)$data['ticket']->discount;
-            $price=(int)$data['ticket']->price;
-            @endphp
+               $price=$data['ticket']->price;
+               $price_dis=null;
+               @endphp
+
+                @foreach($discounts as $discount)
+                            @if($data['ticket']->id==$discount->ticket_id&&$discount->start_discount<=date('Y-m-d')&&$discount->end_discount>=date('Y-m-d'))
+                              @php
+                              $price=number_format($data['ticket']->price*(100-$discount->discount)/100 ,0, '', '.');
+                              $price_dis=number_format($data['ticket']->price, 0, '', '.');
+                              @endphp
+                            @endif 
+                @endforeach
             
-            <span>Giá vé: {{number_format(@$price*(100-$discount)/100, 0, '', '.')}}đ</span>
-        
-            @if(!empty($data['ticket']->discount))
-            <p class="price_discount"> {{number_format(@$data['ticket']->price ,0, '', '.')}}đ</p>
-            @else
-            @endif
+
+                <span class="product_item__vote_num">Giá vé: {{$price}}đ</span>
+                @if(!empty($price_dis))
+                <span class="price_discount">{{$price_dis}}đ</span>
+                @else
+                @endif    
         </div>
         <div class="clock_pay">
             <div class="clock">
