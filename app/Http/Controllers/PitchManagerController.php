@@ -10,6 +10,7 @@ use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Intervention\Image\ImageManagerStatic as Image;
 // use Image;
@@ -138,9 +139,10 @@ class PitchManagerController extends BaseAdminController
         if($pitch->save()){
              $discount=new Discount();
              $discount->pitch_id=$pitch->id;
+             $discount->ticket_id='';
              $discount->discount=0;
-             $discount->start_discount=0;
-             $discount->end_discount=0;
+             $discount->start_discount=Carbon::now()->subDays(1)->format('Y-m-d');
+             $discount->end_discount=Carbon::now()->subDays(1)->format('Y-m-d');
              $discount->save();
 
             return redirect()->route('pitchs.create')->with('success','Thêm sân mới thành công');

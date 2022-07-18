@@ -67,12 +67,27 @@
                 </div>
                 <div class="product_item__title_1">{{$ticket['code_ticket']}} - {{$ticket['name']}} - Số ngày trong tuần {{$ticket['number_day_of_week']}} - Gói {{$ticket['month']}} tháng </div>
                 <div class="product_item__vote">
-                    <span class="product_item__vote_num">Giá vé: {{number_format($ticket->price*(100-$ticket->discount)/100 ,0, '', '.')}}đ</span>
-                    @if($ticket->discount!=0)
-                    <span class="product_item__vote_num_discount">{{number_format($ticket->price, 0, '', '.')}}đ</span>
-                    @else
-                    @endif
-                  </div>
+               @php
+               $price=$ticket->price;
+               $price_dis=null;
+               @endphp
+
+                @foreach($discounts as $discount)
+                            @if($ticket['id']==$discount->ticket_id&&$discount->start_discount<=date('Y-m-d')&&$discount->end_discount>=date('Y-m-d'))
+                              @php
+                              $price=number_format($ticket->price*(100-$discount->discount)/100 ,0, '', '.');
+                              $price_dis=number_format($ticket->price, 0, '', '.');
+                              @endphp
+                            @endif 
+                @endforeach
+            
+
+                <span class="product_item__vote_num">Giá vé: {{$price}}đ</span>
+                @if(!empty($price_dis))
+                <span class="product_item__vote_num_discount">{{$price_dis}}đ</span>
+                @else
+                @endif    
+              </div>
                 <div class="product_item__price">   
                     <meta name="csrf-token" content="{{ csrf_token() }}">
                    <button type="button"  class="btn btn-primary btnBuy" ticket_id="{{$ticket['id']}}">  Mua ngay
@@ -184,8 +199,11 @@
                      $("#month").text(response.data.ticket.month);
                      var price= parseInt(response.data.ticket.price);
                      var pricedis=null;
-                     if(response.data.ticket.discount!=0){
-                      pricedis=price*(100-response.data.ticket.discount)/100;
+                     
+                     var date = new Date().toJSON().slice(0,10).split('/').reverse().join('-');
+                      
+                     if(response.data.discount.discount>0 &&response.data.discount.start_discount<=date&&response.data.discount.end_discount>=date){
+                      pricedis=price*(100-response.data.discount.discount)/100;
                       pricedis=pricedis.toLocaleString('vi-VN', {style : 'currency', currency : 'VND'});
                       $("#price_dis").text(pricedis);
                       price=price.toLocaleString('vi-VN', {style : 'currency', currency : 'VND'});

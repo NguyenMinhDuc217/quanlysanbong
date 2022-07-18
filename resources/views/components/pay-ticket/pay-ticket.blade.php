@@ -40,7 +40,19 @@
      </div>
      <div class="pay_list">
         <span class="pay_list_title">Giá vé: </span>
-        <span>{{number_format($data['ticket']->price*(100-$data['ticket']->discount)/100)}}đ</span> 
+               @php
+               $price=$data['ticket']->price;
+               @endphp
+
+                @foreach($discounts as $discount)
+                            @if($data['ticket']->id==$discount->ticket_id&&$discount->start_discount<=date('Y-m-d')&&$discount->end_discount>=date('Y-m-d'))
+                              @php
+                              $price=number_format($data['ticket']->price*(100-$discount->discount)/100 ,0, '', '.');
+                              @endphp
+                            @endif 
+                @endforeach
+
+                <span>{{$price}}đ</span>
     </div>
      <div class="pay_list">
          <span class="pay_list_title">Số ngày trong tuần {{$data['ticket']->number_day_of_week}} - Gói {{$data['ticket']->month}} tháng</span>

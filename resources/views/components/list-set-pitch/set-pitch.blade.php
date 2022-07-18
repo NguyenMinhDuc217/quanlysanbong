@@ -186,14 +186,14 @@
         @endif
     @else
 
-    <td colspan="5" style="text-align:center;">Sân được đặt bởi vé tháng</td>
+    <td colspan="6" style="text-align:center;">Sân được đặt bởi vé tháng</td>
    
     @endif
     @endforeach
     </tr>
     @else
     <tr>
-    <td colspan="10" style="text-align:center;">Bạn chưa đặt sân</td>
+    <td colspan="11" style="text-align:center;">Bạn chưa đặt sân</td>
     </tr>
     @endif
 

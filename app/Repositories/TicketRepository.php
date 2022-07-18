@@ -9,6 +9,7 @@ use App\Models\Detail_set_pitchs;
 use App\Models\Tickets;
 use App\Models\DetailTicket;
 use App\Models\SetService;
+use App\Models\Discount;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,7 +18,11 @@ class TicketRepository implements TicketRepositoryInterface
   public function showTicket(){
       $now=Carbon::now()->format('Y-m-d');
       $tickets=Tickets::where('status',1)->where('ispay',0)->where('timeout','>',$now)->paginate(9)->appends(request()->query());
-      return view('buy-ticket.index',compact('tickets'));
+      $discounts=[];
+      foreach(Discount::all() as $discount){
+          $discounts[$discount->ticket_id]=$discount;
+      }
+      return view('buy-ticket.index',compact('tickets','discounts'));
   }
 
   public function viewTicket(Request $request){
@@ -25,6 +30,7 @@ class TicketRepository implements TicketRepositoryInterface
       $data=[];
       $data['ticket']=Tickets::where('id', $request->ticketid)->where('status',1)->where('timeout','>',$now)->first();
       $data['detail_ticket']=DetailTicket::where('ticket_id', $request->ticketid)->first();
+      $data['discount']=Discount::where('ticket_id',$request->ticketid)->first();
       return response()->json([
         'status'=>200,
         'data'=>$data,
@@ -46,7 +52,11 @@ class TicketRepository implements TicketRepositoryInterface
     foreach(SetService::where('ticket_id', $request->ticketid)->get() as $i=>$service){
       $data['service'][$i]=$service;
     }
-    return view('ticket-detail.index',compact('data'));
+    $discounts=[];
+    foreach(Discount::all() as $discount){
+        $discounts[$discount->ticket_id]=$discount;
+    }
+    return view('ticket-detail.index',compact('data','discounts'));
   }
 
   public function buyTicket(Request $request){
@@ -88,6 +98,10 @@ class TicketRepository implements TicketRepositoryInterface
       foreach(SetService::where('ticket_id', $request->ticketid)->get() as $i=>$service){
         $data['service'][$i]=$service;
       }
-      return view('pay-ticket.index',compact('data'));
+      $discounts=[];
+      foreach(Discount::all() as $discount){
+          $discounts[$discount->ticket_id]=$discount;
+      }
+      return view('pay-ticket.index',compact('data','discounts'));
    }
 }
