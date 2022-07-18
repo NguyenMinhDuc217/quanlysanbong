@@ -22,7 +22,7 @@ class PitchRepository implements PitchRepositoryInterface
 {
     public function ListPitch(Request $request)
     {
-        $pitch = Pitchs::orderby('average_rating','DESC')->paginate(8)->appends(request()->query());
+        $pitch = Pitchs::orderby('average_rating','DESC')->where('status',1)->paginate(8)->appends(request()->query());
         return $pitch;
     }
     public function Search(Request $request){
@@ -79,7 +79,6 @@ class PitchRepository implements PitchRepositoryInterface
             'user' => $user,
             'services' => $services,
             'detail_set_pitchs' => $detail_set_pitchs,
-            // 'start_time' => $start_time,
         );
     }
     public function Comment(Request $request,$id = ''){

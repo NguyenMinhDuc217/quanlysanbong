@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Cache;
 // use Image;
+use Carbon\Carbon;
 
 
 class SetPitchManagerController extends BaseAdminController
@@ -33,6 +34,14 @@ class SetPitchManagerController extends BaseAdminController
     public function index()
     {
         $detail_set_pitch = Detail_set_pitchs::all();
+        foreach($detail_set_pitch as $d){
+            if($d->end_time != null){
+                if((strtotime(Carbon::now()->format('Y-m-d H:i:s'))- strtotime($d->end_time))/(60*60*24)>365){
+                    // dd((strtotime(Carbon::now()->format('Y-m-d H:i:s'))-strtotime($d->end_time))/(60*60*24));
+                    $d->delete();
+                }
+            }
+        }
         $users = [];
         foreach ($detail_set_pitch as $i => $detail) {
             $users = User::where("id", $detail['user_id'])->first();
@@ -42,6 +51,7 @@ class SetPitchManagerController extends BaseAdminController
             $detail['username'] = isset($users['username']) ? $users['username'] : "";
             $detail['service_name'] = isset($services['name']) ? $services['name'] : "";
         }
+        
         return View('admin.set_pitch.index', compact('detail_set_pitch'));
     }
 

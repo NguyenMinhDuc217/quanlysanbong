@@ -59,22 +59,29 @@
               </div>
               <!-- Sân -->
               <div class="form-group">
-              <label>Sân</label>
-              <select type="name" class="form-control" name="pitch_id" id="pitch_id" placeholder="Sân" value="#">
-                @foreach($pitchs as $pitch)
+                <label>Sân</label>
+                <select type="name" class="form-control" name="pitch_id" id="pitch_id" placeholder="Sân" value="#">
+                  @foreach($pitchs as $pitch)
                   <option value="{{$pitch->id}}">{{$pitch->name}}</option>
-                @endforeach
+                  @endforeach
                 </select>
               </div>
               <!-- Type Services -->
               <div class="form-group">
-                <label>Dịch vụ</label>
-                <select type="name" class="form-control" name="type_service" id="type_service" placeholder="Loại dịch vụ" value="#">
+                <div class='box__filter' id='box__filter'>
+                <label>Các loại dịch vụ</label>
                 @foreach($services as $service)
-                  <option value="{{$service->id}}">{{$service->name}}</option>
+                <div class="checkbox form-inline form_checkbox">
+                  <label class="main">
+                    <input type="checkbox" name="ch_name[]" value="{{$service['id']}}"> {{$service['name']}}
+                    <span class="geekmark"></span>
+                  </label>
+                  <input type="number" name="ch_for[{{$service['id']}}][]" value="1" placeholder="Nhập số lượng" class="form-control ch_for hide ipt_value" min="1" max="300">
+                </div>
                 @endforeach
-                </select>
               </div>
+              </div>
+              
               <!-- Number day of week -->
               <div class="form-group">
                 <label>Số ngày trong một tuần <span class="text-danger"></span></label>
@@ -82,7 +89,7 @@
               </div>
               <!-- Tháng -->
               <div class="form-group">
-              <label>Số tháng</label>
+                <label>Số tháng</label>
                 <select type="name" class="form-control" name="month" id="month" placeholder="Số tháng" value="#">
                   <option value="1">1</option>
                   <option value="2">2</option>
@@ -93,47 +100,37 @@
               <div class="form-group">
                 <label for="">Thời gian hạn đặt vé</label>
                 <input type="date" name="timeOut" id="timeOut">
-                  @error('timeOut')
-                  <span class="vali_sign" class="invalid-feedback" role="alert">
-                      <strong>{{ $message }}</strong>
-                  </span>
-                  @enderror
+                @error('timeOut')
+                <span class="vali_sign" class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+                </span>
+                @enderror
               </div>
               <!-- Thời gain bắt đầu -->
               <div class="form-group">
                 <label for="">Thời gian bắt đầu</label>
                 <input type="date" name="timeStart" id="timeStart">
-                  @error('timeStart')
-                  <span class="vali_sign" class="invalid-feedback" role="alert">
-                      <strong>{{ $message }}</strong>
-                  </span>
-                  @enderror
+                @error('timeStart')
+                <span class="vali_sign" class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+                </span>
+                @enderror
               </div>
               <!-- Thời gain kết thúc -->
               <div class="form-group">
                 <label for="">Thời gian kết thúc</label>
                 <input type="date" name="timeEnd" id="timeEnd">
-                  @error('timeEnd')
-                  <span class="vali_sign" class="invalid-feedback" role="alert">
-                      <strong>{{ $message }}</strong>
-                  </span>
-                  @enderror
+                @error('timeEnd')
+                <span class="vali_sign" class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+                </span>
+                @enderror
               </div>
               <!-- Chi tiết thời gian đá hàng tuần -->
               <div class="form-group">
                 <label for="">Chi tiết thời gian đá hàng tuần</label>
                 <input type="datetime-local" name="timeDay" id="timeDay">
-                  @error('timeEnd')
-                  <span class="vali_sign" class="invalid-feedback" role="alert">
-                      <strong>{{ $message }}</strong>
-                  </span>
-                  @enderror
-              </div>
-              <!-- Khuyến mãi -->
-              <div class="form-group">
-                <label for="">Khuyến mãi</label>
-                <input type="text" name="discount" class="form-control" placeholder="Ex: 10%">
-                @error('username')
+                @error('timeEnd')
                 <span class="vali_sign" class="invalid-feedback" role="alert">
                   <strong>{{ $message }}</strong>
                 </span>
@@ -168,36 +165,43 @@
   </div>
   <script src="{{asset('admin/dist/js/image-upload/image-uploader.min.js') }}"></script>
 
-<script>
-  function readURL(input) {
-    if (input.files && input.files[0]) {
-      var reader = new FileReader();
+  <script>
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
 
-      reader.onload = function(e) {
-        $('#appimg').attr('src', e.target.result);
+        reader.onload = function(e) {
+          $('#appimg').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]); // convert to base64 string
       }
-
-      reader.readAsDataURL(input.files[0]); // convert to base64 string
     }
-  }
 
-  $(document).ready(function() {
-    $("#cover_input").change(function() {
-      console.log(this);
-      readURL(this);
+    $(document).ready(function() {
+      $("#cover_input").change(function() {
+        console.log(this);
+        readURL(this);
+      });
     });
-  });
 
-  const nowTime1 = new Date();
+    $(document).mouseup(function(e) {
+        var container = $(".box__filter");
+        if (!container.is(e.target) && container.has(e.target).length === 0) {
+            box__filter.classList.remove("show__filter");
+        }
+    });
+
+    const nowTime1 = new Date();
     nowTime1.setMinutes(nowTime1.getMinutes() - nowTime1.getTimezoneOffset());
     nowTime1.setHours(nowTime1.getHours() + 5);
     document.getElementById('timeOut').value = nowTime1.toISOString().slice(0, 16);
 
-  const nowTime3 = new Date();
+    const nowTime3 = new Date();
     nowTime3.setMinutes(nowTime3.getMinutes() - nowTime3.getTimezoneOffset());
     nowTime3.setHours(nowTime3.getHours() + 3);
     document.getElementById('timeStart').value = nowTime3.toISOString().slice(0, 16);
-    
+
     const nowTime5 = new Date();
     nowTime5.setMinutes(nowTime5.getMinutes() - nowTime5.getTimezoneOffset());
     nowTime5.setHours(nowTime5.getHours() + 5);
@@ -207,5 +211,5 @@
     nowTime7.setMinutes(nowTime5.getMinutes() - nowTime7.getTimezoneOffset());
     nowTime7.setHours(nowTime7.getHours() + 5);
     document.getElementById('timeDay').value = nowTime7.toISOString().slice(0, 16);
-</script>
+  </script>
   @endsection

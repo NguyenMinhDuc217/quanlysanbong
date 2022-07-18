@@ -7,7 +7,27 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
+<div class="modal" id="resetPassModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form action="{{route('users.resetpassword')}}" method="POST" >
+        @csrf
+      <div class="modal-header">
+        <h5 class="modal-title">Làm mới mật khẩu người dùng</h5>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" name="user" id="user_id">
+        <p>Bạn có chắc chắn làm mới mật khẩu người dùng không?</p>
+      </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+      <button type="submit" class="btn btn-primary">Đồng ý</button>
+      </div>
+      </form>
 
+    </div>
+  </div>
+</div>
 <div class="modal" id="deleteModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -76,9 +96,10 @@
                 <td>@if(@$user->created_at) {{ $user->created_at->format('d/m/Y')}} @endif</td>
                 <td>
                  <a  href="{{route('users.edit',['user'=>$user->id])}}"> <button class="btn btn-btn btn-primary">Sửa</button></a>
-                  <button class="btn btn-btn btn-success">Làm mới mật khẩu</button>
-                <button class="btn btn-btn btn-danger deleteUserBtn" value="{{$user->id}}">Xóa</button>
-              
+                  <button class="btn btn-btn btn-success resetPassword" value="{{$user->id}}">Làm mới mật khẩu</button>
+                <button class="btn btn-btn btn-danger deleteUserBtn" value="{{$user->id}}">Xoá</button>
+               
+  
                </th>
                 </td>
               </tr>
@@ -123,6 +144,14 @@
         "scrollX": true
       });
     });
+    $(document).ready(function(){
+        $(document).on('click','.resetPassword',function(e){
+          e.preventDefault();
+          var user_id=$(this).val();
+        $('#user_id').val(user_id);
+        $('#resetPassModal').modal('show');
+        })
+  });
     $(document).ready(function(){
         $(document).on('click','.deleteUserBtn',function(e){
           e.preventDefault();

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class UserLoginController extends Controller
@@ -29,6 +30,9 @@ class UserLoginController extends Controller
             ]
         );
         if (Auth::guard('user')->attempt(['email' => $request->email, 'password' => $request->password,'status'=>1], $request->remember)) {
+            $user = User::where('id',Auth::guard('user')->user()->id)->first();
+            $user->time_login = date('d-m-Y H:i:s',strtotime(Carbon::now()));
+            $user->save();
             return redirect()->route('list_pitch');
         }
         if (Auth::guard('user')->attempt(['email' => $request->email, 'password' => $request->password,'status'=>2], $request->remember)) {

@@ -10,6 +10,7 @@ use App\Models\Services;
 use App\Models\Tickets;
 use App\Models\User;
 use App\Models\Discount;
+use App\Models\SetService;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManagerStatic as Image;
 use Carbon\Carbon;
@@ -22,6 +23,7 @@ class TicketManagerController extends Controller
 
         return View('admin.ticket.index', compact('tickets'));
     }
+
     public function create()
     {
         // $months = ['1','2','3','4','5','6','7','8','9','10','11','12'];
@@ -31,6 +33,7 @@ class TicketManagerController extends Controller
     }
     public function store(Request $request)
     {
+        // dd($request->ch_name,$request->ch_for);
         define('MINUTE', 60);
         define('HAFLANHOUR', 30);
         define('SECOND', 60);
@@ -62,17 +65,38 @@ class TicketManagerController extends Controller
         $timeEnd = $request->timeEnd;
         $timeDay = $request->timeDay;
 
-        
-
-
-        // // echo $timeDay;
-        // // echo '<br>';
-        // echo date('d-m-Y H:i:s', $timeDay);die;
-
         //kiểm tra vé đã tồn tại hay chưa (ticket)
         $checkTicket = Tickets::where('name', $request->name)->first();
         if (!empty($checkTicket)) {
             return redirect()->route('tickets.create')->with('error', "Vé đã tồn tại");
+        }
+
+        $timeStartDay = $request->timeDay;
+        $timeEndDay = date('d-m-Y H:i:s', strtotime('+1 Hour', strtotime($request->timeDay)));
+
+        $dayStart = date_format(date_create($timeStartDay), "d");
+        $dayEnd = date_format(date_create($timeEndDay), "d");
+        if ($dayStart < $dayEnd) {
+            return response()->json(['status' => 401, 'error' => "Sân bóng hoạt động từ 7h00 đến 23h59"]);
+        }
+
+        $hourStart = date_format(date_create($timeStartDay), "H:i");
+        $hourEnd = date_format(date_create($timeEndDay), "H:i");
+
+        $timeStartNo = date('H:i', mktime(0, 0));
+        $timeEndNo = date('H:i', mktime(7, 0));
+
+
+        if ($timeStartNo <= $hourStart && $hourStart <= $timeEndNo) {
+            return response()->json(['status' => 401, 'error' => "Sân bóng hoạt động từ 7h00 đến 23h59"]);
+        }
+
+        if ($timeStartNo <= $hourEnd && $hourEnd <= $timeEndNo) {
+            return response()->json(['status' => 401, 'error' => "Sân bóng hoạt động từ 7h00 đến 23h59"]);
+        }
+
+        if ($timeStartNo <= $hourStart && $hourEnd <= $timeEndNo) {
+            return response()->json(['status' => 401, 'error' => "Sân bóng hoạt động từ 7h00 đến 23h59"]);
         }
 
         if ($timeOut < $now) {
@@ -100,8 +124,13 @@ class TicketManagerController extends Controller
                 return redirect()->route('tickets.create')->with('error', "Bạn đã trọn " . $month . " tháng nên thời gian hiệu lực của vé phải là 93 ngày");
             }
         }
-        $pitchs = Pitchs::where('id',$request->pitch_id)->first();
-        $services = Services::where('id',$request->type_service)->first();
+        $pitchs = Pitchs::where('id', $request->pitch_id)->first();
+        //lấy từng dịch vụ
+        $services = [];
+        foreach ($request->ch_name as $i => $id_service) {
+            $service = Services::where('id', $id_service)->first();
+            $services[$i] = $service;
+        }
 
         $tickets = new Tickets();
         $tickets->user_id = 0;
@@ -119,38 +148,36 @@ class TicketManagerController extends Controller
             Image::make($path)->resize(350, 228)->save(public_path('/images/tickets' . $filename));
             $tickets->image = $filename;
         }
-        $tickets->code_ticket = "D" .date('d', strtotime($timeDay)) . "M" . date('m', strtotime($month)) . "P" . $request->pitch_id . "-" . $tickets->id;
+        $tickets->code_ticket = "D" . date('d', strtotime($timeDay)) . "M" . date('m', strtotime($month)) . "P" . $request->pitch_id . "-" . $tickets->id;
         $tickets->number_day_of_week = $request->number_day;
         $tickets->timeout = $request->timeOut;
-        $tickets->price = $pitchs["price"] * $request->number_day * $request->month * 4;
+        // $tickets->price = $pitchs["price"] * $request->number_day * $request->month * 4;
+        $tickets->price = 0;
         $tickets->month = $request->month;
-        $tickets->discount = $request->discount;
         $tickets->status = $request->get('status');
         $tickets->save();
-        $tickets->code_ticket = "D" .date('d', strtotime($timeDay)) . "M" . date('m', strtotime($month)) . "P" . $request->pitch_id . "-" . $tickets->id;
+        $tickets->code_ticket = "D" . date('d', strtotime($timeDay)) . "M" . date('m', strtotime($month)) . "P" . $request->pitch_id . "-" . $tickets->id;
 
 
         //lấy phần tử cuối cùng trong mảng
         // $ticketsTemp = Tickets::all()->toArray();
         // $ticketsTemp = end($ticketsTemp);
-        // $detail_set_pitch_Temp = Detail_set_pitchs::all()->toArray();
-        // $detail_set_pitch_Temp = end($detail_set_pitch_Temp);
 
         $detailTicket = new DetailTicket();
         $detailTicket->ticket_id = $tickets->id;
         $detailTicket->pitch_id = $request->pitch_id;
         $detailTicket->description = $request->describe;
-        $detailTicket->sercive_id = $request->type_service;
+        $detailTicket->sercive_id = '';
         $detailTicket->start_time = $request->timeStart;
         $detailTicket->end_time = $request->timeEnd;
         $detailTicket->status = $request->get('status');
 
         $timeDaystart = $timeDay;
         $timeDayend = date('d-m-Y H:i:s', strtotime('+1 Hour', strtotime($timeDay)));
-        
+
         $times[0]['timeDaystart'] = date('Y-m-d H:i:s', (strtotime($timeDaystart)));
         $times[0]['timeDayend'] = date('Y-m-d H:i:s', (strtotime($timeDayend)));
-        
+
         $a = date('Y-m-d H:i:s', strtotime('+7 day', strtotime($timeDaystart)));
         $b = date('Y-m-d H:i:s', strtotime('+7 day', strtotime($timeDayend)));
         for ($i = 1; $i <= 3; $i++) {
@@ -187,13 +214,11 @@ class TicketManagerController extends Controller
                 }
                 return redirect()->route('tickets.create')->with('error', "Sân đã được đặt từ $setTimeStart đến $setTimeEnd");
             }
-
-            
         }
-        $detailTicket->detail_time_of_week = json_encode($times) ;
+        $detailTicket->detail_time_of_week = json_encode($times);
+
         // lưu thông tin vô bảng detail set pitch
-        
-        foreach($times as $time){
+        foreach ($times as $time) {
             $detail_set_pitch[] = array(
                 'ticket_id' => $detailTicket->ticket_id,
                 'picth_id' => $detailTicket->pitch_id,
@@ -202,18 +227,47 @@ class TicketManagerController extends Controller
                 'start_time' => $time["timeDaystart"],
                 'end_time' => $time["timeDayend"],
                 'price_pitch' => $pitchs["price"],
-                'total' => ($pitchs["price"] + $services["price"]) - (($pitchs["price"] + $services["price"]) * $request->discount /100),
+                'total' => $pitchs["price"],
                 'ispay' => '0',
             );
-
         }
         Detail_set_pitchs::insert($detail_set_pitch);
 
+        $checkDetailSetPitch = Detail_set_pitchs::where('ticket_id', $tickets->id)->get();
+        foreach ($checkDetailSetPitch as $detailSetPitch) {
+            if ($request->ch_name != null) {
+                foreach ($request->ch_name as $server_id) {
+                    $service = Services::where('id', $server_id)->first();
+                    $setService = new SetService();
+                    $setService->ticket_id = $tickets->id;
+                    $setService->set_pitch_id = $detailSetPitch['id'];
+                    $setService->service_id = $server_id;
+                    $setService->name = $service->name;
+                    $setService->quantity = $request->ch_for[$server_id][0];
+                    if ($service->type == 1) {
+                        $setService->total = $request->ch_for[$server_id][0] * $timeSoccer * $service->price;
+                    } else {
+                        $setService->total = $request->ch_for[$server_id][0] * $service->price;
+                    }
+                    $setService->save();
+                }
+            }
+            $checkSetService = SetService::where('set_pitch_id', $detailSetPitch['id'])->get();
+            $totalService = 0;
+            foreach ($checkSetService as $setService) {
+                $totalService = $totalService + $setService['total'];
+            }
+            $detailSetPitch->update([
+                'total' => $detailSetPitch['price_pitch'] + $totalService,
+            ]);
+            $detailSetPitch->save();
+            $tickets->price = $tickets->price + $detailSetPitch['total'];
+        }
         $detailTicket->save();
 
         $notification = new Notifications();
-        $notification->title = 'Vé '.$tickets->name.' mới được tạo';
-        $notification->content = 'Với mức giá chỉ '.number_format($tickets->price).' vnd bạn đã có thể sở hữu chiếc vé "'.$tickets->name.'" có mã là "'.$tickets->code_ticket. '" có thời hạn từ '.date('d-m-Y',strtotime($detailTicket->start_time)).' đến '.date('d-m-Y',strtotime($detailTicket->end_time)).' để có thể thoả mãn đam mê với trái bóng tròn của mình';
+        $notification->title = 'Vé ' . $tickets->name . ' mới được tạo';
+        $notification->content = 'Với mức giá chỉ ' . number_format($tickets->price) . ' vnd bạn đã có thể sở hữu chiếc vé "' . $tickets->name . '" có mã là "' . $tickets->code_ticket . '" có thời hạn từ ' . date('d-m-Y', strtotime($detailTicket->start_time)) . ' đến ' . date('d-m-Y', strtotime($detailTicket->end_time)) . ' để có thể thoả mãn đam mê với trái bóng tròn của mình';
         $notification->save();
 
         if ($tickets->save()) {
@@ -227,6 +281,7 @@ class TicketManagerController extends Controller
         }
         return redirect()->route('tickets.create')->with('error', 'Xử lí thêm thất bại');
     }
+
     public function edit($id)
     {
         $pitchs = Pitchs::where('id', $id)->first();

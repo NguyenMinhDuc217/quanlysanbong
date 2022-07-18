@@ -23,6 +23,20 @@
         <div class="col-md-12">
           <form method="POST" action="{{route('pitchs.store')}}" enctype="multipart/form-data">
             @csrf
+            @if (session()->has('error'))
+        <div class="alert alert-danger">
+            {{ session()->get('error') }}
+        </div>
+        @endif
+        @if (count($errors) > 0)
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
             <!-- avatar -->
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
               <div class="inbox-left-sd">
@@ -51,20 +65,30 @@
               <div class="form-group">
                 <label for="">Tên</label>
                 <input type="text" name="name" class="form-control" placeholder="Tên sân">
-                @error('username')
+                <!-- @error('name')
                 <span class="vali_sign" class="invalid-feedback" role="alert">
                   <strong>{{ $message }}</strong>
                 </span>
-                @enderror
+                @enderror -->
               </div>
               <div class="form-group">
                 <label for="">Giá</label>
                 <input type="text" name="price" class="form-control" placeholder="Giá">
+                <!-- @error('price')
+                <span class="vali_sign" class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+                </span>
+                @enderror -->
               </div>
               <!-- Describe -->
               <div class="form-group">
                 <label>Thông tin <span class="text-danger"></span></label>
                 <textarea class="form-control html-editor-cm" id="describe" name="describe" placeholder="Thông tin"></textarea>
+                <!-- @error('describe')
+                <span class="vali_sign" class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+                </span>
+                @enderror -->
               </div>
               <!-- Type Pitch -->
               <div class="form-group">
@@ -92,11 +116,11 @@
                       <label class="active">Ảnh Hoạt Động </label><span> (Bạn có thể chọn tối đa 8 ảnh. Ảnh nổi bật của bạn phải là tệp PNG hoặc JPEG với kích thước tệp tối đa là 8 MB và độ phân giải ảnh là: 1455 x 500px)</span>
                       <div id="screenshots" class="screenshots" style="padding-top: .5rem;"></div>
                     </div>
-                    @error('screenshots')
+                    <!-- @error('screenshots')
                     <span class="vali_sign" class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
                     </span>
-                    @enderror
+                    @enderror -->
                   </div>
                 </div>
               </div>
@@ -104,7 +128,6 @@
                 <div class="uploaded" id="screen">
                 </div>
               </div> -->
-
               @if(session()->has('error'))
               <p class="vali_sign" class="invalid-feedback" role="alert">
                 <strong>{{ session()->get('error') }}</strong>
@@ -146,7 +169,7 @@
       $(document).on('click', '.remove-img', function() {
         $(this).parent('.uploaded-image').remove();
       });
-      $('#screen').html(html);
+      // $('#screen').html(html);
     });
   </script>
   @endsection
