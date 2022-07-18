@@ -17,7 +17,7 @@
             @endif
             <div class="form-control">
                 <div class="form_control__custom">
-                    <label for="password">Mật khẩu cũ</label>
+                    <label for="password">Mật khẩu cũ: <span class="text-danger">*</span></label>
                     <div class="form-control_notify">
                         <input type="password" id="old_password" name="old_password" placeholder="Nhập mật khẩu cũ" autocomplete="off">
                         @error('old_password')
@@ -30,7 +30,7 @@
             </div>
             <div class="form-control">
                 <div class="form_control__custom">
-                    <label for="password">Mật khẩu mới</label>
+                    <label for="password">Mật khẩu mới: <span class="text-danger">*</span></label>
                     <div class="form-control_notify">
                         <input type="password" id="new_password" name="new_password" placeholder="Nhập mật khẩu mới" autocomplete="off">
                         @error('new_password')
@@ -43,7 +43,7 @@
             </div>
             <div class="form-control">
                 <div class="form_control__custom">
-                    <label for="password">Xác nhận xật khẩu mới</label>
+                    <label for="password">Xác nhận xật khẩu mới: <span class="text-danger">*</span></label>
                     <div class="form-control_notify">
                         <input type="password" id="confirm_password" name="confirm_password" placeholder="Nhập lại mật khẩu mới" autocomplete="off">
                         @error('confirm_password')

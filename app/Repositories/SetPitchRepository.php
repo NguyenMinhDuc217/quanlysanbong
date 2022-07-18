@@ -312,7 +312,7 @@ class SetPitchRepository implements SetPitchRepositoryInterface
       }
       
       if(abs(strtotime($timeStart)-strtotime(Carbon::now()->format('Y-m-d H:i:s')))/(60)<120){
-        return response()->json(['status' => 402, 'error' => "Không thể thay đổi trước 120p"]);
+        return response()->json(['status' => 402, 'error' => "Không thể thay đổi trước 120 phút"]);
     }
     
     if(strtotime(Carbon::now()->format('Y-m-d H:i:s'))-strtotime($timeStart)>0||strtotime(Carbon::now()->format('Y-m-d H:i:s'))-strtotime($timeEnd)>0){

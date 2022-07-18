@@ -71,7 +71,7 @@
                 <div class="form_control__custom">
                     <label for="email">Thời gian tạo:</label>
                     <div class="form-control_notify">
-                        <input type="text" name="created_at" id="created_at" disabled readonly value="{{date('d-m-Y'),@$users['created_at']}}" placeholder="Nhập email" autocomplete="off">
+                        <input type="text" name="created_at" id="created_at" disabled readonly value="{{date('d-m-Y',strtotime(@$users['created_at']))}}" placeholder="Nhập email" autocomplete="off">
                         @error('phone_number')
                         <span class="vali_sign" class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -87,17 +87,11 @@
             <div class="login_google__zalo">
                 <a href="{{route('edit.information',['id'=>@$users['id']])}}">
                     <div class="login_google">
-                        <!-- <div class="login_google__icon">
-                            <i class="fa-brands fa-google"></i>
-                        </div> -->
                         <span class="log_in__title">Cập nhật thông tin</span>
                     </div>
                 </a>
                 <a href="{{route('edit.password',['id'=>@$users['id']])}}">
                     <div class="login_zalo">
-                        <!-- <div class="login_zalo__icon">
-                            <i class="fa-brands fa-facebook-f"></i>
-                        </div> -->
                         <span class="log_in__title">Thay đổi mật khẩu</span>
                     </div>
                 </a>
