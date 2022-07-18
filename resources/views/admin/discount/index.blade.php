@@ -112,6 +112,7 @@
             "sortDescending": ": activate to sort column descending"
           }
         },
+        "scrollX": true
       });
     });
   </script>

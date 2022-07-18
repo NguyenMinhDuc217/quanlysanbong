@@ -270,12 +270,13 @@ class TicketManagerController extends Controller
         $notification->content = 'Với mức giá chỉ ' . number_format($tickets->price) . ' vnd bạn đã có thể sở hữu chiếc vé "' . $tickets->name . '" có mã là "' . $tickets->code_ticket . '" có thời hạn từ ' . date('d-m-Y', strtotime($detailTicket->start_time)) . ' đến ' . date('d-m-Y', strtotime($detailTicket->end_time)) . ' để có thể thoả mãn đam mê với trái bóng tròn của mình';
         $notification->save();
 
-        if ($tickets->save()) {
+        if ($tickets->save()) {         
             $discount=new Discount();
-            $discount->pitch_id=$tickets->id;
+            $discount->pitch_id='';
+            $discount->ticket_id=$tickets->id;
             $discount->discount=0;
-            $discount->start_discount=0;
-            $discount->end_discount=0;
+            $discount->start_discount=Carbon::now()->subDays(1)->format('Y-m-d');
+            $discount->end_discount=Carbon::now()->subDays(1)->format('Y-m-d');
             $discount->save();
             return redirect()->route('tickets.create')->with('success', 'Thêm vé mới thành công');
         }

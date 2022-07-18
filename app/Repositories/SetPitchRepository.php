@@ -43,7 +43,7 @@ class SetPitchRepository implements SetPitchRepositoryInterface
 
         $timeStart=$request->timeStart;
         $timeEnd=$request->timeEnd;
-        dd($timeStart, $timeEnd);
+        
         $dayStart= date_format(date_create($request->timeStart),"d");
         $dayEnd= date_format(date_create($request->timeEnd),"d"); 
         if($dayStart<$dayEnd){
@@ -372,11 +372,14 @@ class SetPitchRepository implements SetPitchRepositoryInterface
       $setPitch->save();
 
       $deleteService=SetService::where('set_pitch_id',$id)->get();
-      foreach($deleteService as $setService){
-          foreach($request->ch_name as $service_id){
-                unset($deleteService[$service_id-1]);
+      if(!empty($request->ch_name)){
+        foreach($deleteService as $setService){
+            foreach($request->ch_name as $service_id){
+                  unset($deleteService[$service_id-1]);
+          }
         }
       }
+
       foreach($deleteService as $delete){
         $delete->delete();
       }
