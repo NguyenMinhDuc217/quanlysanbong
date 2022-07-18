@@ -9,6 +9,7 @@ use App\Models\Pitchs;
 use App\Models\Services;
 use App\Models\Tickets;
 use App\Models\User;
+use App\Models\Discount;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManagerStatic as Image;
 use Carbon\Carbon;
@@ -216,6 +217,12 @@ class TicketManagerController extends Controller
         $notification->save();
 
         if ($tickets->save()) {
+            $discount=new Discount();
+            $discount->pitch_id=$tickets->id;
+            $discount->discount=0;
+            $discount->start_discount=0;
+            $discount->end_discount=0;
+            $discount->save();
             return redirect()->route('tickets.create')->with('success', 'Thêm vé mới thành công');
         }
         return redirect()->route('tickets.create')->with('error', 'Xử lí thêm thất bại');

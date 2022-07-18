@@ -118,6 +118,12 @@
                   <p>Hóa đơn</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{route('discounts.index')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Khuyến mãi</p>
+                </a>
+              </li>
             </ul>
           </li>
           <li class="nav-item">
