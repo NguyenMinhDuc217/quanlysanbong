@@ -84,21 +84,23 @@ class PitchManagerController extends BaseAdminController
         {
             return back()->withInput()->withErrors($validator);
         }
-        
         $pitch = new Pitchs();
+        if ($pitch->where('name', '=', $request->name)->exists()) {
+            return redirect()->route('pitchs.create')->with('error', 'Tên sân đã tồn tại');
+        }
         $pitch->name = $request->name;
         $pitch->price = $request->price;
         $pitch->describe = $request->describe;
         //avartar
         if ($request->hasFile('cover')) {
             $image = $request->file('cover');
-            $filename = $pitch->name . '.' . 'jpg';
+            $filename = str_replace(' ', '', $pitch->name.'-'.Str::random(10). '.' . 'jpg');
             $location = public_path('/images/pitch/' . $filename);
             Image::make($image)->resize(350, 228)->save($location);
             $pitch->avartar = $filename;
         } else {
             $path = $request->get('cover');
-            $filename = $request->appid . '.jpg';
+            $filename = Str::random(10) . '.jpg';
             $filename = public_path('/images/pitch/' . $filename);
             Image::make($path)->resize(350, 228)->save(public_path('/images/pitch' . $filename));
             $pitch->avartar = $filename;
