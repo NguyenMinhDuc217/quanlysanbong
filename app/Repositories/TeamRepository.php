@@ -42,7 +42,12 @@ class TeamRepository implements TeamRepositoryInterface
     }
     public function listTeam()
     {
+        $myTeams = Teams::where('user_name',Auth::guard('user')->user()->username)->get();
         $teams = Teams::orderby('id', 'DESC')->paginate(5)->appends(request()->query());
+        foreach($myTeams as $myteam){
+            $teams = Teams::where('user_name',$myteam['user_name'])->first();
+            $teams->delete();
+        }
         return view('list-team.index', compact('teams'));
     }
     public function myTeam()
