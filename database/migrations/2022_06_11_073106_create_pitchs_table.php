@@ -19,7 +19,7 @@ class CreatePitchsTable extends Migration
             $table->id();
             $table->string('name',255);
             $table->string('price')->nullable();
-            $table->string('discount')->nullable();
+            $table->integer('discount_id')->default(0);
             $table->string('describe',255)->nullable();
             $table->string('type_pitch',255);
             $table->string('avartar',255)->nullable();

@@ -83,7 +83,7 @@ class UserManagerController extends BaseAdminController
         $user->status='1';
         $user-> token=strtoupper(Str::random(12));
       if($user->save()){
-        return redirect()->route('users.create')->with('success','Thêm sân mới thành công');
+        return redirect()->route('users.create')->with('success','Thêm người dùng mới thành công');
       }
        return redirect()->route('users.create')->with('error','Xử lí thêm thất bại');
     }
@@ -144,7 +144,7 @@ class UserManagerController extends BaseAdminController
         $user->save();
 
         if($user->save()){
-            return redirect()->route('users.edit',['user'=>$user->id])->with('success','Cập nhật User mới thành công');
+            return redirect()->route('users.edit',['user'=>$user->id])->with('success','Cập nhật người dùng mới thành công');
           }
            return redirect()->route('users.edit',['user'=>$user->id])->with('error','Xử lí cập nhật thất bại');
     }

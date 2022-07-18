@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\BaseAdminController;
 use App\Models\Pitchs;
-use App\Models\User;
+use App\Models\Discount;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -135,10 +135,17 @@ class PitchManagerController extends BaseAdminController
             }
         }
         $pitch->screenshort = json_encode($count_s);
-        if ($pitch->save()) {
-            return redirect()->route('pitchs.create')->with('success', 'Thêm sân mới thành công');
-        }
-        return redirect()->route('pitchs.create')->with('error', 'Xử lí thêm thất bại');
+        if($pitch->save()){
+             $discount=new Discount();
+             $discount->pitch_id=$pitch->id;
+             $discount->discount=0;
+             $discount->start_discount=0;
+             $discount->end_discount=0;
+             $discount->save();
+
+            return redirect()->route('pitchs.create')->with('success','Thêm sân mới thành công');
+          }
+           return redirect()->route('pitchs.create')->with('error','Xử lí thêm thất bại');
     }
 
     /**

@@ -71,9 +71,8 @@
                 <th>Tên</th>
                 <th>Email</th>
                 <th>SĐT</th>
-                <!-- <th>Ví</th> -->
                 <th>Trình trạng</th>
-                <!-- <th>Người tạo</th> -->
+                <th>Người tạo</th>
                 <th>Ngày tạo</th>
                 <th>Chức năng</th>
               </tr>
@@ -85,7 +84,6 @@
                 <td>{{$user->username}}</td>
                 <td>{{$user->email}}</td>
                 <td>{{$user->phone_number}}</td>
-                <!-- <td>{{$user->wallet}}</td> -->
                 <td>@if($user->status==1)
                   <span style=" color: #2ecc71;">Đang hoạt động</span>
                   @elseif($user->status==2)
@@ -94,7 +92,7 @@
                   <span style=" color: red;">Bị khóa</span>
                   @endif
                 </td>
-                <!-- <td>{{$user->created_by}}</td> -->
+                <td>{{$user->created_by}}</td>
                 <td>@if(@$user->created_at) {{ $user->created_at->format('d/m/Y')}} @endif</td>
                 <td>
                  <a  href="{{route('users.edit',['user'=>$user->id])}}"> <button class="btn btn-btn btn-primary">Sửa</button></a>

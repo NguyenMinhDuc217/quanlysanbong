@@ -44,10 +44,15 @@
         $end= date_format($date,"d/m/Y");
         @endphp
       <th>{{$end}}</th>
-      <th>{{$ticket['ticket']->price}}</th>
+      @php
+      $price=number_format($ticket['ticket']->price, 0, '', '.');
+      @endphp
+      <th>{{$price}}đ</th>
       </tr>
     </div>
       @endforeach
    
 </table>
-
+<div class="hompage_pagination">
+    {{$paginate->appends($tickets)->links('components.pagination.custom')}}
+  </div>

@@ -16,10 +16,10 @@
             $price=(int)$data['ticket']->price;
             @endphp
             
-            <span>Giá vé: {{number_format(@$price*(100-$discount)/100)}}đ</span>
+            <span>Giá vé: {{number_format(@$price*(100-$discount)/100, 0, '', '.')}}đ</span>
         
             @if(!empty($data['ticket']->discount))
-            <p class="price_discount"> {{number_format(@$data['ticket']->price)}}đ</p>
+            <p class="price_discount"> {{number_format(@$data['ticket']->price ,0, '', '.')}}đ</p>
             @else
             @endif
         </div>

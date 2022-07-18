@@ -7,6 +7,7 @@ use App\Models\Detail_set_pitchs;
 use App\Repositories\Interfaces\PitchRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Models\Pitchs;
+use App\Models\Discount;
 use App\Models\Services;
 use App\Models\User_comments;
 use DateTime;

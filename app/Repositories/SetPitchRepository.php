@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\SendMail;
 use App\Models\Bill;
 use App\Models\DetailTicket;
+use App\Models\Discount;
 
 class SetPitchRepository implements SetPitchRepositoryInterface
 {
@@ -107,15 +108,33 @@ class SetPitchRepository implements SetPitchRepositoryInterface
             }
             return response()->json(['status' => 400, 'error' => "Sân đã được đặt từ $setTimeStart đến $setTimeEnd"]);
         }
-    
+
+        if($request->ch_name!=null){
+            foreach($request->ch_name as $server_id){
+                if($request->ch_for[$server_id][0]<1||$request->ch_for[$server_id][0]>300){
+                    return response()->json(['status' => 400, 'error' => "Số lượng đặt chỉ từ 1 đến 300"]);
+                }
+            }
+          }
+
+
+        $now=Carbon::now()->format('Y-m-d');
+
+        $discount=Discount::where('pitch_id',$pitchid)->where('end_discount','>=',$now)->first();
+        
+        if(!empty($discount)){
+            $discount=$discount->discount;
+        }else{
+            $discount=0;
+        }
         $setPitch=new Detail_set_pitchs();
         $setPitch->picth_id=$pitchid;
         $setPitch->user_id=Auth::guard('user')->user()->id;
         $setPitch->date_event= $request->timeStart;
         $setPitch->start_time = $request->timeStart;
         $setPitch->end_time = $request->timeEnd;   
-        $setPitch->price_pitch= $pitch->price*$timeSoccer*((PERCENT-$pitch->discount)/PERCENT);   
-        $setPitch->total= $pitch->price*$timeSoccer*((PERCENT-$pitch->discount)/PERCENT);   
+        $setPitch->price_pitch= $pitch->price*$timeSoccer*((PERCENT-$discount)/PERCENT);   
+        $setPitch->total= $pitch->price*$timeSoccer*((PERCENT-$discount)/PERCENT);   
         $setPitch->save();
 
         if($request->ch_name!=null){
@@ -152,7 +171,8 @@ class SetPitchRepository implements SetPitchRepositoryInterface
             $bills[$bill->detail_set_pitch_id]=$bill->transaction_id;
      }
     $listSetPitch=[];
-    foreach(Detail_set_pitchs::orderby('start_time','DESC')->where('user_id',Auth::guard('user')->user()->id)->get() as $i=>$detail_set_pitch){
+    $paginate=Detail_set_pitchs::orderby('start_time','DESC')->where('user_id',Auth::guard('user')->user()->id)->paginate(10);
+    foreach(Detail_set_pitchs::orderby('start_time','DESC')->where('user_id',Auth::guard('user')->user()->id)->paginate(10) as $i=>$detail_set_pitch){
        $listSetPitch[$i]['detail_set_pitch']=$detail_set_pitch;
        $listSetPitch[$i]['name']=$pitchs[$detail_set_pitch->picth_id];
        foreach(SetService::where('set_pitch_id',$detail_set_pitch->id)->get() as $k=>$setService){
@@ -163,7 +183,7 @@ class SetPitchRepository implements SetPitchRepositoryInterface
 
     }
 
-    return view('list-set-pitch.index',compact('listSetPitch'));
+    return view('list-set-pitch.index',compact('listSetPitch','paginate'));
    }
 
    public function deleteSetPitch(Request $request){ 
@@ -295,6 +315,9 @@ class SetPitchRepository implements SetPitchRepositoryInterface
         return response()->json(['status' => 402, 'error' => "Không thể thay đổi trước 120p"]);
     }
     
+    if(strtotime(Carbon::now()->format('Y-m-d H:i:s'))-strtotime($timeStart)>0||strtotime(Carbon::now()->format('Y-m-d H:i:s'))-strtotime($timeEnd)>0){
+        return response()->json(['status' => 402, 'error' => "Thời gian của trận đấu phải lớn hơn thời gian hiện tại"]);
+    }
       
       $pitch=Pitchs::where('id',$request->pitchid)->where('status','1')->first();
        if( $pitch==null){
@@ -313,21 +336,39 @@ class SetPitchRepository implements SetPitchRepositoryInterface
       }
       
       if($checkTimes->count()>0){
-          foreach ($checkTimes as $checkTime) {
-              $setTimeStart=$checkTime->start_time;
-              $setTimeEnd=$checkTime->end_time;
-          }
-          return response()->json(['status' => 400, 'error' => "Sân đã được đặt từ $setTimeStart đến $setTimeEnd"]);
+          return response()->json(['status' => 400, 'error' => "Vui lòng chọn sân khác"]);
       }
-  
+      
+      if($request->ch_name!=null){
+        foreach($request->ch_name as $server_id){
+            if($request->ch_for[$server_id][0]<1||$request->ch_for[$server_id][0]>300){
+                return response()->json(['status' => 400, 'error' => "Số lượng đặt chỉ từ 1 đến 300"]);
+            }
+        }
+      }
+
       $setPitch=Detail_set_pitchs::find($id);
+      
+      $dayCreate= date_format(date_create($setPitch->created_at),"Y-m-d");
+      $checkSetActiveDis=Discount::where('pitch_id',$request->pitchid)->where('start_discount','<=',$dayCreate)->where('end_discount','>=',$dayCreate)->first();
+      $discount=0;
+      if(!empty($checkSetActiveDis)){
+        $now=Carbon::now()->format('Y-m-d');
+        $discount=Discount::where('pitch_id',$request->pitchid)->where('end_discount','>=',$now)->first();
+        if(!empty($discount)){
+            $discount=$discount->discount;
+        }else{
+            $discount=0;
+        }
+      }
+
       $setPitch->picth_id=$request->pitchid;
       $setPitch->user_id=Auth::guard('user')->user()->id;
       $setPitch->date_event= $request->timeStart;
       $setPitch->start_time = $request->timeStart;
       $setPitch->end_time = $request->timeEnd;   
-      $setPitch->price_pitch= $pitch->price*$timeSoccer*((PERCEN-$pitch->discount)/PERCEN);   
-      $setPitch->total= $pitch->price*$timeSoccer*((PERCEN-$pitch->discount)/PERCEN);   
+      $setPitch->price_pitch= $pitch->price*$timeSoccer*((PERCEN-$discount)/PERCEN);   
+      $setPitch->total= $pitch->price*$timeSoccer*((PERCEN-$discount)/PERCEN);   
       $setPitch->save();
 
       $deleteService=SetService::where('set_pitch_id',$id)->get();

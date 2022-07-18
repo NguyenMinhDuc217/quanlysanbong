@@ -130,6 +130,11 @@ Route::prefix('admin')->group(function () {
    Route::resource('/services', ServiceManagerController::class);
    Route::post('/services/delete', [ServiceManagerController::class,'destroy'])->name('services.delete');
    Route::resource('/bills', BillsManagerController::class);
+   Route::resource('/discounts', DiscountManagerController::class);
+   Route::get('/discounts/update/pitch', [DiscountManagerController::class,'showUpdatePitch'])->name('show.discount.pitch');
+   Route::post('/discounts/update/pitch', [DiscountManagerController::class,'updatePitch'])->name('discount.pitch');
+   Route::get('/discounts/update/ticket', [DiscountManagerController::class,'showUpdateTicket'])->name('show.discount.ticket');
+   Route::post('/discounts/update/tickets', [DiscountManagerController::class,'updateTicket'])->name('discount.ticket');
    Route::get('/image', [ImageManagerController::class,'fileManager'])->name('admin.image');
    Route::get('/chart-set-pitch', [StatisticManagerController::class,'showChartSetPitch'])->name('show.chart.set.pitch');
    Route::get('/chart/set-pitch', [StatisticManagerController::class,'chartSetPitch'])->name('chart.set.pitch');

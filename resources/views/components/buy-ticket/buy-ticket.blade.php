@@ -67,9 +67,9 @@
                 </div>
                 <div class="product_item__title_1">{{$ticket['code_ticket']}} - {{$ticket['name']}} - Số ngày trong tuần {{$ticket['number_day_of_week']}} - Gói {{$ticket['month']}} tháng </div>
                 <div class="product_item__vote">
-                    <span class="product_item__vote_num">Giá vé: {{number_format($ticket->price*(100-$ticket->discount)/100)}}đ</span>
+                    <span class="product_item__vote_num">Giá vé: {{number_format($ticket->price*(100-$ticket->discount)/100 ,0, '', '.')}}đ</span>
                     @if($ticket->discount!=0)
-                    <span class="product_item__vote_num_discount">{{number_format($ticket->price)}}đ</span>
+                    <span class="product_item__vote_num_discount">{{number_format($ticket->price, 0, '', '.')}}đ</span>
                     @else
                     @endif
                   </div>
