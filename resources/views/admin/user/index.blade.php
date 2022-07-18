@@ -63,6 +63,16 @@
             </div>
           </div>
         </div>
+        @if(Session::has('success'))
+                        <div class="alert alert-success notifi__success">
+                            <span>{{ Session::get('success') }}</span>
+                        </div>
+                       @endif
+             @if(session()->has('error'))
+                                <p class="vali_sign"  class="invalid-feedback" role="alert">
+                                   <strong>{{ session()->get('error') }}</strong>
+                                 </p>
+             @endif
         <div class="col-md-12">
           <table id="myTable" class="table table-striped table-bordered nowrap">
             <thead>

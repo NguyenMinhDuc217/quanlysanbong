@@ -161,18 +161,18 @@ class UserManagerController extends BaseAdminController
         $pass=Str::random(8);
          $user->password = bcrypt($pass);
          if(!$user->save()){
-             $subject =null;
-             $details = [
-                 'title' => 'Dặt lại mật khẩu',
-                 'name' => $user->username,
-                 'body'=>"Mật khẩu hiện tại là $pass",
-                 
-             ];
-                 $email=$user->email;
-                 Mail::to( $email)->send(new SendMail($details, $subject));
-
              return redirect()->route('users.index')->with('error','Làm mới mật khẩu người dùng không thành công');
          }
+         $subject =null;
+         $details = [
+             'title' => 'Đặt lại mật khẩu',
+             'name' => $user->username,
+             'body'=>"Mật khẩu hiện tại là $pass",
+             
+         ];
+             $email=$user->email;
+             Mail::to( $email)->send(new SendMail($details, $subject));
+
          return redirect()->route('users.index')->with('success','Làm mới mật khẩu người dùng thành công');
 
 
