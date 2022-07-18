@@ -2,7 +2,7 @@
 
 @section('content')
 
-@section('content_header', 'Dịch vụ')
+@section('content_header', 'Hóa đơn')
 <link rel="stylesheet" type="text/css" href="{{asset('admin/dist/css/style.css') }}">
 
 <div class="container">
@@ -22,22 +22,28 @@
             <thead>
               <tr>
                 <th>STT</th>
+                <th>Tên người dùng</th>
                 <th>Mã hóa đơn</th>
+                <th>Mã giao dịch</th>
                 <th>Giá</th>
                 <th>Mã ngân hàng</th>
                 <th>Nội dung</th>
-                <th>Ngày tạo</th>
               </tr>
             </thead>
             <tbody>
               @foreach($bills as $i=>$bill)
               <tr>
                 <th>{{$i+1}}</th>
+                  @foreach($users as $user)
+                   @if($bill->user_id==$user->id)
+                   <th>{{$user->username}}</th>
+                   @endif
+                  @endforeach
                 <th>{{$bill->bill_number}}</th>
+                <th>{{$bill->transaction_id}}</th>
                 <th>{{$bill->price}}</th>
                 <th>{{$bill->bank}}</th>
                 <th>{{$bill->transfer_content}}</th>
-                <th>{{$bill->createdate}}</th>
               </tr>
               @endforeach
             </tbody>

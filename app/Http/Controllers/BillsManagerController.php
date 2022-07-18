@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Bill;
+use App\Models\User;
 
 class BillsManagerController extends Controller
 {
@@ -14,9 +15,12 @@ class BillsManagerController extends Controller
      */
     public function index()
     {
-        $bills=Bill::all();
-
-        return view('admin.bill.index',compact('bills'));
+        $bills=Bill::where('transaction_id','!=',null)->get();
+        $users=[];
+        foreach(User::all() as $user){
+         $users[$user->id]=$user;
+        }
+        return view('admin.bill.index',compact('bills','users'));
     }
 
     /**
