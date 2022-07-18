@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendMail;
 
 class UserManagerController extends BaseAdminController
 {
@@ -151,16 +153,27 @@ class UserManagerController extends BaseAdminController
 
     public function resetPassword(Request $request)
     {
-           $user = User::where('id',$request->user)->where('status',1)->first();
+        $user = User::where('id',$request->user)->where('status',1)->first();
            
-           if(empty($user)){
-            return redirect()->route('users.index')->with('error','Không tìm thấy người dùng');
-           }
-            $user->password = bcrypt('12345678');
-            if(!$user->save()){
-                return redirect()->route('users.index')->with('error','Làm mới mật khẩu người dùng không thành công');
-            }
-            return redirect()->route('users.index')->with('success','Làm mới mật khẩu người dùng thành công');
+        if(empty($user)){
+         return redirect()->route('users.index')->with('error','Không tìm thấy người dùng');
+        }
+        $pass=Str::random(8);
+         $user->password = bcrypt($pass);
+         if(!$user->save()){
+             $subject =null;
+             $details = [
+                 'title' => 'Dặt lại mật khẩu',
+                 'name' => $user->username,
+                 'body'=>"Mật khẩu hiện tại là $pass",
+                 
+             ];
+                 $email=$user->email;
+                 Mail::to( $email)->send(new SendMail($details, $subject));
+
+             return redirect()->route('users.index')->with('error','Làm mới mật khẩu người dùng không thành công');
+         }
+         return redirect()->route('users.index')->with('success','Làm mới mật khẩu người dùng thành công');
 
 
     }
