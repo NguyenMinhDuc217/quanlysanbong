@@ -288,8 +288,13 @@ class TicketManagerController extends Controller
 
     public function edit($id)
     {
-        $pitchs = Pitchs::where('id', $id)->first();
-        return View('admin.set_pitch.edit', compact('pitchs'));
+        $services = Services::all();
+        $pitchs = Pitchs::all();
+        $tickets = Tickets::where('id',$id)->first();
+        $detailTicket = DetailTicket::where('ticket_id',$tickets->id)->first();
+        $detail_set_pitch = Detail_set_pitchs::where('ticket_id', $tickets->id)->get();
+        // $setService = SetService::where('set_pitch_id', )
+        return View('admin.ticket.edit', compact('services', 'pitchs'));
     }
     public function update(Request $request, $id)
     {

@@ -4,6 +4,27 @@
 
 @section('content_header', 'Pitchs')
 <link rel="stylesheet" type="text/css" href="{{asset('admin/dist/css/style.css') }}">
+
+<div class="modal" id="deleteModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form action="{{route('set_pitchs.pay')}}" method="POST">
+        @csrf
+        <div class="modal-header">
+          <h5 class="modal-title">Thanh toán đặt sân</h5>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" name="setpitch" id="setpitch_id">
+          <p>Bạn có chắc chắn muốn thanh toán</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+          <button type="submit" class="btn btn-primary">Đồng ý</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 <div class="container">
   <div class="row">
     <div class="col-md-12">
@@ -11,6 +32,16 @@
         <div class="card-header">
           <h3 class="card-title"><b>Danh sách đặt sân</b></h3>
         </div>
+        @if(Session::has('success'))
+        <div class="alert alert-success notifi__success">
+          <span>{{ Session::get('success') }}</span>
+        </div>
+        @endif
+        @if(session()->has('error'))
+        <p class="vali_sign" class="invalid-feedback" role="alert">
+          <strong>{{ session()->get('error') }}</strong>
+        </p>
+        @endif
         <!-- <div class="container" style="margin: 10px 0px;">
           <div class="row">
             <div class="col-md-2">
@@ -29,27 +60,44 @@
                 <th>Thời gian bắt đầu</th>
                 <th>Thời gian két thúc</th>
                 <th>Tình trạng</th>
-                <th>Chức năng</th>
+                <!-- <th>Chức năng</th> -->
               </tr>
             </thead>
             <tbody>
               @foreach($detail_set_pitch as $pitch)
               <tr>
-                <td>{{@$pitch->id}}</td>
-                <td>{{@$pitch->pitch_name}}</td>
-                <td>{{@$pitch->username}}</td>
-                <td>{{@$pitch->service_name}}</td>
-                <td>{{@$pitch->start_time}}</td>
-                <td>{{@$pitch->end_time}}</td>
-                @if($pitch->ispay == 1)
-                <td>Đã thanh toán</td>
-                @elseif($pitch->ispay == 0)
-                <td>Chưa thanh toán</td>
-                @endif
+                <td>{{@$pitch['detail']->id}}</td>
+                <td>{{@$pitch['name']}}</td>
+                <td>{{@$pitch['username']}}</td>
+                <!-- <td>{{@$pitch['detail']->service_name}}</td> -->
+                @if(!empty($pitch['service']))
                 <td>
-                 <!-- <a  href="{{route('set_pitchs.edit',['set_pitch'=>$pitch->id])}}"> <button class="btn btn-btn btn-primary">Sửa</button></a> -->
-                  <!-- <button class="btn btn-btn btn-danger">Xoá</button> -->
+                  @foreach($pitch['service'] as $service)
+                  @if(!empty($service->ticket_id))
+                  <button type="button" class="btn btn-primary btnServiceTicket custom_btn" data-toggle="modal" data-target="#serviceTicketModal" value="{{$service->id}}">
+                    {{$service->name}}
+                  </button>
+                  @else
+                  <button type="button" class="btn btn-primary btnService custom_btn" data-toggle="modal" data-target="#serviceModal" value="{{$service->id}}">
+                    {{$service->name}}
+                  </button>
+                  @endif
+                  @endforeach
                 </td>
+                @else
+                <td></td>
+                @endif
+                <td>{{@$pitch['detail']->start_time}}</td>
+                <td>{{@$pitch['detail']->end_time}}</td>
+
+                @if($pitch['detail']->ispay==0)
+                <td>
+                <button class="btn btn-btn btn-danger deleteUserBtn" value="{{@$pitch['detail']->id}}">Thanh toán</button>
+                </td>
+                @elseif($pitch['detail']->ispay == 1)
+                <td>Đã thanh toán</td>
+                @endif
+                
               </tr>
               @endforeach
             </tbody>
@@ -91,6 +139,15 @@
         // đóng kéo trang theo chiều ngang
         "scrollX": true
       });
+    });
+    $(document).ready(function() {
+      $(document).on('click', '.deleteUserBtn', function(e) {
+        e.preventDefault();
+        var setpitch_id = $(this).val();
+        console.log(setpitch_id);
+        $('#setpitch_id').val(setpitch_id);
+        $('#deleteModal').modal('show');
+      })
     });
   </script>
   @endsection

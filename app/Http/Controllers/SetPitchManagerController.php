@@ -11,6 +11,7 @@ use App\Models\SetService;
 use App\Models\User;
 use App\Models\Setting;
 use App\Models\Tickets;
+use App\Models\Bill;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -34,31 +35,42 @@ class SetPitchManagerController extends BaseAdminController
 
     public function index()
     {
-        $detail_set_pitch = Detail_set_pitchs::all();
-        foreach($detail_set_pitch as $d){
+        $list_detail_set_pitch = Detail_set_pitchs::all();
+        foreach($list_detail_set_pitch as $d){
             if($d->end_time != null){
                 if((strtotime(Carbon::now()->format('Y-m-d H:i:s'))- strtotime($d->end_time))/(60*60*24)>365){
                     $d->delete();
                 }
             }
         }
-        $users = [];
-        foreach ($detail_set_pitch as $i => $detail) {
-            $users = User::where("id", $detail['user_id'])->first();
+        foreach(Pitchs::all() as $pitch){
+            $pitchs[$pitch->id]=$pitch->name;
+         }
+         foreach(User::all() as $user){
+            $users[$user->id]=$user->username;
+         }
+        // dd($pitchs, $users);
+        $detail_set_pitch = [];
+        foreach ($list_detail_set_pitch as $i => $detail) {
             $services = Services::all();
-            // // $setServices = SetService::where('set_pitch_id', $detail['id'])->where('service_id', $services['id'])->get();
-            // $setServices = [];
-            // foreach($services as $s){
-            //     $setServices = SetService::where('set_pitch_id', $detail['id'])->where('service_id', $s['id'])->get();
+            $setServices = [];
+            $detail_set_pitch[$i]['detail']= $detail;
+            $detail_set_pitch[$i]['name']=$pitchs[$detail->picth_id];
+            if($detail->user_id == 0){
+                $detail_set_pitch[$i]['username'] = "";
+            }
+            else{
+                $detail_set_pitch[$i]['username'] = isset($users[$detail->user_id]) ? $users[$detail->user_id] : "";
+            }
 
-            // }
-            // dd($setServices);
-            $pitchs = Pitchs::where("id", $detail["picth_id"])->first();
-            $detail['pitch_name'] = isset($pitchs['name']) ? $pitchs['name'] : "";
-            $detail['username'] = isset($users['username']) ? $users['username'] : "";
-            $detail['service_name'] = isset($services['name']) ? $services['name'] : "";
+            foreach(SetService::where('set_pitch_id',$detail['id'])->get() as $s => $set){
+                $detail_set_pitch[$i]['service'][$s]= $set;
+            }
+            // $pitchs = Pitchs::where("id", $detail["picth_id"])->first();
+            // $detail['pitch_name'] = isset($pitchs['name']) ? $pitchs['name'] : "";
+            // $detail['username'] = isset($users['username']) ? $users['username'] : "";
+            // $detail['service_name'] = isset($services['name']) ? $services['name'] : "";
         }
-        
         return View('admin.set_pitch.index', compact('detail_set_pitch'));
     }
 
@@ -93,31 +105,60 @@ class SetPitchManagerController extends BaseAdminController
     {
         //
     }
+    public function pay(Request $request)
+    {
+        $detail_set_pitch = Detail_set_pitchs::where('id',$request->setpitch)->first();
+        $bill = Bill::where('detail_set_pitch_id', $detail_set_pitch->id)->where('status',1)->first();
+        if(!empty($bill)){
+            return redirect()->route('set_pitchs.index')->with('error', "Hoá đơn đã tồn tại");
+        }
+        $detail_set_pitch->ispay = '1';
+        $detail_set_pitch->save();
 
+        $bill= new Bill();
+        $bill->detail_set_pitch_id = $detail_set_pitch->id;
+        $bill->user_id = $detail_set_pitch->user_id;
+        $bill->transaction_id=Str::random(8);
+        $bill->bill_number = rand(0,99999999);
+        $bill->trace_number=Str::random(8);
+        $bill->price = $detail_set_pitch->total;
+        $bill->createdate = Carbon::now();
+        $bill->bank = '';
+        $bill->transfer_content = 'Thanh toán tiền sân từ '. $detail_set_pitch->start_time . ' đến '. $detail_set_pitch->end_time;
+        $bill->status='1';
+        $bill->save();
+        $setPitch=Detail_set_pitchs::where('id',$bill->detail_set_pitch_id)->first();
+        $setPitch->ispay='1';
+        $setPitch->save();
+        if($bill->save()){
+            return redirect()->route('set_pitchs.index')->with('success', "Thanh toán thành công");
+        }
+        return redirect()->route('set_pitchs.index')->with('error','Xử lí thanh toán thất bại');
+    }
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        // $pitchs = Pitchs::where('id', $id)->first();
-        $detail_set_pitch = Detail_set_pitchs::where('id', $id)->first();
-        $type_pitchs = Pitchs::all();
-        $ticket = Tickets::where('id', $detail_set_pitch["ticket_id"])->first();
-        $user = User::where('id', $detail_set_pitch->user_id)->first();
-        $services=Services::get();
-        $setServices=SetService::where('set_pitch_id',$detail_set_pitch->id)->get();
-        foreach($services as $i=>$service){
-            foreach($setServices as $setservice){
-                if($service->id==$setservice->service_id){
-                    unset($services[$i]);
-                }
-            }  
-        }
-        return View('admin.set_pitch.edit', compact('detail_set_pitch', 'type_pitchs', 'ticket', 'user','services','setServices'));
-    }
+    // public function edit($id)
+    // {
+    //     // $pitchs = Pitchs::where('id', $id)->first();
+    //     $detail_set_pitch = Detail_set_pitchs::where('id', $id)->first();
+    //     $type_pitchs = Pitchs::all();
+    //     $ticket = Tickets::where('id', $detail_set_pitch["ticket_id"])->first();
+    //     $user = User::where('id', $detail_set_pitch->user_id)->first();
+    //     $services=Services::get();
+    //     $setServices=SetService::where('set_pitch_id',$detail_set_pitch->id)->get();
+    //     foreach($services as $i=>$service){
+    //         foreach($setServices as $setservice){
+    //             if($service->id==$setservice->service_id){
+    //                 unset($services[$i]);
+    //             }
+    //         }  
+    //     }
+    //     return View('admin.set_pitch.edit', compact('detail_set_pitch', 'type_pitchs', 'ticket', 'user','services','setServices'));
+    // }
 
     /**
      * Update the specified resource in storage.

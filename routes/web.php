@@ -126,6 +126,7 @@ Route::prefix('admin')->group(function () {
    Route::post('/users/delete', [UserManagerController::class,'delete'])->name('users.delete');
    Route::resource('/pitchs', PitchManagerController::class);
    Route::resource('/set_pitchs', SetPitchManagerController::class);
+   Route::post('/set_pitchs/pay/', [SetPitchManagerController::class,'pay'])->name('set_pitchs.pay');
    Route::resource('/tickets', TicketManagerController::class);
    Route::resource('/services', ServiceManagerController::class);
    Route::post('/services/delete', [ServiceManagerController::class,'destroy'])->name('services.delete');

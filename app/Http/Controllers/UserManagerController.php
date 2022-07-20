@@ -153,6 +153,7 @@ class UserManagerController extends BaseAdminController
 
     public function resetPassword(Request $request)
     {
+        dd($request->all());
         $user = User::where('id',$request->user)->where('status',1)->first();
            
         if(empty($user)){
