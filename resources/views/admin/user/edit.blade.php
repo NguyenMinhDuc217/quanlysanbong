@@ -28,7 +28,7 @@
                        @endif
                 <div class="card-body">
                   <div class="form-group">
-                    <label for="">Họ và Tên</label>
+                    <label for="">Họ và Tên<span class="require">*</label>
                     <input type="text" name="username" class="form-control" value="{{$users->username}}"  placeholder="Họ và tên">
                     @error('username')
                                    <span class="vali_sign" class="invalid-feedback" role="alert">
@@ -37,7 +37,7 @@
                             @enderror   
                   </div>
                   <div class="form-group">
-                    <label for="">Email</label>
+                    <label for="">Email<span class="require">*</label>
                     <input type="email" name="email" class="form-control" value="{{$users->email}}"  placeholder="Email" disabled>
                   </div>
                   @error('email')
@@ -46,7 +46,7 @@
                                    </span>
                             @enderror   
                   <div class="form-group">
-                    <label for="">Số điện thoại</label>
+                    <label for="">Số điện thoại<span class="require">*</label>
                     <input type="text" name="phone" class="form-control" value="{{$users->phone_number}}" placeholder="Số điện thoại">
                   </div>
                   @error('phone')

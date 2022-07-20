@@ -35,20 +35,20 @@
             <tbody>
               @foreach($detail_set_pitch as $pitch)
               <tr>
-                <td>{{$pitch->id}}</td>
-                <td>{{$pitch->pitch_name}}</td>
-                <td>{{$pitch->username}}</td>
-                <td>{{$pitch->service_name}}</td>
-                <td>{{$pitch->start_time}}</td>
-                <td>{{$pitch->end_time}}</td>
+                <td>{{@$pitch->id}}</td>
+                <td>{{@$pitch->pitch_name}}</td>
+                <td>{{@$pitch->username}}</td>
+                <td>{{@$pitch->service_name}}</td>
+                <td>{{@$pitch->start_time}}</td>
+                <td>{{@$pitch->end_time}}</td>
                 @if($pitch->ispay == 1)
                 <td>Đã thanh toán</td>
                 @elseif($pitch->ispay == 0)
                 <td>Chưa thanh toán</td>
                 @endif
                 <td>
-                 <a  href="{{route('set_pitchs.edit',['set_pitch'=>$pitch->id])}}"> <button class="btn btn-btn btn-primary">Sửa</button></a>
-                  <button class="btn btn-btn btn-danger">Xoá</button>
+                 <!-- <a  href="{{route('set_pitchs.edit',['set_pitch'=>$pitch->id])}}"> <button class="btn btn-btn btn-primary">Sửa</button></a> -->
+                  <!-- <button class="btn btn-btn btn-danger">Xoá</button> -->
                 </td>
               </tr>
               @endforeach

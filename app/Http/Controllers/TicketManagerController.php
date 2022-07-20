@@ -50,10 +50,10 @@ class TicketManagerController extends Controller
             'name.required' => 'Vui lòng nhập tên vé',
             'name.max' => 'Vui lòng nhập tên vé không quá 255 ký tự',
             'describe.required' => 'Vui lòng nhập thông tin',
-            'describe.max' => 'Vui lòng nhập tên sân không quá 500 ký tự',
+            'describe.max' => 'Vui lòng nhập thông tin không quá 500 ký tự',
             'number_day.required' => 'Vui lòng nhập số ngày',
             'number_day.digits' => 'Vui lòng nhập số ngày trong khoảng từ 1 đến 7',
-            'timeOut.required' => 'Vui lòng chọn thời gian bắt đầu',
+            'timeOut.required' => 'Vui lòng chọn thời gian hạn đặt vé',
             'timeStart.required' => 'Vui lòng chọn thời gian bắt đầu',
             'timeEnd.required' => 'Vui lòng thời gian kết thúc',
             'timeDay.required' => 'Vui lòng thời gian đá hàng tuần',
@@ -127,6 +127,9 @@ class TicketManagerController extends Controller
         $pitchs = Pitchs::where('id', $request->pitch_id)->first();
         //lấy từng dịch vụ
         $services = [];
+        // if($request->ch_name == null){
+
+        // }
         foreach ($request->ch_name as $i => $id_service) {
             $service = Services::where('id', $id_service)->first();
             $services[$i] = $service;

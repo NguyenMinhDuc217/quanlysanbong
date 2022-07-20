@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\BaseAdminController;
+use App\Models\Detail_set_pitchs;
 use App\Models\Pitchs;
 use App\Models\Discount;
 use App\Models\Setting;
@@ -66,15 +67,15 @@ class PitchManagerController extends BaseAdminController
                 'images' => ['required', 'max:8192']
             ],
             $messages = [
-                'cover.required' => 'Vui lòng chọn hình ảnh abc',
+                'cover.required' => 'Vui lòng chọn hình ảnh đại diện',
                 'name.required' => 'Vui lòng nhập tên sân',
                 'name.max' => 'Vui lòng nhập tên sân không quá 255 ký tự',
-                'price.required' => 'Vui lòng nhập giá',
-                'price.numeric' => 'Giá phải là số',
+                'price.required' => 'Vui lòng nhập giá sân',
+                'price.numeric' => 'Giá sân phải là số',
                 'describe.required' => 'Vui lòng nhập thông tin',
-                'describe.max' => 'Vui lòng nhập tên sân không quá 500 ký tự',
-                'screenshots.required' => 'Vui lòng chọn hình ảnh',
-                'images.required' => 'Vui lòng chọn hình ảnh',
+                'describe.max' => 'Vui lòng nhập thông tin sân không quá 500 ký tự',
+                'screenshots.required' => 'Vui lòng chọn hình ảnh hoạt động',
+                'images.required' => 'Vui lòng chọn hình ảnh hoạt động',
                 // 'images.mimes' => 'Định dạng file chưa đúng',
                 'images.max' => 'Vui lòng chọn hình ảnh dưới 8 MB',
             ]
@@ -190,14 +191,15 @@ class PitchManagerController extends BaseAdminController
             'name.required' => 'Vui lòng nhập tên sân',
             'name.max' => 'Vui lòng nhập tên sân không quá 255 ký tự',
             'price.required' => 'Vui lòng nhập giá sân',
-            'price.numeric' => 'giá sân phải là số',
+            'price.numeric' => 'Giá sân phải là số',
             'describe.required' => 'Vui lòng nhập thông tin',
             'describe.max' => 'Vui lòng nhập tên sân không quá 500 ký tự',
         ]);
 
         $pitch = Pitchs::where('id', $id)->first();
-
-        $pitch->name = $request->name;
+        if ($pitch->where('name', '=', $request->name)->exists()) {
+            return redirect()->route('pitchs.create')->with('error', 'Tên sân đã tồn tại');
+        }
         $pitch->price = $request->price;
         $pitch->describe = $request->describe;
         $pitch->type_pitch = $request->get('type_pitch');
@@ -247,29 +249,13 @@ class PitchManagerController extends BaseAdminController
      */
     public function destroy(Request $request)
     {
-        if ($request->ajax()) {
-            $id = $request->id;
-            $pitch = Pitchs::where('id', $id)->first();
-            if (!empty($pitch->avartar)) {
-                if (file_exists(public_path() . '/images/pitch/' . $pitch->avartar)) {
-                    @unlink(public_path() . '/images/pitch/' . $pitch->avartar);
-                }
-            }
-            if (!empty($pitch->screenshort)) {
-                $screenshort = json_decode($pitch->screenshort);
-                foreach ($screenshort as $v) {
-                    if (file_exists(public_path() . '/images/pitch/' . $v)) {
-                        @unlink(public_path() . '/images/pitch/' . $v);
-                    }
-                }
-            }
-            Pitchs::where('id', $id)->delete();
-            // Clear cache
-            Cache::flush();
-            return response()->json([
-                'status' => true,
-                'message' => 'Data deleted successfully!'
-            ]);
+        $pitch = Pitchs::where('id',$request->pitch)->first();
+        $detailSetPitch = Detail_set_pitchs::where('picth_id', $pitch->id)->get();
+        if(!empty($detailSetPitch)){
+            return redirect()->route('pitchs.index')->with('error', 'Không thể xoá sân');
         }
+        dd($pitch);
+        $pitch->delete();
+        return redirect()->route('pitchs.index')->with('success', 'Xoá sân thành công');
     }
 }

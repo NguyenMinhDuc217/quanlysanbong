@@ -82,7 +82,6 @@
                 <th>Email</th>
                 <th>SĐT</th>
                 <th>Trình trạng</th>
-                <th>Người tạo</th>
                 <th>Ngày tạo</th>
                 <th>Chức năng</th>
               </tr>
@@ -102,7 +101,6 @@
                   <span style=" color: red;">Bị khóa</span>
                   @endif
                 </td>
-                <td>{{$user->created_by}}</td>
                 <td>@if(@$user->created_at) {{ $user->created_at->format('d/m/Y')}} @endif</td>
                 <td>
                  <a  href="{{route('users.edit',['user'=>$user->id])}}"> <button class="btn btn-btn btn-primary">Sửa</button></a>

@@ -56,7 +56,7 @@
     <div class="list_item"> 
         <span class="list_item_title">Link:</span> 
         <!-- <span class="list_item_desc">{{$team->link}}</span> -->
-        <a href="{{$team->link}}">{{@$team->link}}</a>
+        <a href="{{@$team->link}}">{{@$team->link}}</a>
     </div>
     <!-- <div class="button">
         <button class="btn_left">aaa</button>

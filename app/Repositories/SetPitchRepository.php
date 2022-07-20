@@ -338,7 +338,6 @@ class SetPitchRepository implements SetPitchRepositoryInterface
       if($checkTimes->count()>0){
           return response()->json(['status' => 400, 'error' => "Vui lòng chọn sân khác"]);
       }
-      
       if($request->ch_name!=null){
         foreach($request->ch_name as $server_id){
             if($request->ch_for[$server_id][0]<1||$request->ch_for[$server_id][0]>300){
