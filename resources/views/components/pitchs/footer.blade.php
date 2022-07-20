@@ -6,13 +6,13 @@
             <div class="footer_dess__address_icon">
                 <box-icon name='location-plus' animation='tada'></box-icon>
             </div>
-            <span class="footer_desc__address_title">A1L2-08, 2th floor Ecolife Capitol, 58 To Huu, Trung Van</span>
+            <span class="footer_desc__address_title">65 Đ. Huỳnh Thúc Kháng, Bến Nghé, Quận 1, Thành phố Hồ Chí Minh Việt Nam</span>
         </div>
         <div class="footer_desc__email">
             <div class="footer_dess__email_icon">
                 <box-icon name='mail-send' animation='tada'></box-icon>
             </div>
-            <a class="footer_desc__email_title" href="mailto:nhattan97.work@gmail.com">welcome@bravebits.co</a>
+            <a class="footer_desc__email_title" href="mailto:quanlysanbong247@gmail.com">quanlysanbong247@gmail.com</a>
         </div>
     </div>
     <div class="footer_map">

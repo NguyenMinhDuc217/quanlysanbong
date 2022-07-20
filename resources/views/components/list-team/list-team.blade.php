@@ -43,20 +43,20 @@
 <div class="list">
     <div class="list_item"> 
         <span class="list_item_title">Tên đội:</span> 
-        <span class="list_item_desc">{{$team->team_name}}</span>
+        <span class="list_item_desc">{{@$team->team_name}}</span>
     </div>
     <div class="list_item"> 
         <span class="list_item_title">Đội trưởng:</span> 
-        <span class="list_item_desc">{{$team->user_name}}</span>
+        <span class="list_item_desc">{{@$team->user_name}}</span>
     </div>
     <div class="list_item"> 
         <span class="list_item_title">Thành viên:</span> 
-        <span class="list_item_desc">{{$team->team_member}}</span>
+        <span class="list_item_desc">{{@$team->team_member}}</span>
     </div>
     <div class="list_item"> 
         <span class="list_item_title">Link:</span> 
         <!-- <span class="list_item_desc">{{$team->link}}</span> -->
-        <a href="{{$team->link}}">{{$team->link}}</a>
+        <a href="{{@$team->link}}">{{@$team->link}}</a>
     </div>
     <!-- <div class="button">
         <button class="btn_left">aaa</button>

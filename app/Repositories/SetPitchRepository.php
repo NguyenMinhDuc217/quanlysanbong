@@ -314,7 +314,7 @@ class SetPitchRepository implements SetPitchRepositoryInterface
       }
       
       if(abs(strtotime($timeStart)-strtotime(Carbon::now()->format('Y-m-d H:i:s')))/(60)<120){
-        return response()->json(['status' => 402, 'error' => "Không thể thay đổi trước 120p"]);
+        return response()->json(['status' => 402, 'error' => "Không thể thay đổi trước 120 phút"]);
     }
     
     if(strtotime(Carbon::now()->format('Y-m-d H:i:s'))-strtotime($timeStart)>0||strtotime(Carbon::now()->format('Y-m-d H:i:s'))-strtotime($timeEnd)>0){
@@ -340,7 +340,6 @@ class SetPitchRepository implements SetPitchRepositoryInterface
       if($checkTimes->count()>0){
           return response()->json(['status' => 400, 'error' => "Vui lòng chọn sân khác"]);
       }
-      
       if($request->ch_name!=null){
         foreach($request->ch_name as $server_id){
             if($request->ch_for[$server_id][0]<1||$request->ch_for[$server_id][0]>300){

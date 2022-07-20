@@ -66,7 +66,7 @@
                 <div class="form_control__custom">
                     <label for="phone">Liên hệ <span class="require">*</span></label>
                     <div class="form-control_notify">
-                        <input type="text" id="contact" name="contact" value="{{@$my_teams['team_name']}}" autocomplete="off">
+                        <input type="text" id="contact" name="contact" value="{{@$my_teams['link']}}" autocomplete="off">
                         @error('contact')
                         <p class="vali_sign" class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>

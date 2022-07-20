@@ -2,7 +2,7 @@
 
 @section('content')
 
-@section('content_header', 'Pitchs')
+@section('content_header', 'Tickets')
 <link rel="stylesheet" type="text/css" href="{{asset('admin/dist/css/style.css') }}">
 <link rel="stylesheet" type="text/css" href="{{asset('admin/dist/css/image-upload/image-uploader.min.css') }}">
 
@@ -85,7 +85,7 @@
               <!-- Number day of week -->
               <div class="form-group">
                 <label>Số ngày trong một tuần <span class="text-danger"></span></label>
-                <input type="text" name="number_day" class="form-control" placeholder="Ex(ngày): 2">
+                <input type="text" name="number_day" class="form-control" placeholder="Ex(ngày): 1">
               </div>
               <!-- Tháng -->
               <div class="form-group">

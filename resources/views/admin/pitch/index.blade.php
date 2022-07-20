@@ -4,6 +4,9 @@
 
 @section('content_header', 'Pitchs')
 <link rel="stylesheet" type="text/css" href="{{asset('admin/dist/css/style.css') }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
 <div class="container">
   <div class="row">
     <div class="col-md-12">
@@ -31,7 +34,7 @@
             <tbody>
               @foreach($pitchs as $pitch)
               <tr>
-                <td>{{$pitch->id}}</td>
+                <td>{{@$pitch->id}}</td>
                 <td>{{$pitch->name}}</td>
                 <td>@if($pitch->status==1)
                   <span style=" color: #2ecc71;">Đang hoạt động</span>
@@ -43,7 +46,7 @@
                 </td>
                 <td>
                   <a href="{{route('pitchs.edit',$pitch->id)}}"> <button class="btn btn-btn btn-primary">Sửa</button></a>
-                  <button class="btn btn-btn btn-danger">Xoá</button>
+                  <button class="btn btn-btn btn-danger deletePitchBtn" value="{{@$pitch->id}}}">Xoá</button>
                 </td>
               </tr>
               @endforeach
@@ -87,5 +90,13 @@
         "scrollX": false
       });
     });
+  //   $(document).ready(function(){
+  //       $(document).on('click','.deletePitchBtn',function(e){
+  //         e.preventDefault();
+  //         var user_id=$(this).val();
+  //       $('#pitch_id').val(pitch_id);
+  //       $('#deleteModal').modal('show');
+  //       })
+  // });
   </script>
   @endsection

@@ -104,7 +104,7 @@ class DiscountManagerController extends Controller
             'discount.min'=>'Giá trị nhỏ nhất là 0',
             'discount.max'=>'Giá trị lớn nhất 100',
             'datestart.required'=>'Vui lòng nhập ngày bắt đầu',
-            'dateend.required'=>'Vui lòng nhập ngyaf kết thúc',
+            'dateend.required'=>'Vui lòng nhập ngày kết thúc',
         ]);
 
         $discount = Discount::find($id);

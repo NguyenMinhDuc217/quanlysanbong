@@ -41,7 +41,7 @@
      <div class="pay_list">
         <span class="pay_list_title">Giá vé: </span>
                @php
-               $price=$data['ticket']->price;
+               $price=number_format($data['ticket']->price);
                @endphp
 
                 @foreach($discounts as $discount)

@@ -107,7 +107,7 @@
     <th>Tổng tiền</th>
     <th>Hủy sân</th>
     <th>Mã giao dịch</th>
-    <th>Sửa sân</th>
+    <th>Sửa đặt sân</th>
     <th>Phương thức</th>
   </tr>
     @if(!empty($listSetPitch))

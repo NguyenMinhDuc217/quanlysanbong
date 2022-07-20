@@ -58,8 +58,8 @@
                   <option value="">{{@$user['username'] ? $user['username'] : "Người dùng"}}</option>
                 </select>
               </div>
-              <!-- Thời gain hết hạn -->
-              <div class="form-group">
+              <!-- Thời gian hết hạn -->
+              <!-- <div class="form-group">
                 <div class="row">
                   <div class="col-4">
                     <label for="">Ngày diễn ra</label>
@@ -68,13 +68,13 @@
                     <input type="date" name="date_event" id="date_event" value="{{date('d-m-Y',strtotime($detail_set_pitch->date_event)) }}">
                   </div>
                 </div>
-                @error('timeOut')
+                @error('date_event')
                 <span class="vali_sign" class="invalid-feedback" role="alert">
                   <strong>{{ $message }}</strong>
                 </span>
                 @enderror
-              </div>
-              <!-- Thời gain bắt đầu -->
+              </div> -->
+              <!-- Thời gian bắt đầu -->
               <div class="form-group">
                 <div class="row">
                   <div class="col-4">
@@ -91,7 +91,7 @@
                 </span>
                 @enderror
               </div>
-              <!-- Thời gain kết thúc -->
+              <!-- Thời gian kết thúc -->
               <div class="form-group">
                 <div class="row">
                   <div class="col-4">
@@ -108,14 +108,38 @@
                 @enderror
               </div>
               <!-- Giá sân -->
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <label>Giá sân (vnd) :<span class="text-danger"></span></label>
                 <input type="text" name="price_pitch" class="form-control" placeholder="Ex: 200.000 đ" value="{{number_format(@$detail_set_pitch->price_pitch)}}">
-              </div>
+              </div> -->
               <!-- Giá sân -->
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <label>Tổng tiền (vnd) :<span class="text-danger"></span></label>
-                <input type="text" name="total" class="form-control" placeholder="Ex: 350.000 đ" value="{{number_format(@$detail_set_pitch->total)}}">
+                <input type="text" disabled readon name="total" class="form-control" placeholder="Ex: 350.000 đ" value="{{number_format(@$detail_set_pitch->total)}}">
+              </div> -->
+              <!-- Type Services -->
+              <div class='box__filter' id='box__filter'>
+                <label class="service_title">Các loại dịch vụ</label>
+                @foreach($setServices as $setservice)
+
+                <div class="checkbox form-inline form_checkbox">
+                  <label class="main">
+                    <input class="checkbox_name" type="checkbox" name="ch_name[]" value="{{$setservice->service_id}}" {{$setservice->id?'checked':''}}> {{$setservice->name}}
+                    <span class="geekmark"></span>
+                  </label>
+                  <input type="number" name="ch_for[{{$setservice->service_id}}][]" value="{{$setservice->quantity}}" class="ch_for ipt_value" min="1" max="300">
+                </div>
+                @endforeach
+                @foreach($services as $service)
+                <div class="checkbox form-inline form_checkbox">
+                  <label class="main">
+                    <input class="checkbox_name checkbox_bot" type="checkbox" name="ch_name[]" value="{{$service->id}}"> {{$service->name}}
+                    <span class="geekmark"></span>
+                  </label>
+                  <input type="number" name="ch_for[{{$service->id}}][]" value="1" class="ch_for hide ipt_value" min="1" max="300">
+                </div>
+                @endforeach
+
               </div>
               <!-- Thanh toán-->
               <div class="form-group">

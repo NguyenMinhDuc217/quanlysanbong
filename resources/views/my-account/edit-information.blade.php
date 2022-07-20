@@ -17,7 +17,7 @@
             @endif
             <div class="form-control">
                 <div class="form_control__custom">
-                    <label for="email">Tên tài khoản:</label>
+                    <label for="email">Tên tài khoản: <span class="text-danger">*</span></label>
                     <div class="form-control_notify">
                         <input type="text" name="username" id="username" value="{{@$users['username']}}" placeholder="Nhập email" autocomplete="off">
                         @error('username')
@@ -43,7 +43,7 @@
             </div>
             <div class="form-control">
                 <div class="form_control__custom">
-                    <label for="email">Số điện thoại:</label>
+                    <label for="email">Số điện thoại: <span class="text-danger">*</span></label>
                     <div class="form-control_notify">
                         <input type="text" name="phone_number" id="phone_number" value="{{@$users['phone_number']}}" placeholder="Nhập email" autocomplete="off">
                         @error('phone_number')
@@ -56,7 +56,7 @@
             </div>
             <div class="form-control">
                     <div class="form_control__custom">
-                        <label for="password">Mật khẩu</label>
+                        <label for="password">Mật khẩu: <span class="text-danger">*</span></label>
                         <div class="form-control_notify">
                         <input type="password" id="password" name="password" placeholder="Nhập mật khẩu" autocomplete="off" >
                         @error('password')

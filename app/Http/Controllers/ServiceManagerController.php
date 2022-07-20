@@ -58,7 +58,7 @@ class ServiceManagerController extends BaseAdminController
         $service->price = $request->price;
         $service->type = $request->type;
       if($service->save()){
-        return redirect()->route('services.create')->with('success','Thêm sân mới thành công');
+        return redirect()->route('services.create')->with('success','Thêm dịch vụ mới thành công');
       }
        return redirect()->route('services.create')->with('error','Xử lí thêm thất bại');
     }
