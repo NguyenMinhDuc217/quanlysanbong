@@ -83,6 +83,8 @@ Route::get('/return-vnpay', [PayController::class,'return'])->name('return.payme
 //thanh toan VNPAY
 Route::post('/vnpay-payment-ticket', [PayTicketController::class,'vnpay_payment'])->name('vnpay.payment.ticket');
 Route::get('/return-vnpay-ticket', [PayTicketController::class,'return'])->name('return.payment.ticket');
+//search ticket
+Route::get('/search-ticket', [TicketController::class,'searchTicket'])->name('search.ticket');
 //list_ticket
 Route::get('/ticket', [TicketController::class,'showTicket'])->name('show.ticket');
 //view

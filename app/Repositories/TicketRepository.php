@@ -104,4 +104,18 @@ class TicketRepository implements TicketRepositoryInterface
       }
       return view('pay-ticket.index',compact('data','discounts'));
    }
+
+   public function searchTicket(Request $request){
+      $key = $request->key;
+      $ticket = new Tickets();
+      if(!empty($key)){
+          $ticket = $ticket->where('code_ticket','like','%'.($key).'%');
+      }
+      $tickets = $ticket->paginate(9)->appends(request()->query());
+      $discounts=[];
+      foreach(Discount::all() as $discount){
+          $discounts[$discount->ticket_id]=$discount;
+      }
+      return view('buy-ticket.index',compact('tickets','discounts'));
+    }
 }

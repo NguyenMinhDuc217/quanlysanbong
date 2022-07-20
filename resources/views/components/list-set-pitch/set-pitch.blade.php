@@ -113,7 +113,7 @@
     @if(!empty($listSetPitch))
     @foreach($listSetPitch as $i=>$setPitch)
     <tr>
-    <td>{{$i+1}}</td>
+    <td>{{$setPitch['stt']+1}}</td>
     <td>{{$setPitch['name']}}</td>
      @php
     $date=date_create($setPitch['detail_set_pitch']->start_time);

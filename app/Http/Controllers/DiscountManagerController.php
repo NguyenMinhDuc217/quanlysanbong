@@ -172,7 +172,7 @@ class DiscountManagerController extends Controller
             return redirect()->route('show.discount.pitch')->with('error','Thời gian kết thúc phải lớn hơn thời gian bắt đầu');
         }
 
-        if(Carbon::now()->format('d/m/Y')>$checkDateStart||Carbon::now()->format('d/m/Y')>$checkDateEnd){
+        if(Carbon::now()->format('d/m/Y')>$checkDateEnd){
             return redirect()->route('show.discount.pitch')->with('error','Thời gian khuyến mãi phải lớn hơn thời gian hiện tại');
         }
 
@@ -231,7 +231,7 @@ class DiscountManagerController extends Controller
             return redirect()->route('show.discount.pitch')->with('error','Thời gian kết thúc phải lớn hơn thời gian bắt đầu');
         }
 
-        if(Carbon::now()->format('d/m/Y')>$checkDateStart||Carbon::now()->format('d/m/Y')>$checkDateEnd){
+        if(Carbon::now()->format('d/m/Y')>$checkDateEnd){
             return redirect()->route('show.discount.pitch')->with('error','Thời gian khuyến mãi phải lớn hơn thời gian hiện tại');
         }
 

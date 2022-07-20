@@ -24,7 +24,7 @@
           @php
           $start=date_create()->format('Y-m-d ');
           $nowstart=date_create()->format('d-m-Y ');
-          $start=date('d-m-Y', strtotime('-7 day', strtotime($nowstart)));
+          $start=date('d-m-Y', strtotime('-6 day', strtotime($nowstart)));
           @endphp
           @endif
     
