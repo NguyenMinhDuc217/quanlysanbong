@@ -118,7 +118,7 @@ class DiscountManagerController extends Controller
             return redirect()->route('discounts.index')->with('error','Thời gian kết thúc phải lớn hơn thời gian bắt đầu');
         }
 
-        if(Carbon::now()->format('d/m/Y')>$timeStart||Carbon::now()->format('d/m/Y')>$timeEnd){
+        if(Carbon::now()->format('d/m/Y')>$timeEnd){
             return redirect()->route('discounts.index')->with('error','Thời gian khuyến mãi phải lớn hơn thời gian hiện tại');
         }
         $discount->discount=$request->discount;
