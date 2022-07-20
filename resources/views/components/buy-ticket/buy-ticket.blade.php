@@ -35,7 +35,7 @@
             <i class="fa-brands fa-cc-amazon-pay"></i>
               <div class="date_clock">
                 <label class="label_buy">Phương thức thanh toán</label>
-                 <span class="credit">Tiền mặt/ VNPAY</span>
+                 <span class="credit">VNPAY</span>
               </div>
             </div>
           </div>
@@ -70,6 +70,7 @@
                @php
                $price=$ticket->price;
                $price_dis=null;
+               $price=number_format($ticket->price, 0, '', '.');
                @endphp
 
                 @foreach($discounts as $discount)

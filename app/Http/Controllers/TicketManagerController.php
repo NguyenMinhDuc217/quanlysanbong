@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Models\Discount;
 use App\Models\SetService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Intervention\Image\ImageManagerStatic as Image;
 use Carbon\Carbon;
 
@@ -65,11 +66,7 @@ class TicketManagerController extends Controller
         $timeEnd = $request->timeEnd;
         $timeDay = $request->timeDay;
 
-        //kiểm tra vé đã tồn tại hay chưa (ticket)
-        $checkTicket = Tickets::where('name', $request->name)->first();
-        if (!empty($checkTicket)) {
-            return redirect()->route('tickets.create')->with('error', "Vé đã tồn tại");
-        }
+    
 
         $timeStartDay = $request->timeDay;
         $timeEndDay = date('d-m-Y H:i:s', strtotime('+1 Hour', strtotime($request->timeDay)));
@@ -138,7 +135,7 @@ class TicketManagerController extends Controller
         //avartar
         if ($request->hasFile('cover')) {
             $image = $request->file('cover');
-            $filename = $tickets->name . '.' . 'jpg';
+            $filename = Str::random(12). '.' . 'jpg';
             $location = public_path('/images/tickets/' . $filename);
             Image::make($image)->resize(300, 200)->save($location);
             $tickets->image = $filename;

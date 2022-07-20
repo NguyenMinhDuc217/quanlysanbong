@@ -45,7 +45,7 @@
                 <i class="fa-brands fa-cc-amazon-pay"></i>
               <div class="date_clock">
                 <label class="label_buy">Phương thức thanh toán</label>
-                 <span class="credit">Thẻ quốc tế/ Thẻ nội địa/ Trả góp</span>
+                 <span class="credit">VNPAY</span>
               </div>
             </div>
             <div class="clock">
