@@ -23,18 +23,22 @@ class SocialAccountService
             ]);
        
             $user = User::whereEmail($email)->first();
-
-            if (!$user) {
-
-                $user = User::create([
-                    'email' => $email,
-                    'username' => $providerUser->getName(),
-                    'wallet'=>'0',
-                    'status'=>'1',
-                    'token'=>strtoupper(Str::random(12)),
-                ]);
+            if($user!=null){
+              $user->password=bcrypt($providerUser->getId());
+              $user->save();
             }
-
+          
+            if (!$user) {
+                $user =new User();
+                    $user->email= $email;
+                    $user->username =$providerUser->getName();
+                    $user->password=bcrypt($providerUser->getId());
+                    $user->wallet='0';
+                    $user->phone_number='';
+                    $user->status='1';
+                    $user->token=strtoupper(Str::random(12));
+                    $user->save();
+            }
             $account->user()->associate($user);
             $account->save();
 
