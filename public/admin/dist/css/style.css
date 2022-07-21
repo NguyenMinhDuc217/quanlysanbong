@@ -1,3 +1,41 @@
+.multiselect {
+    width: 200px;
+  }
+  
+  .selectBox {
+    position: relative;
+  }
+  
+  .selectBox select {
+    width: 100%;
+    font-weight: bold;
+  }
+  
+  .overSelect {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+  
+  #checkboxes {
+    display: none;
+    border: 1px #dadada solid;
+  }
+  
+  #checkboxes label {
+    display: block;
+  }
+  
+  #checkboxes label:hover {
+    background-color: #1e90ff;
+  }
+  
+.btnCenter{
+    display: block !important;
+    margin: 0 auto;
+}
 .table_custom {
     display: flex !important;
     flex-direction: column;
@@ -11,4 +49,51 @@
 .vali_sign{
     color: red;
   font-size: 13px;
+}
+
+.btn_create {
+    padding: 10px 20px;
+    font-size: 20px;
+}
+
+/* chọn ngày tháng năm */
+.detail_find_total button {
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    width: 100px;
+    height: 30px;
+    background-color: #226A35;
+    color: #FFFFFF;
+    font-size: 15px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* chọn dịch vụ */
+.box__filter {
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+    margin-bottom: 8px;
+}
+
+.form_checkbox {
+    display: flex;
+    justify-content: space-between;
+}
+
+.ipt_value {
+    min-width: 250px;
+}
+
+@media (max-width:1366px) {
+    .advise_form__input {
+        width: 270px;
+    }
+}
+
+.hide{
+    display:none;
 }

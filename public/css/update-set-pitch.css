@@ -1,0 +1,76 @@
+
+.hide {
+    display:none;
+}
+
+.ipt_value {
+    min-width: 300px;
+    padding: 5px 10px;
+}
+
+.ground {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.ground_name {
+    font-size: 18px;
+    font-weight: 600;
+    margin-right: 28px;
+}
+
+.myselect,
+#timeStart,
+#timeEnd {
+    padding: 3px 8px;
+}
+
+.searchTime {
+    display: block;
+    max-width: 650px;
+    margin: 30px auto;
+}
+
+.detail_find_list {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.detail_find_from,
+.detail_find_to {
+    display: flex;
+    align-items: center;
+}
+
+.find_hour {
+    padding-right: 10px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.box__filter .service_title {
+    margin: 10px 0 0 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.form_checkbox {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.checkbox_name {
+    margin-right: 10px;
+}
+
+.btnChange {
+    display: block !important;
+    margin: 0 auto;
+}
+
+.noti{
+    margin: 7px;
+}
+

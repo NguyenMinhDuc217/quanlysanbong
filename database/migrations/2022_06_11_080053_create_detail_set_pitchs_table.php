@@ -15,13 +15,15 @@ class CreateDetailSetPitchsTable extends Migration
     {
         Schema::create('detail_set_pitchs', function (Blueprint $table) {
             $table->id();
+            $table->string('ticket_id')->nullable();
             $table->integer('picth_id');
             $table->integer('user_id');
-            $table->integer('service_id');
-            $table->date('date_event');
+            $table->date('date_event')->nullable();
             $table->dateTime('start_time');
             $table->dateTime('end_time');
+            $table->string('price_pitch');
             $table->string('total');
+            $table->string('ispay')->default(0);
             $table->timestamps();
         });
     }

@@ -11,4 +11,9 @@ interface UserRepositoryInterface
  public function activeAccount(Request $request);
  public function sendForgetPassword(Request $request);
  public function changePassword(Request $request);
+ public function myAccount();
+ public function editInformation($id);
+ public function updateInformation(Request $request, $id);
+ public function editPassword($id);
+ public function updatePassword(Request $request, $id);
 }

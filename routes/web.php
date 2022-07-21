@@ -9,7 +9,11 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\UserManagerController;
 use App\Http\Controllers\SocialController;
-
+use App\Http\Controllers\SetPitchController;
+use App\Http\Controllers\TicketController;
+use App\Http\Controllers\BuyTicketController;
+use App\Models\Detail_set_pitchs;
+use Carbon\Carbon;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -40,17 +44,105 @@ Route::get('/user/forget-password', [UserController::class,'showForgetPassword']
 Route::post('/user/forget-password', [UserController::class,'sendForgetPassword'])->name('send.forgetpassword');
 Route::get('/user/change-password', [UserController::class,'changeForgetPassword'])->name('change.forgetpassword');
 Route::post('/user/change-password', [UserController::class,'test'])->name('change.password');
+//my account
+Route::get('/my-account', [UserController::class,'myAccount'])->name('my.account');
+Route::get('/my-account/{id}/edit-information', [UserController::class,'editInformation'])->name('edit.information');
+Route::post('/my-account/{id}/edit-information', [UserController::class,'updateInformation'])->name('update.information');
+Route::get('/my-account/{id}/edit-password', [UserController::class,'editPassword'])->name('edit.password');
+Route::post('/my-account/{id}/edit-password', [UserController::class,'updatePassword'])->name('update.password');
+//notification 
+Route::get('/notification', [NotificationController::class,'listNotification'])->name('notification');
+Route::get('/search-notification', [NotificationController::class,'searchNotification'])->name('search.notification');
+
+
+
 //listpitch
 Route::get('/', [PitchController::class,'ListPitch'])->name('list_pitch');
 Route::get('/search-pitch', [PitchController::class,'Search'])->name('search.pitch');
 
-Route::get('/dang-nhap', [AdminLoginController::class,'showLoginForm'])->name('admin.show.login');
-Route::post('/dang-nhap', [AdminLoginController::class,'login'])->name('admin.login');
+//detailpitch
+Route::get('/detail-pitch/{pitchid}', [PitchController::class,'DetailPitch'])->name('detail.pitch');
+Route::post('/detail-pitch/{id}/ajax', [PitchController::class,'commentAjax'])->name('pitch.detail.comment.ajax');
+Route::post('/send-phone', [PitchController::class,'sendPhone'])->name('send.phone');
+
+//set pitch
+Route::post('/detail-pitch/{pitchid}', [SetPitchController::class,'setPitch'])->name('search.time');
+//list set pitch
+Route::get('/list-set-pitch', [SetPitchController::class,'listSetPitch'])->name('list.set.pitch');
+//show update
+Route::post('/set-pitch/update/{id}', [SetPitchController::class,'showUpdateSetPitch'])->name('show.update.set.pitch');
+//show update
+Route::post('/update/{id}/set-pitch', [SetPitchController::class,'updateSetPitch'])->name('update.set.pitch');
+//delete
+Route::post('/delete-set-pitch', [SetPitchController::class,'deleteSetPitch'])->name('delete.set.pitch');
+//show dich vu dat san
+Route::get('/view-service', [SetPitchController::class,'detailService'])->name('detail.service');
+//thanh toan VNPAY
+Route::post('/vnpay-payment', [PayController::class,'vnpay_payment'])->name('vnpay.payment');
+Route::get('/return-vnpay', [PayController::class,'return'])->name('return.payment');
+//thanh toan VNPAY
+Route::post('/vnpay-payment-ticket', [PayTicketController::class,'vnpay_payment'])->name('vnpay.payment.ticket');
+Route::get('/return-vnpay-ticket', [PayTicketController::class,'return'])->name('return.payment.ticket');
+//search ticket
+Route::get('/search-ticket', [TicketController::class,'searchTicket'])->name('search.ticket');
+//list_ticket
+Route::get('/ticket', [TicketController::class,'showTicket'])->name('show.ticket');
+//view
+Route::get('/view-ticket', [TicketController::class,'viewTicket'])->name('view.ticket');
+//detail
+Route::get('/detail-ticket', [TicketController::class,'detailTicket'])->name('detail.ticket');
+//buy ticket
+Route::post('/buy-ticket', [BuyTicketController::class,'buyTicket'])->name('buy.ticket');
+//list-buy-ticket
+Route::get('/list-buy-ticket', [BuyTicketController::class,'listBuyTicket'])->name('list.buy.ticket');
+//pay
+Route::get('/pay-ticket', [BuyTicketController::class,'payTicket'])->name('pay.ticket');
+//Team
+   //create
+Route::get('/create-team', [TeamController::class,'showCreateTeam'])->name('show.create.team');
+Route::post('/create-team', [TeamController::class,'createTeam'])->name('create.team');
+   //list
+Route::get('/list-team', [TeamController::class,'listTeam'])->name('list.team');
+Route::get('/my-team', [TeamController::class,'myTeam'])->name('my.team');
+Route::get('/my-team/{id}/edit', [TeamController::class,'editTeam'])->name('my.team.edit');
+Route::post('/my-team/{id}/edit', [TeamController::class,'updateTeam'])->name('my.team.update');
+// Route::get('/apps/{id}/edit', 'ApplicationManagerController@edit')->name('admin.apps.edit');
+// Route::put('/apps/{id}/edit', 'ApplicationManagerController@update')->name('admin.apps.update');
+  //search
+Route::get('/search-team', [ListTeamController::class,'searchTeam'])->name('search.team');
+
+Route::get('/login', [AdminLoginController::class,'showLoginForm'])->name('admin.show.login');
+Route::post('/login', [AdminLoginController::class,'login'])->name('admin.login');
 Route::get('/logout', [AdminLoginController::class,'logout'])->name('admin.logout');
 
-Route::get('/dashboard', [AdminController::class,'index'])->name('admin.index');
 
 Route::prefix('admin')->group(function () {
+   Route::get('/home', [AdminController::class,'index'])->name('admin.index');
+   Route::get('/my-account', [AdminController::class,'myAccount'])->name('admin.my.account');
+   Route::get('/my-account/{id}/edit-information', [AdminController::class,'editInformation'])->name('admin.my.edit.information');
+   Route::post('/my-account/{id}/edit-information', [AdminController::class,'updateInformation'])->name('admin.my.update.information');
+   Route::get('/my-account/{id}/edit-password', [AdminController::class,'editPassword'])->name('admin.my.account.edit.password');
+   Route::post('/my-account/{id}/edit-password', [AdminController::class,'updatepassword'])->name('admin.my.account.update.password');
    Route::resource('/users', UserManagerController::class);
+   Route::post('/users/reset-password', [UserManagerController::class,'resetPassword'])->name('users.resetpassword');
+   Route::post('/users/delete', [UserManagerController::class,'delete'])->name('users.delete');
+   Route::resource('/pitchs', PitchManagerController::class);
+   Route::resource('/set_pitchs', SetPitchManagerController::class);
+   Route::post('/set_pitchs/pay/', [SetPitchManagerController::class,'pay'])->name('set_pitchs.pay');
+   Route::resource('/tickets', TicketManagerController::class);
+   Route::resource('/services', ServiceManagerController::class);
+   Route::post('/services/delete', [ServiceManagerController::class,'destroy'])->name('services.delete');
+   Route::resource('/bills', BillsManagerController::class);
+   Route::resource('/discounts', DiscountManagerController::class);
+   Route::get('/discounts/update/pitch', [DiscountManagerController::class,'showUpdatePitch'])->name('show.discount.pitch');
+   Route::post('/discounts/update/pitch', [DiscountManagerController::class,'updatePitch'])->name('discount.pitch');
+   Route::get('/discounts/update/ticket', [DiscountManagerController::class,'showUpdateTicket'])->name('show.discount.ticket');
+   Route::post('/discounts/update/tickets', [DiscountManagerController::class,'updateTicket'])->name('discount.ticket');
+   Route::get('/image', [ImageManagerController::class,'fileManager'])->name('admin.image');
+   Route::get('/chart-set-pitch', [StatisticManagerController::class,'showChartSetPitch'])->name('show.chart.set.pitch');
+   Route::get('/chart/set-pitch', [StatisticManagerController::class,'chartSetPitch'])->name('chart.set.pitch');
+   Route::get('/chart-bill-set-pitch', [StatisticManagerController::class,'showChartBillSetPitch'])->name('show.chart.bill.set.pitch');
+   Route::get('/chart/bill-set-pitch', [StatisticManagerController::class,'chartBillSetPitch'])->name('chart.bill.set.pitch');
+
 });
 

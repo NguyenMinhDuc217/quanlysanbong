@@ -2,7 +2,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 <div class="container_register">
-            <form class="form" id="register" method="POST" action="" enctype="multipart/form-data">
+            <form class="form" id="register" method="POST" action="{{route('register')}}" enctype="multipart/form-data">
                @csrf
             <h2>Đăng ký</h2>
                         @if(Session::has('success'))

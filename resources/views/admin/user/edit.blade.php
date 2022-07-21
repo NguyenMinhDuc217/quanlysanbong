@@ -9,12 +9,12 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title"><b>Users Table</b></h3>
+          <h3 class="card-title"><b>Danh sách người dùng</b></h3>
         </div>
         <div class="container" style="margin: 10px 0px;">
           <div class="row">
             <div class="col-md-2">
-              <a class="btn btn-success uppercase" href="{{route('users.index')}}"> <i class="nav-icon fa fa-long-arrow-left"></i> Back</a>
+              <a class="btn btn-success uppercase" href="{{route('users.index')}}"> <i class="nav-icon fa fa-long-arrow-left"></i> Quay lại</a>
             </div>
           </div>
         </div>
@@ -28,7 +28,7 @@
                        @endif
                 <div class="card-body">
                   <div class="form-group">
-                    <label for="">Họ và Tên</label>
+                    <label for="">Họ và Tên<span class="require">*</label>
                     <input type="text" name="username" class="form-control" value="{{$users->username}}"  placeholder="Họ và tên">
                     @error('username')
                                    <span class="vali_sign" class="invalid-feedback" role="alert">
@@ -37,7 +37,7 @@
                             @enderror   
                   </div>
                   <div class="form-group">
-                    <label for="">Email</label>
+                    <label for="">Email<span class="require">*</label>
                     <input type="email" name="email" class="form-control" value="{{$users->email}}"  placeholder="Email" disabled>
                   </div>
                   @error('email')
@@ -46,7 +46,7 @@
                                    </span>
                             @enderror   
                   <div class="form-group">
-                    <label for="">Số điện thoại</label>
+                    <label for="">Số điện thoại<span class="require">*</label>
                     <input type="text" name="phone" class="form-control" value="{{$users->phone_number}}" placeholder="Số điện thoại">
                   </div>
                   @error('phone')
@@ -55,7 +55,7 @@
                                    </span>
                             @enderror   
                  <div class="form-group">
-                    <label for="">Status</label>
+                    <label for="">Tình trạng</label>
                     <div class="upload_select">
                                             <select name="status" class="select">
                                                 <option class="select" value="1" {{$users->status == 1 ? 'selected' : ''}} >Đang hoạt động</option>
@@ -76,7 +76,7 @@
                                 @endif
                 </div>
                 <!-- /.card-body -->
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="submit" class="btn btn-primary">Cập nhật</button>
               
               </form>
         </div>

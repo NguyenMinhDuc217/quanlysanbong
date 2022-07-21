@@ -17,11 +17,15 @@ class CreateTableUsers extends Migration
             $table->id();
             $table->string('username',255)->nullable();
             $table->string('email',255);
-            $table->string('password');
-            $table->string('phone_number');
+            $table->string('password')->nullable();
+            $table->string('phone_number')->nullable();
             $table->string('wallet',255)->nullable();
             $table->string('status',255)->nullable();
             $table->string('created_by',255)->nullable();
+<<<<<<< HEAD
+=======
+            $table->string('time_login',255)->nullable();
+>>>>>>> thinh
             $table->string('token');
             $table->rememberToken();
             $table->timestamps();

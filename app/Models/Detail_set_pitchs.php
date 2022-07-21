@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Detail_set_pitchs extends Model
 {
     use HasFactory;
+    public $table = 'detail_set_pitchs';
     protected $fillable = [
         'picth_id',
         'user_id',
@@ -17,4 +18,5 @@ class Detail_set_pitchs extends Model
         'end_time',
         'total',
     ];
+
 }

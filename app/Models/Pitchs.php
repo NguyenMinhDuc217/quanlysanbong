@@ -20,4 +20,5 @@ class Pitchs extends Model
         'total_set',
         'status',
     ];
+
 }

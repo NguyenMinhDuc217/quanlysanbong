@@ -50,6 +50,7 @@
                     <a href="{{route('show.forgetpassword')}}" class="forgot_password__title">Quên mật khẩu ?</a>
                 </div>
                 <div class="login_google__zalo">
+                    <a href="{{route('show.login.fb',['social'=>'google'])}}">
                     <div class="login_google">
                         <div class="login_google__icon">
                             <i class="fa-brands fa-google"></i>
@@ -61,7 +62,7 @@
                         <div class="login_zalo__icon">
                             <i class="fa fa-facebook-official" aria-hidden="true"></i>
                         </div>
-                        <span class="log_in__title">Đăng nhập bằng Zalo</span>
+                        <span class="log_in__title">Đăng nhập bằng Facebook</span>
                     </div>
                     </a>
               

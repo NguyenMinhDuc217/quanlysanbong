@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pitchs;
+use App\Models\Discount;
 use Illuminate\Http\Request;
 use App\Repositories\Interfaces\PitchRepositoryInterface;
 
@@ -15,12 +15,29 @@ class PitchController extends Controller
     }
     public function ListPitch(Request $request){
         $pitchs = $this->pitchRepository->ListPitch($request);
-        // return view('layouts.home', ['listPitch' => $listPitch]);
-        return view('pitchs.index', compact('pitchs'));
+        $discounts=[];
+        foreach(Discount::all() as $discount){
+            $discounts[$discount->pitch_id]=$discount;
+        }
+        return view('pitchs.index', compact('pitchs','discounts'));
     }
     public function Search(Request $request){
         $pitchs = $this->pitchRepository->Search($request);
-        // return view('layouts.home', ['listPitch' => $listPitch]);
-        return view('pitchs.search', compact('pitchs'));
+        $discounts=[];
+        foreach(Discount::all() as $discount){
+            $discounts[$discount->pitch_id]=$discount;
+        }
+        return view('pitchs.search', compact('pitchs','discounts'));
     }
+    public function DetailPitch($pitchid){
+        $data = $this->pitchRepository->DetailPitch($pitchid);
+        return view('detailpitch.index', array('data'=>$data));
+    }
+    public function commentAjax(Request $request, $id = ''){
+        return $comment = $this->pitchRepository->Comment($request, $id);
+    }
+    public function sendPhone(Request $request){
+        return $this->pitchRepository->sendPhone($request);
+    }
+
 }

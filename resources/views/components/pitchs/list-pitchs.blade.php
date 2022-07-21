@@ -6,7 +6,7 @@
         @foreach($pitchs as $pitch)
         
         <div class="product_item__list">
-            <a href="" class="product_item__link">
+            <a href="{{route('detail.pitch',[$pitch->id])}}" class="product_item__link">
                 <div class="product_item__img">
                     <img src="{{ asset('images/pitch') }}/{{ $pitch['avartar'] }}" />
                 </div>
@@ -21,7 +21,24 @@
                         <span><i class='bx bx-star'></i></span>
                     </div>
                 </div>
-                <div class="product_item__price">Giá <span class="product_item__price_color">{{number_format($pitch->price)}}</span> / Giờ</div>
+                <!-- <div class="product_item__vote">
+                    <span class="product_item__vote_num">Giá: {{number_format($pitch->price)}}đ / Giờ</span>
+                    @if($pitch['discount']!=0)
+                    <span class="product_item__vote_num_discount">{{number_format($pitch['discount'])}}%</span>
+                    @else
+                    @endif
+                  </div> -->
+                <div class="product_item__vote">
+                    <div class="product_item__price">Giá: <span class="product_item__price_color">{{number_format($pitch->price)}}</span> / Giờ</div>
+                   
+                    @foreach($discounts as $discount)
+                            @if($pitch['id']==$discount->pitch_id&&$discount->start_discount<=date('Y-m-d')&&$discount->end_discount>=date('Y-m-d'))
+                                <div><span class="product_item__vote_num_discount">{{number_format($discount->discount)}}%</span></div>
+                            @else
+                            @endif
+                     @endforeach
+                 
+                </div>
             </a>
         </div>
         @endforeach

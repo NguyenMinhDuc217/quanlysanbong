@@ -7,19 +7,25 @@
                 <div class="header_top__left__hotline_icon">
                     <box-icon name='phone' type='solid' color='#ffffff'></box-icon>
                 </div>
-                <span class="header_top__left__hotline_title">Showroom</span>
-                <div class="header_top__left__hotline_phone">0123456789</div>
+                <span class="header_top__left__hotline_title">Hotline</span>
+                <div class="header_top__left__hotline_phone">0356155012</div>
             </div>
-            <div class="header_top__left__hotline_tech">
+            <!-- <div class="header_top__left__hotline_tech">
                 <div class="header_top__left__hotline_tech_icon">
                     <box-icon type='solid' name='brightness' color='#ffffff'></box-icon>
                 </div>
                 <span class="header_top__left__hotline_tech_title">Kĩ thuật</span>
                 <div class="header_top__left__hotline_tech_phone">0123456789</div>
-            </div>
+            </div> -->
         </div>
         <div class="header_top__right">
             @if(!empty(Auth::guard('user')->user()->id))
+            <!-- <div class="review__avt__user__left">
+                <img src="https://picsum.photos/id/237/200/300" alt="avatar user">
+            </div> -->
+            <div class="header_top__right__login">
+                <a href="{{route('my.account')}}">Tài Khoản</a>
+            </div>
             <div class="header_top__right__login">
                 <a href="{{route('logout')}}">Đăng xuất</a>
             </div>
@@ -37,7 +43,7 @@
     <div class="header_center">
         <div class="header_center__logo">
             <a href="{{route('list_pitch')}}">
-            <img src="{{asset('images/logo/logo.png')}}" alt="logo" />
+            <img src="{{asset('images/logo/logosanbong247.png')}}" alt="logo" />
             </a>
         </div>
         <div class="header_center__search">
@@ -46,7 +52,7 @@
                     <button style="padding: 0; border:none" id="btn__submit" >
                         <i id="find" class='bx bx-search' onclick="handleSubmit()"></i>
                     </button>
-                    <input type="text" name="key" class="inp" placeholder="Sản phẩm cần tìm" id="filter_search" autocomplete="off" value="{{request()->get('key')}}">
+                    <input type="text" name="key" class="inp" placeholder="Tìm sân bóng" id="filter_search" autocomplete="off" value="{{request()->get('key')}}">
                 </div>
                 <div id="keyword__search" class="keyword__search">
                     <div class="seeAll__search">

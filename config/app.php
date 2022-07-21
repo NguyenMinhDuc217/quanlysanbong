@@ -162,6 +162,8 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
+        // Intervention\Image\ImageServiceProvider::class,
+
         /*
          * Package Service Providers...
          */
@@ -176,7 +178,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         //Service to provider
         App\Providers\RepositoryServiceProvider::class,
-
+        //
+        Laravel\Socialite\SocialiteServiceProvider::class
     ],
 
     /*
@@ -232,6 +235,11 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+<<<<<<< HEAD
+=======
+        'Image' => Intervention\Image\ImageManagerStatic::class,
+        // 'Image' => Intervention\Image\Facades\Image::class,
+>>>>>>> thinh
     ],
 
 ];
