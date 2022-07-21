@@ -83,9 +83,9 @@
                 @endforeach
             
 
-                <span class="product_item__vote_num">Giá vé: {{number_format($price)}}đ</span>
+                <span class="product_item__vote_num">Giá vé: {{$price}}đ</span>
                 @if(!empty($price_dis))
-                <span class="product_item__vote_num_discount">{{number_format($price_dis)}}đ</span>
+                <span class="product_item__vote_num_discount">{{$price_dis}}đ</span>
                 @else
                 @endif    
               </div>

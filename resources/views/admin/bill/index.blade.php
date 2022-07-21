@@ -34,11 +34,16 @@
               @foreach($bills as $i=>$bill)
               <tr>
                 <th>{{$i+1}}</th>
-                  @foreach($users as $user)
-                   @if($bill->user_id==$user->id)
-                   <th>{{$user->username}}</th>
-                   @endif
-                  @endforeach
+                @if($bill->user_id==0)
+                <th></th>
+                @endif
+                @foreach($users as $user)
+                    @if($bill->user_id==$user->id)
+                    <th>{{$user->username}}</th>
+                    @endif
+                    
+                    @endforeach
+              
                 <th>{{$bill->bill_number}}</th>
                 <th>{{$bill->transaction_id}}</th>
                 <th>{{$bill->price}}</th>
@@ -53,6 +58,8 @@
       <!-- /.card -->
     </div>
   </div>
+</div>
+
   <script src="//cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
   <script>
     $(document).ready(function() {

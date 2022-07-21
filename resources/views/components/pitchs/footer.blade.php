@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="footer_map">
-        <a target="_blank" href="https://www.google.com/maps/place/97+%C4%90.+Man+Thi%E1%BB%87n,+Hi%E1%BB%87p+Ph%C3%BA,+Qu%E1%BA%ADn+9,+Th%C3%A0nh+ph%E1%BB%91+H%E1%BB%93+Ch%C3%AD+Minh,+Vi%E1%BB%87t+Nam/@10.8486428,106.7835031,17z/data=!3m1!4b1!4m5!3m4!1s0x31752713216a3adf:0xf8b22853eea72777!8m2!3d10.8486375!4d106.7856918?hl=vi-VN" class="footer_map__link"></a>
+        <a target="_blank" href="https://www.google.com/maps/place/Tr%C6%B0%E1%BB%9Dng+Cao+%C4%91%E1%BA%B3ng+K%E1%BB%B9+thu%E1%BA%ADt+Cao+Th%E1%BA%AFng/@10.771595,106.6991629,17z/data=!3m1!4b1!4m5!3m4!1s0x31752f40a3b49e59:0xa1bd14e483a602db!8m2!3d10.771595!4d106.7013516?hl=vi-VN" class="footer_map__link"></a>
     </div>
 </div>
 

@@ -30,7 +30,7 @@ class UserManagerController extends BaseAdminController
 
       foreach($users as $user){
           if($user->time_login != null){
-              if((strtotime(Carbon::now()->format('Y-m-d H:i:s'))-strtotime($user->time_out))/(60*60*24)>365){
+              if((strtotime(Carbon::now()->format('Y-m-d H:i:s'))-strtotime($user->time_login))/(60*60*24)>365){
                 $user->delete();
               }
           }

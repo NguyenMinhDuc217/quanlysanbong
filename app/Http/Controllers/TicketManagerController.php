@@ -122,16 +122,8 @@ class TicketManagerController extends Controller
             }
         }
         $pitchs = Pitchs::where('id', $request->pitch_id)->first();
-        //lấy từng dịch vụ
-        $services = [];
-        // if($request->ch_name == null){
-
-        // }
-        foreach ($request->ch_name as $i => $id_service) {
-            $service = Services::where('id', $id_service)->first();
-            $services[$i] = $service;
-        }
-
+      
+  
         $tickets = new Tickets();
         $tickets->user_id = 0;
         $tickets->name = $request->name;

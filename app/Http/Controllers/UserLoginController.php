@@ -35,12 +35,14 @@ class UserLoginController extends Controller
             $user->save();
             return redirect()->route('list_pitch');
         }
-        if (Auth::guard('user')->attempt(['email' => $request->email, 'password' => $request->password,'status'=>2], $request->remember)) {
+
+        if (User::where('email',$request->email)->where('status',2)->first()!=null) {
         return redirect()->back()->withInput($request->only('email', 'remember'))->with('error', 'Tài khoản chưa kích hoạt!!!');
-    }
-    if (Auth::guard('user')->attempt(['email' => $request->email, 'password' => $request->password,'status'=>3], $request->remember)) {
-        return redirect()->back()->withInput($request->only('email', 'remember'))->with('error', 'Tài khoản đang bị khóa!!!');
-    }
+    
+       }
+        if (User::where('email',$request->email)->where('status',3)->first()!=null) {
+            return redirect()->back()->withInput($request->only('email', 'remember'))->with('error', 'Tài khoản đang bị khóa!!!');
+        }
     return redirect()->back()->withInput($request->only('email', 'remember'))->with('error', 'Tài khoản hoặc mật khẩu chưa đúng!!!');
     }
     public function logout(Request $request)

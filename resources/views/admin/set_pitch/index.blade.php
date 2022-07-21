@@ -87,17 +87,18 @@
                 @else
                 <td></td>
                 @endif
-                <td>{{@$pitch['detail']->start_time}}</td>
-                <td>{{@$pitch['detail']->end_time}}</td>
+                <td>{{date('d-m-Y H:i:s', strtotime(@$pitch['detail']->start_time))}}</td>
+                <td>{{date('d-m-Y H:i:s', strtotime(@$pitch['detail']->end_time))}}</td>
 
-                @if($pitch['detail']->ispay==0)
+                @if($pitch['detail']->ticket_id!=null)
+                <td>Được đặt bỏi vé</td>
+                @elseif($pitch['detail']->ispay==0)
                 <td>
                 <button class="btn btn-btn btn-danger deleteUserBtn" value="{{@$pitch['detail']->id}}">Thanh toán</button>
                 </td>
                 @elseif($pitch['detail']->ispay == 1)
                 <td>Đã thanh toán</td>
                 @endif
-                
               </tr>
               @endforeach
             </tbody>

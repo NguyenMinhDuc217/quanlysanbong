@@ -45,12 +45,14 @@ class TicketRepository implements TicketRepositoryInterface
     $data=[];
     $data['ticket']=Tickets::where('id', $request->ticketid)->where('status',1)->where('timeout','>',$now)->first();
     $data['detail_ticket']=DetailTicket::where('ticket_id', $request->ticketid)->first();
+    $service=Detail_set_pitchs::where('ticket_id', $request->ticketid)->get();
+
     foreach(Detail_set_pitchs::where('ticket_id', $request->ticketid)->get() as $i=>$setPitch){
       $data['setPitch'][$i]['setPitch']=$setPitch;
       $data['setPitch'][$i]['pitch']=$pitchs[$setPitch->picth_id];
     }
-    foreach(SetService::where('ticket_id', $request->ticketid)->get() as $i=>$service){
-      $data['service'][$i]=$service;
+    foreach(SetService::where('ticket_id', $request->ticketid)->where('set_pitch_id',$service[0]->id)->get() as $i=>$service){
+      $data['service'][$i]=$service; 
     }
     $discounts=[];
     foreach(Discount::all() as $discount){
